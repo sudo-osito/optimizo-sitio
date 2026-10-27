@@ -1,5 +1,7 @@
 # Optimizo · sitio para la feria (TechAI Summit)
 
+**v2 (27-oct, noche):** rehecha tras el feedback de Max («super claude, nada distinto»). Disección de composio.dev: tipografía delgada + rótulos/botones mono, marco de plano con líneas finas y cruces, degradado WebGL (port de su shader de 4 colores en OKLab, aquí en RGB) bajo objetos nítidos, microanimaciones de píxeles 22×6. Firma propia: el isotipo de Optimizo hecho de LED, de pie y girando en 3D (`discoDeLuz` en app.js); piso de luz en el cierre (`pisoDeLuz`). Médula con su identidad real (Orbe, isotipo negro, auras azul-lavanda, `recursos/medula-marca*.svg` del repo medula).
+
 Página principal de Optimizo, versión feria. HTML + CSS + JS sin dependencias ni compilación.
 
 - **Ver en local:** `python3 -m http.server 4410 --bind 127.0.0.1` y abrir http://127.0.0.1:4410/ (los módulos JS necesitan http, no file://).
