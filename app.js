@@ -38,117 +38,173 @@ function pintarNav() {
   nav.classList.toggle("clara", !sobre);
 }
 
-/* ── El isotipo hecho de puntos: se arma al llegar, gira en 3D y se dispersa con el scroll ── */
-function nubeIsotipo(cv, op) {
-  const c = cv.getContext("2d");
-  const MORD = 2.36, HUECO = .265, puntos = [];
-  const s = op.densidad || .036;
-  for (let y = -1, fila = 0; y <= 1; y += s * .866, fila++) for (let x = -1 + (fila % 2) * s / 2; x <= 1; x += s) {
-    const r = Math.hypot(x, y); if (r > 1 || r < HUECO || Math.hypot(x - Math.cos(MORD) * .93, y - Math.sin(MORD) * .93) < .34) continue;
-    puntos.push({ u: x, v: y, punto: false });
-  }
-  const pcx = Math.cos(MORD) * 1.3, pcy = Math.sin(MORD) * 1.3;
-  for (let y = -.3; y <= .3; y += s * .866) for (let x = -.3; x <= .3; x += s) if (Math.hypot(x, y) <= .3) puntos.push({ u: pcx + x, v: pcy + y, punto: true });
-  puntos.forEach((p, i) => {
-    const a = azar(i) * Math.PI * 2, b = Math.acos(2 * azar(i + .5) - 1), d = 2 + azar(i + .7) * 2.5;
-    p.su = Math.sin(b) * Math.cos(a) * d; p.sv = Math.sin(b) * Math.sin(a) * d; p.sw = Math.cos(b) * d;
-    p.du = Math.sin(b) * Math.cos(a); p.dv = Math.sin(b) * Math.sin(a); p.dw = Math.cos(b);
-    p.retraso = (Math.hypot(p.u, p.v) / 1.6) * .9 + azar(i + .3) * .35;
-  });
-  let w = 0, h = 0, mx = 0, my = 0, sx = 0, sy = 0;
-  const ajustar = () => { const dpr = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0); };
+/* ── El isotipo hecho de LED (héroe) y el piso de luz (cierre) ── */
+const hash = (a, b, c = 0) => { let h = (a * 374761393 + b * 668265263 + c * 2147483647) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967295; };
+function pisoDeLuz(cv, op) {
+  const P = op.paso || 12, LUZ = op.luz || 8.5;
+  const c = cv.getContext("2d"), chico = document.createElement("canvas"), cc = chico.getContext("2d");
+  let w = 0, h = 0, cols = 0, filas = 0, img = null, rejilla = null, mx = 0, mxSuave = 0;
+  const ajustar = () => {
+    const dpr = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / P); filas = Math.ceil(h / P); chico.width = cols; chico.height = filas; img = cc.createImageData(cols, filas);
+    // la rejilla tapa el borde de cada celda para que se lean como LED separados
+    const m = document.createElement("canvas"); m.width = P; m.height = P; const mc = m.getContext("2d");
+    mc.fillStyle = op.fondo; mc.fillRect(0, 0, P, P); mc.clearRect(0, 0, LUZ, LUZ); rejilla = c.createPattern(m, "repeat");
+  };
   ajustar(); addEventListener("resize", ajustar);
-  cv.parentElement.addEventListener("pointermove", (e) => { const r = cv.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5; });
+  cv.parentElement.addEventListener("pointermove", (e) => { const r = cv.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - .5; });
+  const MENTA = [145, 206, 196], TEAL = [89, 189, 177], HIELO = [214, 244, 238];
+  const R = 5.2, Z0 = op.z0 || 7.2, H = op.altura || 1, MORD = op.mordida ?? -2.36, hueco = .27;
   return (t) => {
-    if (!w) return;
-    sx += (mx - sx) * .04; sy += (my - sy) * .04;
-    const disp = op.dispersion ? op.dispersion() : 0, o = op();
-    const ccx = w * o.x, ccy = h * o.y, f = h * 1.25, D = 10, R = o.radio * h * D / f;
-    const fi = Math.sin(t * .2) * .5 + sx * .6 + disp * 1.4 + (op.giro || 0), ta = .2 + Math.sin(t * .15) * .08 - sy * .3 - disp * .5;
-    const cf = Math.cos(fi), sf = Math.sin(fi), ct = Math.cos(ta), st = Math.sin(ta);
-    const U = [cf, 0, -sf], V = [sf * st, ct, cf * st], N = [sf * ct, -st, cf * ct];
-    const sale = .25 * (.5 + .5 * Math.sin(t * .7)), intro = QUIETO ? 9 : t * 1.1, barrido = (t * .13) % 1.7 - .35;
-    c.clearRect(0, 0, w, h);
-    const halo = c.createRadialGradient(ccx, ccy, 0, ccx, ccy, o.radio * h * 1.6); halo.addColorStop(0, `rgba(89,189,177,${.12 * o.alfa})`); halo.addColorStop(1, "rgba(89,189,177,0)"); c.fillStyle = halo; c.fillRect(0, 0, w, h);
-    for (const p of puntos) {
-      const k = eio((intro - p.retraso) / 1.3);
-      let u = lerp(p.su, p.u, k), v = lerp(p.sv, p.v, k), ww = lerp(p.sw, 0, k);
-      if (p.punto) ww -= sale * k;
-      const dd = disp * disp * 2.4; u += p.du * dd; v += p.dv * dd; ww += p.dw * dd;
-      const X = (U[0] * u + V[0] * v + N[0] * ww) * R, Y = (U[1] * u + V[1] * v + N[1] * ww) * R, Z = D + (U[2] * u + V[2] * v + N[2] * ww) * R;
-      if (Z < 1) continue;
-      const px = ccx + X / Z * f, py = ccy - Y / Z * f;
-      if (px < -10 || px > w + 10 || py < -10 || py > h + 10) continue;
-      const r = Math.hypot(p.u, p.v);
-      const onda = p.punto ? 1 : Math.pow(.5 + .5 * Math.sin(r * 9 - t * 1.5), 6);
-      const luzB = Math.pow(clamp(1 - Math.abs((p.u + 1) / 2 - barrido) * 5), 2);
-      const luz = Math.max(onda, luzB);
-      const g = clamp((p.u + 1) / 2);
-      const a = (p.punto ? 1 : .32 + .68 * luz) * (.6 + .4 * k) * o.alfa * (1 - disp * .6);
-      const rr = Math.max(.6, (op.punto || 1.45) * (D / Z) * (p.punto ? 1.25 : 1) * (.8 + .5 * luz));
-      c.fillStyle = `rgba(${lerp(lerp(145, 89, g), 225, luz * .6) | 0},${lerp(lerp(206, 189, g), 248, luz * .6) | 0},${lerp(lerp(196, 177, g), 243, luz * .6) | 0},${a.toFixed(3)})`;
-      c.beginPath(); c.arc(px, py, rr, 0, 6.2832); c.fill();
+    if (!img) return;
+    mxSuave += (mx - mxSuave) * .05;
+    const d = img.data, hz = h * op.horizonte, cx = w / 2, f = w * (op.foco || .95);
+    const th = t * (op.giro || .06) + mxSuave * .5 + (op.angulo || 0), cs = Math.cos(th), sn = Math.sin(th);
+    const bx = Math.cos(MORD) * R * .93, bz = Math.sin(MORD) * R * .93, br = R * .34;
+    d.fill(0);
+    for (let j = 0; j < filas; j++) {
+      const sy = j * P + P / 2 - hz; if (sy <= 1) continue;
+      const z = H * f / sy; if (z > 22) continue;
+      const niebla = clamp(1 - (z - 2.5) / 15) * clamp(sy / 40);
+      for (let i = 0; i < cols; i++) {
+        const x = (i * P + P / 2 - cx) * z / f, dz = z - Z0;
+        const u = x * cs - dz * sn, v = x * sn + dz * cs, r = Math.hypot(u, v) / R;
+        const k = (j * cols + i) * 4;
+        let a, col;
+        if (r <= 1 && r >= hueco && Math.hypot(u - bx, v - bz) > br) {
+          const borde = (r > .955 || r < hueco + .04) ? 1 : 0;
+          const onda = Math.pow(.5 + .5 * Math.sin(r * 10 - t * 1.7), 4);
+          const titila = hash(i, j, Math.floor(t * 3)) * .14;
+          a = (.16 + .62 * onda + .4 * borde + titila) * niebla;
+          const g = clamp((u / R + 1) / 2);
+          col = onda > .7 ? HIELO : [MENTA[0] + (TEAL[0] - MENTA[0]) * g, MENTA[1] + (TEAL[1] - MENTA[1]) * g, MENTA[2] + (TEAL[2] - MENTA[2]) * g];
+        } else { a = .045 * niebla; col = [120, 150, 160]; }
+        d[k] = col[0]; d[k + 1] = col[1]; d[k + 2] = col[2]; d[k + 3] = Math.round(clamp(a) * 255);
+      }
     }
+    // el punto que se escapa: flota fuera de la mordida
+    const pu = Math.cos(MORD) * R * 1.32, pv = Math.sin(MORD) * R * 1.32;
+    const X = pu * cs + pv * sn, Zp = -pu * sn + pv * cs + Z0, Y = .95 + .18 * Math.sin(t * 1.3);
+    const psx = cx + X * f / Zp, psy = hz + (H - Y) * f / Zp, prr = .62 * f / Zp;
+    if (Zp > 1) {
+      for (let j = Math.max(0, Math.floor((psy - prr) / P)); j <= Math.min(filas - 1, Math.ceil((psy + prr) / P)); j++)
+        for (let i = Math.max(0, Math.floor((psx - prr) / P)); i <= Math.min(cols - 1, Math.ceil((psx + prr) / P)); i++) {
+          const q = Math.hypot(i * P + P / 2 - psx, j * P + P / 2 - psy) / prr; if (q > 1) continue;
+          const k = (j * cols + i) * 4, luz = 1 - q * .55;
+          d[k] = 145 + 90 * luz; d[k + 1] = 206 + 40 * luz; d[k + 2] = 196 + 50 * luz; d[k + 3] = 255;
+        }
+    }
+    cc.putImageData(img, 0, 0);
+    c.clearRect(0, 0, w, h);
+    if (Zp > 1) { const g = c.createRadialGradient(psx, psy, 0, psx, psy, prr * 4); g.addColorStop(0, "rgba(145,206,196,.28)"); g.addColorStop(1, "rgba(145,206,196,0)"); c.fillStyle = g; c.fillRect(psx - prr * 4, psy - prr * 4, prr * 8, prr * 8); }
+    c.imageSmoothingEnabled = false; c.drawImage(chico, 0, 0, cols * P, filas * P);
+    c.fillStyle = rejilla; c.fillRect(0, 0, w, h);
+    // se funde con el fondo abajo, donde van los logos
+    const y0 = h * (op.fundido || .8), fin = c.createLinearGradient(0, y0, 0, h); fin.addColorStop(0, op.fondo + "00"); fin.addColorStop(1, op.fondo);
+    c.fillStyle = fin; c.fillRect(0, y0, w, h - y0);
   };
 }
+function discoDeLuz(cv, op) {
+  const P = op.paso || 12, LUZ = op.luz || 8.5;
+  const c = cv.getContext("2d"), chico = document.createElement("canvas"), cc = chico.getContext("2d");
+  let w = 0, h = 0, cols = 0, filas = 0, img = null, rejilla = null, mx = 0, my = 0, sx = 0, sy = 0;
+  const ajustar = () => {
+    const dpr = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / P); filas = Math.ceil(h / P); chico.width = cols; chico.height = filas; img = cc.createImageData(cols, filas);
+    const m = document.createElement("canvas"); m.width = P; m.height = P; const mc = m.getContext("2d");
+    mc.fillStyle = op.fondo; mc.fillRect(0, 0, P, P); mc.clearRect(0, 0, LUZ, LUZ); rejilla = c.createPattern(m, "repeat");
+  };
+  ajustar(); addEventListener("resize", ajustar);
+  cv.parentElement.addEventListener("pointermove", (e) => { const r = cv.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5; });
+  const MENTA = [145, 206, 196], TEAL = [74, 168, 160], HIELO = [222, 248, 243], MORD = 2.36, HUECO = .265;
+  return (t) => {
+    if (!img) return;
+    sx += (mx - sx) * .04; sy += (my - sy) * .04; const mx2 = (mx + .5) * w, my2 = (my + .5) * h;
+    const d = img.data, ccx = w * op.x, ccy = h * op.y, f = h * 1.25, D = 10, R = op.radio * h * D / f;
+    const fi = Math.sin(t * .22) * .55 + sx * .6, ta = .18 + Math.sin(t * .17) * .08 - sy * .3;
+    const cf = Math.cos(fi), sf = Math.sin(fi), ct = Math.cos(ta), st = Math.sin(ta);
+    // base del plano: u (derecha), v (arriba), n (normal), girada en Y y luego en X
+    const u = [cf, 0, -sf], v = [sf * st, ct, cf * st], n = [sf * ct, -st, cf * ct];
+    const C = [0, 0, D], Cn = C[0] * n[0] + C[1] * n[1] + C[2] * n[2];
+    const bx = Math.cos(MORD) * R * .93, by = Math.sin(MORD) * R * .93, br = R * .34, frente = Math.abs(n[2]);
+    d.fill(0);
+    for (let j = 0; j < filas; j++) {
+      const dy = -(j * P + P / 2 - ccy) / f;
+      for (let i = 0; i < cols; i++) {
+        const dx = (i * P + P / 2 - ccx) / f, dn = dx * n[0] + dy * n[1] + n[2];
+        if (Math.abs(dn) < 1e-4) continue;
+        const k2 = Cn / dn, px = dx * k2 - C[0], py = dy * k2 - C[1], pz = k2 - C[2];
+        const lu = px * u[0] + py * u[1] + pz * u[2], lv = px * v[0] + py * v[1] + pz * v[2], r = Math.hypot(lu, lv) / R;
+        if (r > 1 || r < HUECO || Math.hypot(lu - bx, lv - by) < br) continue;
+        const k = (j * cols + i) * 4;
+        const borde = (r > .955 || r < HUECO + .045) ? 1 : 0;
+        const onda = Math.pow(.5 + .5 * Math.sin(r * 9 - t * 1.5), 5);
+        const barrido = Math.pow(clamp(1 - Math.abs(((lu / R + 1) / 2) - ((t * .12) % 1.6 - .3)) * 4), 2);
+        const titila = hash(i, j, Math.floor(t * 3)) * .12;
+        const cerca = Math.exp(-(((i * P - mx2) ** 2) + ((j * P - my2) ** 2)) / 9000);
+        const a = (.22 + .5 * onda + .35 * borde + .35 * barrido + titila + .7 * cerca) * (.55 + .45 * frente);
+        const g = clamp((lu / R + 1) / 2), luz = Math.max(onda, barrido);
+        const base = [MENTA[0] + (TEAL[0] - MENTA[0]) * g, MENTA[1] + (TEAL[1] - MENTA[1]) * g, MENTA[2] + (TEAL[2] - MENTA[2]) * g];
+        d[k] = base[0] + (HIELO[0] - base[0]) * luz; d[k + 1] = base[1] + (HIELO[1] - base[1]) * luz; d[k + 2] = base[2] + (HIELO[2] - base[2]) * luz;
+        d[k + 3] = Math.round(clamp(a) * 255 * (op.alfa || 1));
+      }
+    }
+    // el punto que se escapa por la mordida, despegándose del plano
+    const ang = MORD + .06 * Math.sin(t * .9), dist = R * (1.3 + .05 * Math.sin(t * 1.3)), sale = R * .25 * (.5 + .5 * Math.sin(t * .7));
+    const lu0 = Math.cos(ang) * dist, lv0 = Math.sin(ang) * dist;
+    const Px = C[0] + u[0] * lu0 + v[0] * lv0 + n[0] * -sale, Py = C[1] + u[1] * lu0 + v[1] * lv0 + n[1] * -sale, Pz = C[2] + u[2] * lu0 + v[2] * lv0 + n[2] * -sale;
+    const psx = ccx + Px / Pz * f, psy = ccy - Py / Pz * f, prr = R * .3 / Pz * f;
+    for (let j = Math.max(0, Math.floor((psy - prr) / P)); j <= Math.min(filas - 1, Math.ceil((psy + prr) / P)); j++)
+      for (let i = Math.max(0, Math.floor((psx - prr) / P)); i <= Math.min(cols - 1, Math.ceil((psx + prr) / P)); i++) {
+        const q = Math.hypot(i * P + P / 2 - psx, j * P + P / 2 - psy) / prr; if (q > 1) continue;
+        const k = (j * cols + i) * 4, l = 1 - q * .5;
+        d[k] = 160 + 80 * l; d[k + 1] = 215 + 35 * l; d[k + 2] = 205 + 45 * l; d[k + 3] = Math.round(255 * (op.alfa || 1));
+      }
+    cc.putImageData(img, 0, 0);
+    c.clearRect(0, 0, w, h);
+    const halo = c.createRadialGradient(ccx, ccy, 0, ccx, ccy, op.radio * h * 1.5); halo.addColorStop(0, `rgba(89,189,177,${.1 * (op.alfa || 1)})`); halo.addColorStop(1, "rgba(89,189,177,0)");
+    c.fillStyle = halo; c.fillRect(0, 0, w, h);
+    const g2 = c.createRadialGradient(psx, psy, 0, psx, psy, prr * 4); g2.addColorStop(0, "rgba(160,220,210,.3)"); g2.addColorStop(1, "rgba(160,220,210,0)"); c.fillStyle = g2; c.fillRect(psx - prr * 4, psy - prr * 4, prr * 8, prr * 8);
+    c.imageSmoothingEnabled = false; c.drawImage(chico, 0, 0, cols * P, filas * P);
+    c.fillStyle = rejilla; c.fillRect(0, 0, w, h);
+  };
+}
+const NOCHE = "#0B131B";
 {
-  const heroe = $("#heroe");
-  const ver = () => (MOVIL() ? { x: .5, y: .3, radio: .21, alfa: .6 } : { x: .74, y: .5, radio: .3, alfa: 1 });
-  ver.dispersion = () => { const r = heroe.getBoundingClientRect(); return clamp(-r.top / (r.height * .9)); };
-  bucleVisible($("#lienzo-heroe"), nubeIsotipo($("#lienzo-heroe"), ver), 60);
-  const cierre = $("#conversemos");
-  const ver2 = () => (MOVIL() ? { x: .5, y: .45, radio: .26, alfa: .3 } : { x: .5, y: .5, radio: .4, alfa: .32 });
-  ver2.dispersion = () => { const r = cierre.getBoundingClientRect(); return clamp(r.top / innerHeight) * .7; };
-  ver2.giro = .35; ver2.densidad = .04;
-  bucleVisible($("#lienzo-cierre"), nubeIsotipo($("#lienzo-cierre"), ver2), 60);
+  const movil = innerWidth < 700, cv = $("#lienzo-heroe");
+  bucleVisible(cv, discoDeLuz(cv, movil ? { fondo: NOCHE, x: .5, y: .2, radio: .2, alfa: .5, paso: 9, luz: 6.5 } : { fondo: NOCHE, x: .75, y: .5, radio: .3 }), 30);
+  const cv2 = $("#lienzo-cierre");
+  bucleVisible(cv2, pisoDeLuz(cv2, { fondo: NOCHE, horizonte: movil ? .62 : .55, foco: movil ? 1.6 : .9, altura: 2.2, z0: 8.5, paso: movil ? 9 : 12, luz: movil ? 6.5 : 8.5, fundido: .97 }), 30);
 }
 
-/* ── Del caos al orden ── */
-const secCaos = $("#caos"), mesa = $("#mesa"), cables = $("#cables");
-const piezas = $$(".pieza", mesa).map((el) => ({ el, tipo: el.dataset.p }));
-const CAOS = {
-  app: [[.1, .44, -14], [.88, .38, 11], [.22, .78, 9], [.76, .74, -9], [.05, .66, 7], [.95, .62, -12], [.4, .9, -7], [.62, .52, 13]],
-  prob: [[.3, .58, -5], [.68, .88, 4], [.84, .5, -3], [.16, .9, 5], [.5, .7, 2]],
-};
-function pintarCaos(t) {
+/* ── Desafío: el día se llena de ventanas a medida que bajas ── */
+const secDz = $("#desafio"), ventanas = $$(".vent", secDz), dzLista = $$("#dz-lista li"), dzRemate = $(".dz__remate");
+function pintarDesafio() {
   if (MOVIL()) return;
-  const p = avance(secCaos), w = innerWidth, h = innerHeight;
-  secCaos.classList.toggle("orden", p > .42);
-  const entra = eo(p / .14), ordena = eio((p - .36) / .3), resultado = eo((p - .66) / .2);
-  let ia = 0, ip = 0, ir = 0;
-  const nucleo = [w * .5, h * .74];
-  const posApps = [];
-  piezas.forEach(({ el, tipo }, n) => {
-    const ew = el.offsetWidth, eh = el.offsetHeight;
-    let x, y, rot = 0, esc = 1, op = 1;
-    const flota = (k) => Math.sin(t * .8 + n * 1.7) * 8 * k;
-    if (tipo === "app") {
-      const [cx, cy, cr] = CAOS.app[ia]; const ox = lerp(.14, .86, ia / 7);
-      x = lerp(w * cx, w * ox, ordena) + flota(1 - ordena); y = lerp(h * cy, h * .55, ordena) + flota(1 - ordena) * .7;
-      rot = cr * (1 - ordena); esc = lerp(.4, 1, entra) * lerp(1, .82, ordena); op = entra;
-      posApps.push([x, y + 34 * esc]); ia++;
-    } else if (tipo === "prob") {
-      const [cx, cy, cr] = CAOS.prob[ip];
-      const absorbe = eio((p - .3) / .22);
-      x = lerp(w * cx, nucleo[0], absorbe) + flota(1 - absorbe); y = lerp(h * cy, nucleo[1], absorbe) + flota(1 - absorbe);
-      rot = cr * (1 - absorbe); esc = lerp(.6, 1, eo((p - .03 - ip * .02) / .14)) * lerp(1, .2, absorbe); op = eo((p - .03 - ip * .02) / .12) * (1 - absorbe); ip++;
-    } else if (tipo === "nucleo") {
-      x = nucleo[0]; y = nucleo[1]; esc = lerp(.5, 1, eo((p - .4) / .2)); op = eo((p - .4) / .16);
-    } else {
-      x = w * [.27, .5, .73][ir]; y = h * .92; esc = lerp(.85, 1, resultado); op = eo((p - .68 - ir * .04) / .12); ir++;
-    }
-    el.style.transform = `translate(${(x - ew / 2).toFixed(1)}px, ${(y - eh / 2).toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${esc.toFixed(3)})`;
-    el.style.opacity = op.toFixed(3);
-  });
-  // los cables: de cada app al núcleo y del núcleo a cada resultado
-  const kc = eio((p - .5) / .18), kr = eio((p - .66) / .16);
-  cables.setAttribute("viewBox", `0 0 ${w} ${h}`);
-  let html = posApps.map(([x, y]) => `<path d="M${x} ${y} C${x} ${(y + nucleo[1]) / 2}, ${nucleo[0]} ${(y + nucleo[1]) / 2 - 10}, ${nucleo[0]} ${nucleo[1] - 42}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1 - kc}" fill="none" stroke="#59BDB1" stroke-opacity=".55" stroke-width="1.5"/>`).join("");
-  html += [.27, .5, .73].map((fx) => { const x = w * fx, y = h * .92 - 26; return `<path d="M${nucleo[0]} ${nucleo[1] + 42} C${nucleo[0]} ${y - 20}, ${x} ${nucleo[1] + 50}, ${x} ${y}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1 - kr}" fill="none" stroke="#14212F" stroke-opacity=".35" stroke-width="1.5"/>`; }).join("");
-  if (kc > .05 && kc < 1) html += posApps.map(([x, y], i) => { const q = (t * .6 + i / 8) % 1; const yy = lerp(y, nucleo[1] - 42, q), xx = lerp(x, nucleo[0], q * q); return `<circle cx="${xx}" cy="${yy}" r="3" fill="#59BDB1"/>`; }).join("");
-  cables.innerHTML = html;
+  const p = avance(secDz);
+  ventanas.forEach((v, i) => v.classList.toggle("on", p > .04 + i * .12));
+  dzLista.forEach((li, i) => li.classList.toggle("on", p > .06 + i * .14));
+  dzRemate.style.setProperty("--k", eo((p - .78) / .14));
 }
-{ let t0 = performance.now(); bucleVisible(secCaos, () => pintarCaos((performance.now() - t0) / 1000), 60); }
+
+/* ── Héroe: la palabra del bloque va cambiando ── */
+{
+  const rota = $("#rota"), txt = $("span", rota), PAL = ["tu empresa", "tu bodega", "tu equipo", "tu operación", "tus ventas"];
+  let i = 0;
+  if (!QUIETO) setInterval(() => { rota.classList.add("sale"); setTimeout(() => { i = (i + 1) % PAL.length; txt.textContent = PAL[i]; rota.classList.remove("sale"); }, 450); }, 2600);
+}
+
+/* ── Credibilidad: dos cintas de marcas ── */
+{
+  const A = [["whatsapp", "WhatsApp"], ["gmail", "Gmail"], ["googlesheets", "Google Sheets"], ["slack", "Slack"], ["notion", "Notion"], ["hubspot", "HubSpot"], ["shopify", "Shopify"], ["mercadopago", "Mercado Pago"], ["zoho", "Zoho"], ["salesforce", "Salesforce"], ["sap", "SAP"], ["odoo", "Odoo"], ["openai", "ChatGPT"], ["claude", "Claude"], ["googledrive", "Google Drive"], ["googlecalendar", "Calendar"], ["meta", "Meta"], ["instagram", "Instagram"]];
+  const B = [["googlemeet", "Meet"], ["zoom", "Zoom"], ["trello", "Trello"], ["asana", "Asana"], ["clickup", "ClickUp"], ["jira", "Jira"], ["airtable", "Airtable"], ["dropbox", "Dropbox"], ["stripe", "Stripe"], ["woocommerce", "WooCommerce"], ["wordpress", "WordPress"], ["quickbooks", "QuickBooks"], ["xero", "Xero"], ["zapier", "Zapier"], ["make", "Make"], ["n8n", "n8n"], ["telegram", "Telegram"], ["canva", "Canva"]];
+  const loc = [["", "Bsale"], ["../logos/defontana.svg", "Defontana"], ["../logos/softland.png", "Softland"]];
+  const m = ([f, n]) => `<span class="marca">${f ? `<img src="recursos/marcas/${f.includes(".") ? f : f + ".svg"}" alt="">` : ""}${n}</span>`;
+  const a = [...A.slice(0, 9), ...loc, ...A.slice(9)], b = B;
+  $("#marcas-a").innerHTML = [...a, ...a].map(m).join(""); $("#marcas-b").innerHTML = [...b, ...b].map(m).join("");
+}
 
 /* ── Demo: el pedido viaja por Optimizo y vuelve como informe ── */
 {
@@ -180,25 +236,40 @@ function pintarCaos(t) {
   else alVer(esc, async () => { if (corriendo) return; corriendo = true; while (corriendo) await escena(); }, () => { corriendo = false; ciclo++; }, .3);
 }
 
-/* ── Superpoderes: el scroll vertical mueve la pista en horizontal ── */
-const secPoderes = $("#superpoderes"), pista = $("#pista"), tarjetas = $$(".poder", pista), nPoder = $("#poder-n"), barraViaje = $("#barra-viaje");
-let recorrido = 0;
-function medirPoderes() {
-  if (MOVIL()) { secPoderes.style.height = ""; return; }
-  recorrido = Math.max(0, pista.scrollWidth - innerWidth + Math.max(40, (innerWidth - 1240) / 2));
-  secPoderes.style.height = `${innerHeight + recorrido}px`;
+/* ── Superpoderes: emblemas hechos con la geometría del isotipo (disco, agujero, mordida y el punto) ── */
+let nEmb = 0;
+function emblema(tipo) {
+  const id = "e" + (nEmb++), C = [44, 46], R = 27, H = 7, B = [26.6, 28.6, 10], P = [19.5, 21.5, 8];
+  const defs = `<defs><linearGradient id="g${id}" x1="0" x2="1"><stop offset="0" stop-color="#B9E6DE"/><stop offset="1" stop-color="#59BDB1"/></linearGradient>
+    <mask id="m${id}"><rect width="80" height="80" fill="#fff"/><circle cx="${C[0]}" cy="${C[1]}" r="${H}" fill="#000"/><circle cx="${B[0]}" cy="${B[1]}" r="${B[2]}" fill="#000"/></mask></defs>`;
+  const disco = (extra = "", op = 1) => `<circle cx="${C[0]}" cy="${C[1]}" r="${R}" fill="url(#g${id})" mask="url(#m${id})" opacity="${op}" ${extra}/>`;
+  const punto = (extra = "") => `<circle cx="${P[0]}" cy="${P[1]}" r="${P[2]}" fill="url(#g${id})" ${extra}/>`;
+  const A = (attr, vals, dur, extra = "") => `<animate attributeName="${attr}" values="${vals}" dur="${dur}s" repeatCount="indefinite" ${extra}/>`;
+  const K = (vals, dur, tipo2 = "translate", extra = "") => `<animateTransform attributeName="transform" type="${tipo2}" values="${vals}" dur="${dur}s" repeatCount="indefinite" ${extra}/>`;
+  const S = 'calcMode="spline" keySplines=".3 0 .2 1;.3 0 .2 1"';
+  let cuerpo = "";
+  if (tipo === "eficiencia") // el disco es un reloj que se llena rápido; el punto sale disparado
+    cuerpo = disco("", .25) + `<circle cx="${C[0]}" cy="${C[1]}" r="13.5" fill="none" stroke="url(#g${id})" stroke-width="27" mask="url(#m${id})" pathLength="100" stroke-dasharray="100" transform="rotate(-90 ${C[0]} ${C[1]})">${A("stroke-dashoffset", "100;0;0;100", 2.4, 'keyTimes="0;.5;.8;1"')}</circle>`
+      + `<g>${K("0 0;-6 -6;0 0", 2.4, "translate", 'keyTimes="0;.5;1" ' + S)}${punto()}<path d="M27 29 L33 35 M30 23 L35 28 M23 30 L28 35" stroke="#91CEC4" stroke-width="2.4" stroke-linecap="round">${A("opacity", "0;1;0", 2.4, 'keyTimes="0;.5;1"')}</path></g>`;
+  else if (tipo === "seguridad") // el punto vigila: ondas de alerta salen de él y el disco queda protegido
+    cuerpo = disco() + [0, .9].map((d) => `<circle cx="${P[0]}" cy="${P[1]}" r="${P[2]}" fill="none" stroke="#FFAE1A" stroke-width="2">${A("r", `${P[2]};${P[2] + 16}`, 1.8, `begin="${d}s"`)}${A("opacity", ".9;0", 1.8, `begin="${d}s"`)}</circle>`).join("")
+      + `<circle cx="${P[0]}" cy="${P[1]}" r="${P[2]}" fill="#FFAE1A"/><path d="M38 46 l4.5 4.5 l8 -8.5" fill="none" stroke="#0B131B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0">${A("opacity", "0;0;1;1;0", 3.6, 'keyTimes="0;.35;.45;.9;1"')}</path>`;
+  else if (tipo === "inteligencia") // el agujero se conecta con nuevos puntos: información que se cruza
+    cuerpo = disco() + [[70, 18], [74, 50], [58, 76]].map(([x, y], i) => `<line x1="${C[0]}" y1="${C[1]}" x2="${x}" y2="${y}" stroke="#91CEC4" stroke-width="2" pathLength="1" stroke-dasharray="1">${A("stroke-dashoffset", "1;1;0;0;1", 3.6, `keyTimes="0;${(.1 + i * .12).toFixed(2)};${(.25 + i * .12).toFixed(2)};.85;1"`)}</line><circle cx="${x}" cy="${y}" r="0" fill="#fff">${A("r", "0;0;4.5;4.5;0", 3.6, `keyTimes="0;${(.22 + i * .12).toFixed(2)};${(.3 + i * .12).toFixed(2)};.85;1"`)}</circle>`).join("")
+      + `<circle cx="${C[0]}" cy="${C[1]}" r="4" fill="#fff">${A("r", "3;5;3", 1.2)}</circle>` + punto();
+  else if (tipo === "calidad") // el punto encaja exacto en la mordida: precisión
+    cuerpo = disco() + `<circle cx="${B[0]}" cy="${B[1]}" r="${B[2] + 1}" fill="none" stroke="#fff" stroke-width="2" opacity="0">${A("opacity", "0;0;1;0;0", 3, 'keyTimes="0;.42;.5;.7;1"')}${A("r", `${B[2]};${B[2]};${B[2] + 1};${B[2] + 8};${B[2] + 8}`, 3, 'keyTimes="0;.42;.5;.7;1"')}</circle>`
+      + `<g>${K(`0 0;${(B[0] - P[0]).toFixed(1)} ${(B[1] - P[1]).toFixed(1)};${(B[0] - P[0]).toFixed(1)} ${(B[1] - P[1]).toFixed(1)};0 0`, 3, "translate", 'keyTimes="0;.45;.7;1" calcMode="spline" keySplines=".5 0 .2 1;0 0 1 1;.4 0 .2 1"')}${punto(`r="${B[2] - .4}"`)}</g>`;
+  else if (tipo === "rentabilidad") // el punto crece al subir: más valor con el mismo disco
+    cuerpo = disco() + `<path d="M20 22 L20 6 M14 12 L20 6 L26 12" fill="none" stroke="#91CEC4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0" transform="translate(-6 -8)">${A("opacity", "0;0;1;0", 2.8, 'keyTimes="0;.3;.6;1"')}</path>`
+      + `<circle cx="${P[0]}" cy="${P[1]}" fill="#fff">${A("r", `${P[2]};${P[2] + 3.5};${P[2] + 3.5};${P[2]}`, 2.8, 'keyTimes="0;.5;.8;1" ' + S.replace(";.3 0 .2 1", ";0 0 1 1;.3 0 .2 1"))}${A("cy", `${P[1]};${P[1] - 7};${P[1] - 7};${P[1]}`, 2.8, 'keyTimes="0;.5;.8;1"')}</circle>`;
+  else // continuidad: el punto orbita el disco sin parar
+    cuerpo = `<g>${K(`0 ${C[0]} ${C[1]};360 ${C[0]} ${C[1]}`, 14, "rotate")}${disco()}</g><circle cx="${C[0]}" cy="${C[1]}" r="34" fill="none" stroke="rgba(145,206,196,.25)" stroke-width="1.5"/>`
+      + `<circle cx="${C[0]}" cy="${C[1]}" r="34" fill="none" stroke="#91CEC4" stroke-width="2.5" stroke-linecap="round" pathLength="100" stroke-dasharray="18 82">${K(`0 ${C[0]} ${C[1]};360 ${C[0]} ${C[1]}`, 2.4, "rotate")}</circle>`
+      + `<g>${K(`0 ${C[0]} ${C[1]};360 ${C[0]} ${C[1]}`, 2.4, "rotate")}<circle cx="${C[0] + 24}" cy="${C[1] - 24}" r="6" fill="#fff"/></g>`;
+  return `<svg viewBox="0 0 80 80" aria-hidden="true">${defs}${cuerpo}</svg>`;
 }
-function pintarPoderes() {
-  if (MOVIL()) return;
-  const p = avance(secPoderes);
-  pista.style.transform = `translate3d(${(-p * recorrido).toFixed(1)}px,0,0)`;
-  barraViaje.style.setProperty("--p", p);
-  let mejor = 0, dist = 1e9;
-  tarjetas.forEach((t, i) => { const r = t.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - innerWidth * .42); if (d < dist && !t.classList.contains("poder--fin")) { dist = d; mejor = i; } });
-  tarjetas.forEach((t, i) => t.classList.toggle("activo", i === mejor));
-  nPoder.textContent = String(mejor + 1).padStart(2, "0");
-}
-medirPoderes(); addEventListener("resize", medirPoderes);
+$$("[data-emb]").forEach((e) => (e.innerHTML = emblema(e.dataset.emb)));
 
 /* ── Detecciones reales sobre video (Lumina) ── */
 const DET = window.DETECCIONES || [];
@@ -252,7 +323,7 @@ function videoConCapa(cont, alCuadro) {
 }
 
 /* puerta de Lumina: siempre detectando */
-{ const puerta = $(".puerta--lumina"), cv = $("canvas", puerta);
+{ const puerta = $(".pt--lumina .pt__vista"), cv = $("canvas", puerta);
   videoConCapa(puerta, (t) => { const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(t), 1, clamp(w / 700, .75, 1)); }); }
 
 /* Lumina por dentro: cuatro pasos atados al scroll */
@@ -387,7 +458,7 @@ const rutas = $("#rutas");
 function abrir(ruta, ir = true) {
   rutas.classList.add("con-ruta");
   $$(".ruta", rutas).forEach((r) => r.classList.toggle("abierta", r.dataset.ruta === ruta));
-  $$(".puerta").forEach((p) => p.classList.toggle("elegida", p.dataset.ruta === ruta));
+  $$(".pt").forEach((p) => p.classList.toggle("elegida", p.dataset.ruta === ruta));
   $$(".cambiar button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.ruta === ruta));
   lum.paso = -1;
   dispatchEvent(new Event("ruta")); dispatchEvent(new Event("resize"));
@@ -396,27 +467,16 @@ function abrir(ruta, ir = true) {
 $$("[data-ruta]").forEach((b) => b.tagName === "BUTTON" && b.addEventListener("click", () => abrir(b.dataset.ruta)));
 $$("[data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
 
-/* ── Cómo trabajamos ── */
-const secMetodo = $("#metodo"), via = $("#via"), etapas = $$(".etapa", via);
-function pintarMetodo() {
+/* ── Cómo trabajamos: cada paso muestra su entregable ── */
+const secMt = $("#metodo"), mtPasos = $$("#mt-pasos li"), mtVistas = $$(".mtv");
+function pintarMt() {
   if (MOVIL()) return;
-  const p = avance(secMetodo), q = eio((p - .06) / .7);
-  via.style.setProperty("--p", q);
-  etapas.forEach((e, i) => e.classList.toggle("on", q >= i / 3 - .02));
-  secMetodo.style.setProperty("--p-nota", eo((p - .8) / .12));
+  const k = Math.min(3, Math.floor(avance(secMt) * 4.1));
+  mtPasos.forEach((li, i) => li.classList.toggle("activo", i === k)); mtVistas.forEach((v, i) => v.classList.toggle("activo", i === k));
 }
-
-/* ── Conversemos: arma tu frase ── */
-$$("#armador .armador__grupo").forEach((g) => {
-  const destino = $(g.dataset.grupo === "que" ? "#f-que" : "#f-donde");
-  $$(".opcion", g).forEach((o) => o.addEventListener("click", () => {
-    $$(".opcion", g).forEach((x) => x.setAttribute("aria-pressed", x === o)); destino.textContent = o.dataset.v;
-    destino.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "cubic-bezier(.16,1,.3,1)" });
-  }));
-});
 
 /* ── Un solo bucle de scroll ── */
 let pendiente = false;
-function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarPoderes(); pintarLumina(); pintarMetodo(); }); }
+function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarDesafio(); pintarLumina(); pintarMt(); }); }
 addEventListener("scroll", alScroll, { passive: true }); addEventListener("resize", alScroll); addEventListener("ruta", alScroll);
 alScroll();
