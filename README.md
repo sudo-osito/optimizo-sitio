@@ -1,5 +1,7 @@
 # Optimizo · sitio para la feria (TechAI Summit)
 
+**v3 (27-oct, noche):** upgrade masivo tras el segundo feedback de Max. Tipografía del guion de Optimizo (SF 700, rótulos SF semibold, botones píldora). Héroe: isotipo como nube de puntos que se arma, gira y se dispersa con el scroll (`nubeIsotipo`). Escena fija caos→orden (apps y problemas → Optimizo → resultados). Superpoderes en viaje horizontal con un emblema SVG animado propio por cada uno. Bifurcación «Elige tu camino»: Lumina (cámaras con IA, ámbar #FFAE1A, logo provisorio) y Médula (su guion: Geist, aura de puntos portada de `medula/guion-visual/src/componentes/aura.ts` a WebGL2, Médula Lite, isotipo blanco; nunca el orbe). Lumina: detección desde el primer cuadro y 4 pasos atados al scroll.
+
 **v2 (27-oct, noche):** rehecha tras el feedback de Max («super claude, nada distinto»). Disección de composio.dev: tipografía delgada + rótulos/botones mono, marco de plano con líneas finas y cruces, degradado WebGL (port de su shader de 4 colores en OKLab, aquí en RGB) bajo objetos nítidos, microanimaciones de píxeles 22×6. Firma propia: el isotipo de Optimizo hecho de LED, de pie y girando en 3D (`discoDeLuz` en app.js); piso de luz en el cierre (`pisoDeLuz`). Médula con su identidad real (Orbe, isotipo negro, auras azul-lavanda, `recursos/medula-marca*.svg` del repo medula).
 
 Página principal de Optimizo, versión feria. HTML + CSS + JS sin dependencias ni compilación.
