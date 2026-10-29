@@ -759,3 +759,47 @@
 .pr7__areas .ar8__centro { z-index: 1; background: #fff; }
 .pr7__areas .ar8__centro img { position: relative; z-index: 3; background: none; box-shadow: none; border-radius: 0; }
 @media (max-width: 1020px) { .ar8__red { display: none; } }
+
+/* ══ Después de los superpoderes: cabeceras centradas y ordenadas ══ */
+.sp7__remate { padding-left: 0; margin-inline: auto; text-align: center; max-width: 24ch; }
+.mt7__in .eti, .fq7__in .eti { grid-column: 1 / 5; grid-row: 1; justify-self: center; margin-top: 0; padding: 0; }
+.mt7__in .t7, .fq7__in .t7 { grid-column: 1 / 5; grid-row: 2; justify-self: center; text-align: center; padding: 0; margin-top: 18px; max-width: 20ch; }
+.mt7__in .bajada { grid-column: 1 / 5; grid-row: 3; justify-self: center; text-align: center; max-width: 52ch; padding: 0; margin-top: 22px; font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); }
+.mt7__in .btn7 { grid-column: 1 / 5; grid-row: 4; justify-self: center; margin-top: 26px; }
+
+/* Cómo trabajamos: los cuatro pasos sobre una línea de tiempo que se llena */
+.mt7__grilla { grid-row: 5; margin-top: 72px; border-top: 0; border-bottom: 1px solid var(--linea7); overflow: visible; }
+.paso7 { min-height: 300px; padding-top: 48px; background: transparent !important; }
+.paso7 + .paso7, .paso7 + .paso7.activo { box-shadow: -1px 0 0 var(--linea7); }
+.paso7::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--linea7); }
+.paso7::after { content: ""; position: absolute; left: var(--celda); top: -5px; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px var(--apagado); transition: box-shadow .4s, background .4s; }
+.paso7.hecho::before { background: var(--tealp); }
+.paso7.activo::before { background: linear-gradient(90deg, var(--tealp) calc(var(--prog, 0) * 100%), var(--linea7) calc(var(--prog, 0) * 100%)); }
+.paso7.hecho::after, .paso7.activo::after { background: var(--tealp); box-shadow: inset 0 0 0 2px var(--tealp), 0 0 0 5px rgba(56, 126, 128, .15); }
+.paso7__barra { display: none; }
+.paso7__n { width: auto; height: auto; background: none !important; font-size: clamp(2.6rem, 1.8rem + 1.6vw, 3.6rem); font-weight: 650; letter-spacing: -.05em; line-height: 1; color: var(--apagado); transition: color .5s; }
+.paso7.activo .paso7__n, .paso7.hecho .paso7__n { color: var(--tinta7); }
+.paso7__et { top: 52px; }
+
+/* Preguntas: cabecera centrada, la lista al centro y la invitación debajo */
+.fq7__lista { grid-column: 2 / 4; grid-row: 3; margin-top: 56px; padding-left: 0; }
+.fq7__otra { grid-column: 1 / 5; grid-row: 4; justify-self: center; position: static; margin-top: 48px !important; max-width: none; width: auto; display: flex; align-items: center; gap: 22px; padding: 18px 18px 18px 26px; border-radius: 999px; }
+.fq7__otra p { margin: 0; }
+.fq7__otra b { font-size: 17px; }
+
+/* El cierre con el mar: texto en blanco sobre el agua leída como datos */
+.fin7__agua { position: absolute; inset: 0; z-index: 0; }
+.fin7 .aurora { display: none; }
+.cierre-aurora .fin7 .aurora { display: block; }
+.cierre-aurora .fin7__agua { display: none; }
+body:not(.cierre-aurora) .fin7 { color: #fff; }
+body:not(.cierre-aurora) .fin7 .fin7__t, body:not(.cierre-aurora) .fin7 .fin7__quizas, body:not(.cierre-aurora) .fin7 .fin7__linea, body:not(.cierre-aurora) .fin7 .bajada, body:not(.cierre-aurora) .fin7 .eti, body:not(.cierre-aurora) .fin7 .fin7__alcance { color: #fff; text-shadow: 0 2px 24px rgba(4, 40, 44, .25); }
+body:not(.cierre-aurora) .fin7 .eti::before, body:not(.cierre-aurora) .fin7 .cursor { background: #fff; }
+body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
+.fin7 .h7__rotulos .r1 { left: 0; top: 28px; } .fin7 .h7__rotulos .r3 { bottom: 20px; } .fin7 .h7__rotulos .r4 { left: 0; bottom: 20px; }
+@media (max-width: 1020px) {
+  .mt7__in .eti, .fq7__in .eti, .mt7__in .t7, .fq7__in .t7, .mt7__in .bajada, .mt7__in .btn7 { justify-self: start; text-align: left; }
+  .paso7::after { top: -5px; } .paso7 + .paso7 { box-shadow: none; }
+  .fq7__otra { flex-direction: column; align-items: flex-start; border-radius: 22px; }
+}
+.paso7__n { display: block; text-align: left; place-items: unset; }

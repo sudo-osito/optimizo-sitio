@@ -298,20 +298,18 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
   };
 }
 
-/* Héroe: el agua turquesa (horizontal en PC, vertical en el celular); corre solo mientras se ve */
-{
-  const caja = $("#agua"), video = $("video", caja), vertical = innerWidth / innerHeight < .9;
+/* El agua turquesa (horizontal en PC, vertical en el celular) y su lectura como datos: cada celda toma el brillo real del video
+   y lo escribe como un carácter técnico; una línea de escaneo la recorre. «zona» elige dónde: a la derecha (héroe) o a los lados (cierre) */
+function agua(caja, { zona = "derecha", rotulos = true } = {}) {
+  const video = $("video", caja), vertical = innerWidth / innerHeight < .9;
   const base = vertical ? "recursos/video/mar-turquesa-vertical-hd" : "recursos/video/mar-turquesa-hd";
   video.poster = `${base}.jpg`;
-  // HEVC (más nítido y liviano) donde se pueda; H.264 de respaldo
   video.innerHTML = `<source src="${base}.hevc.mp4" type='video/mp4; codecs="hvc1"'><source src="${base}.mp4" type="video/mp4">`;
   video.load();
   if (QUIETO) video.removeAttribute("autoplay");
   alVer(caja, () => !QUIETO && video.play().catch(() => {}), () => video.pause(), 0);
-
-  // El agua leída como datos: en las columnas 3–4 cada celda toma el brillo real del video y lo escribe como un carácter técnico
-  const cv = $(".h7__datos", caja), c = cv.getContext("2d"), muestra = document.createElement("canvas"), m = muestra.getContext("2d", { willReadFrequently: true });
-  const CAR = " ·:+×01ABCDEF#".split(""), tiempo = $("#r-tiempo"), scan = $("#r-scan"), t0 = performance.now();
+  const cv = $("canvas", caja), c = cv.getContext("2d"), muestra = document.createElement("canvas"), m = muestra.getContext("2d", { willReadFrequently: true });
+  const CAR = " ·:+×01ABCDEF#".split(""), tiempo = rotulos && $(".r-tiempo", caja), scan = rotulos && $(".r-scan", caja), t0 = performance.now();
   let previo = 0;
   bucleVisible(caja, () => {
     const ahora = performance.now(); if (ahora - previo < 55) return; previo = ahora;
@@ -319,34 +317,35 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
     if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
     c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
     const t = (ahora - t0) / 1000, f = Math.floor(t * 24);
-    tiempo.textContent = [Math.floor(t / 3600), Math.floor(t / 60) % 60, Math.floor(t) % 60, f % 24].map((n) => String(n).padStart(2, "0")).join(":");
+    if (tiempo) tiempo.textContent = [Math.floor(t / 3600), Math.floor(t / 60) % 60, Math.floor(t) % 60, f % 24].map((n) => String(n).padStart(2, "0")).join(":");
     if (video.readyState < 2) return;
     const vert = w / h < .9, celdaX = vert ? 10 : 12, celdaY = vert ? 15 : 17;
-    // zona: columnas 3–4 de la retícula hasta el borde (o la mitad de arriba en vertical)
-    const env = Math.min(1240, w - 40), x0 = vert ? 0 : (w - env) / 2 + env * .5, y0 = 0, x1 = w, y1 = vert ? h * .5 : h;
+    const env = Math.min(1240, w - 40), x0 = zona === "derecha" && !vert ? (w - env) / 2 + env * .5 : 0, y0 = 0, x1 = w, y1 = vert && zona === "derecha" ? h * .5 : h;
     const cols = Math.ceil((x1 - x0) / celdaX), filas = Math.ceil((y1 - y0) / celdaY);
     muestra.width = cols; muestra.height = filas;
-    // misma cobertura que object-fit: cover
     const vw = video.videoWidth, vh = video.videoHeight, esc = Math.max(w / vw, h / vh), ox = (w - vw * esc) / 2, oy = (h - vh * esc) / 2;
     m.drawImage(video, (x0 - ox) / esc, (y0 - oy) / esc, (x1 - x0) / esc, (y1 - y0) / esc, 0, 0, cols, filas);
     const px = m.getImageData(0, 0, cols, filas).data;
     let lmin = 1, lmax = 0; for (let k = 0; k < px.length; k += 16) { const l = (px[k] * .3 + px[k + 1] * .59 + px[k + 2] * .11) / 255; if (l < lmin) lmin = l; if (l > lmax) lmax = l; }
-    const rango = Math.max(.08, lmax - lmin);
-    const barrido = (t % 7) / 7, bx = barrido * cols;
-    scan.textContent = `SCAN ${String(Math.floor(t / 7) % 12 + 1).padStart(2, "0")}/12`;
+    const rango = Math.max(.08, lmax - lmin), periodo = 7, bx = ((t % periodo) / periodo) * cols;
+    if (scan) scan.textContent = `SCAN ${String(Math.floor(t / periodo) % 12 + 1).padStart(2, "0")}/12`;
     c.font = `500 ${vert ? 10 : 11}px ui-monospace, "SF Mono", Menlo, monospace`; c.textBaseline = "top";
     for (let j = 0; j < filas; j++) for (let i = 0; i < cols; i++) {
       const k = (j * cols + i) * 4, l = Math.min(1, Math.max(0, ((px[k] * .3 + px[k + 1] * .59 + px[k + 2] * .11) / 255 - lmin) / rango));
-      const borde = vert ? Math.min(1, (filas - j) / (filas * .35)) : Math.min(1, i / (cols * .28));   // se funde hacia el titular
-      const cerca = Math.max(0, 1 - Math.abs(i - bx) / 6);                                              // la línea de escaneo enciende
-      const a = (Math.pow(l, 1.6) * .55 + cerca * .5) * borde;
+      // se funde hacia el texto: a la izquierda (héroe), hacia el centro (cierre) o hacia abajo (vertical)
+      const borde = zona === "lados" ? (vert ? Math.max(0, Math.min(1, (Math.abs(j - filas / 2) - filas * .36) / (filas * .08))) : Math.min(1, Math.abs(i - cols / 2) / (cols * .22)))
+        : vert ? Math.min(1, (filas - j) / (filas * .35)) : Math.min(1, i / (cols * .28));
+      const cerca = Math.max(0, 1 - Math.abs(i - bx) / 6), a = (Math.pow(l, 1.6) * .55 + cerca * .5) * borde;
       if (a < .05) continue;
       const ch = CAR[Math.min(CAR.length - 1, Math.floor(l * CAR.length * 1.15 + ((i * 7 + j * 13 + f) % 3 === 0 ? 1 : 0)))];
       c.fillStyle = `rgba(255,255,255,${Math.min(.85, a).toFixed(3)})`; c.fillText(ch, x0 + i * celdaX, y0 + j * celdaY);
     }
-    c.fillStyle = "rgba(255,255,255,.55)"; c.fillRect(x0 + bx * celdaX, y0, 1, y1 - y0);
+    c.fillStyle = "rgba(255,255,255,.5)"; c.fillRect(x0 + bx * celdaX, y0, 1, y1 - y0);
   }, 30);
 }
+agua($("#agua"));
+// el cierre: el mismo mar con la lectura a los lados (con ?cierre=aurora se ve la versión anterior, para comparar)
+if (new URLSearchParams(location.search).get("cierre") === "aurora") document.body.classList.add("cierre-aurora"); else agua($("#agua-fin"), { zona: "lados" });
 
 /* Héroe: la palabra se escribe, espera, se borra y llega la siguiente */
 { const m = maquina($("#tipeo")); m.iniciar(); }
@@ -474,7 +473,7 @@ let pintarPoderes = () => {};
 {
   const sec = $("#mt7"), pasos = $$(".paso7", sec), DUR = 5000;
   let actual = 0, t0 = performance.now(), pausa = false, previo = performance.now();
-  const ir = (i) => { actual = i; t0 = performance.now(); pasos.forEach((p, j) => { p.classList.toggle("activo", j === i); p.style.setProperty("--prog", 0); }); };
+  const ir = (i) => { actual = i; t0 = performance.now(); pasos.forEach((p, j) => { p.classList.toggle("activo", j === i); p.classList.toggle("hecho", j < i); p.style.setProperty("--prog", 0); }); };
   pasos.forEach((p, i) => p.addEventListener("click", () => ir(i)));
   sec.addEventListener("pointerenter", (e) => e.pointerType === "mouse" && (pausa = true));
   sec.addEventListener("pointerleave", () => (pausa = false));
