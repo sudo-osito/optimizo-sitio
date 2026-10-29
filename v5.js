@@ -317,8 +317,6 @@ function isotipo(cv, op) {
   };
 }
 {
-  const heroe = $("#heroe"), cv = $("#iso-heroe");
-  bucleVisible(cv, isotipo(cv, { guinada: -.5, cabeceo: .22, centro: [.73, .5], escala: .46, centroMovil: [.5, .5], escalaMovil: .44, desfase: 2.5, scroll: () => clamp(scrollY / heroe.offsetHeight) }), 60);
   const cv2 = $("#iso-cierre");
   bucleVisible(cv2, isotipo(cv2, { guinada: .55, cabeceo: .18, centro: [.76, .5], escala: .36, centroMovil: [.5, .52], escalaMovil: .36, desfase: 7 }), 60);
 }
