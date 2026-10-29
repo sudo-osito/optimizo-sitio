@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { cuadro as mgCuadro } from "./mg.js?v=1793286346";
+import { montar as montarPoder } from "./poderes.js?v=1793288581";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -436,16 +436,9 @@ let pintarFrase = () => {};
 let pintarPoderes = () => {};
 {
   const sec = $("#sp7"), cartas = $$(".sp7c", sec);
-  cartas.forEach((carta) => {
-    const esc = $(".sp7c__esc", carta), cv = $("canvas", esc), nombre = esc.dataset.mg;
-    let t0 = 0, previo = 0;
-    bucleVisible(esc, () => {
-      const ahora = performance.now() / 1000;
-      if (!t0 || ahora - previo > .5) t0 = ahora; // vuelve a empezar cuando reaparece
-      previo = ahora;
-      mgCuadro(cv, nombre, QUIETO ? 7 : ahora - t0);
-    }, 60);
-  });
+  // cada carta monta su escena: escenario de su color, panel de vidrio en 3D y fichas flotantes (poderes.js)
+  const dibujarCamara = (cv, video) => { const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(video.currentTime), 1, clamp(w / 600, .7, 1)); };
+  cartas.forEach((carta) => { const esc = $(".sp7c__esc", carta); montarPoder(esc, esc.dataset.mg, { alVer, bucleVisible, dibujarCamara, QUIETO }); });
   pintarPoderes = () => {
     cartas.forEach((c, i) => {
       const r = c.getBoundingClientRect(), sig = cartas[i + 1];
