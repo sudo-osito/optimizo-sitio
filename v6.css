@@ -232,7 +232,12 @@
 .sp7c__con { margin-top: 22px; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 10px; border-radius: 999px; background: var(--nube); font-size: 13.5px; font-weight: 600; transition: background .3s; }
 .sp7c__con:hover { background: #ECEEF0; }
 .sp7c__con svg, .sp7c__con img { width: 18px; height: 18px; }
-.sp7c__esc { margin: 14px; border-radius: 24px; background: var(--nube); display: grid; place-items: center; padding: 40px; position: relative; overflow: hidden; }
+.sp7c__esc { margin: 14px; border-radius: 24px; background: var(--nube); position: relative; overflow: hidden; isolation: isolate; }
+.sp7c__esc::before, .sp7c__esc::after { content: ""; position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1; animation: deriva 18s ease-in-out infinite alternate; }
+.sp7c__esc::before { width: 70%; height: 70%; right: -14%; top: -18%; background: var(--c); opacity: .16; }
+.sp7c__esc::after { width: 55%; height: 55%; left: -10%; bottom: -20%; background: var(--c); opacity: .09; animation-duration: 24s; animation-delay: -8s; }
+.sp7c__esc canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sp7c__n { color: var(--c); filter: saturate(1.1) brightness(.85); }
 
 /* La frase: centrada, se escribe por partes */
 .fr7 { min-height: 100vh; display: flex; align-items: center; padding: 120px 0; }

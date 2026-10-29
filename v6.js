@@ -1,4 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
+import { cuadro as mgCuadro } from "./mg.js";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -338,53 +339,26 @@ let pintarFrase = () => {};
   $$(".area7").forEach((a) => ob.observe(a));
 }
 
-/* ── Superpoderes: tarjetas que entran una a una y se apilan; la de arriba funciona ── */
+/* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */
 let pintarPoderes = () => {};
 {
-  const sec = $("#sp7"), cartas = $$(".sp7c", sec), escenas = $$(".esc7", sec);
-  const ins = $(".ins7", sec), insM = maquina($(".tipeo", ins), { una: true, lento: true });
-  const luego = (e, f, ms) => e.timers.push(setTimeout(f, ms));
-  const ESCENAS = {
-    tareas(e, on) {
-      $$(".tarea7", e).forEach((t, i) => {
-        const em = $("em", t); t.classList.remove("on", "hecha"); em.textContent = "En curso";
-        if (on) { luego(e, () => t.classList.add("on"), 200 + i * 600); luego(e, () => { t.classList.add("hecha"); em.textContent = em.dataset.ok; }, 900 + i * 600); }
-      });
-    },
-    camara(e, on) {
-      const cont = $(".cam7", e), video = $("video", cont), cv = $("canvas", cont), aviso = $(".cam7__aviso", cont);
-      aviso.classList.remove("on"); cancelAnimationFrame(e.raf);
-      if (!on) { video.pause(); return; }
-      video.play().catch(() => {}); luego(e, () => aviso.classList.add("on"), 1500);
-      const cuadro = () => { e.raf = requestAnimationFrame(cuadro); const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(video.currentTime), 1, clamp(w / 700, .75, 1)); };
-      cuadro();
-    },
-    async insight(e, on) {
-      ins.classList.remove("on"); insM.parar();
-      if (!on) return;
-      await insM.reiniciar();
-      if (e.classList.contains("vivo")) ins.classList.add("on");
-    },
-    lotes(e, on) { $$(".lotes7 div", e).forEach((d, i) => { d.classList.remove("on"); if (on) luego(e, () => d.classList.add("on"), 250 + i * 450); }); },
-    barras() {}, pulso() {},
-  };
-  const activar = (e, on) => {
-    (e.timers || []).forEach(clearTimeout); e.timers = [];
-    e.classList.toggle("vivo", on); ESCENAS[e.dataset.escena](e, on);
-  };
-  let actual = -1;
+  const sec = $("#sp7"), cartas = $$(".sp7c", sec);
+  cartas.forEach((carta) => {
+    const esc = $(".sp7c__esc", carta), cv = $("canvas", esc), nombre = esc.dataset.mg;
+    let t0 = 0, previo = 0;
+    bucleVisible(esc, () => {
+      const ahora = performance.now() / 1000;
+      if (!t0 || ahora - previo > .5) t0 = ahora; // vuelve a empezar cuando reaparece
+      previo = ahora;
+      mgCuadro(cv, nombre, QUIETO ? 7 : ahora - t0);
+    }, 60);
+  });
   pintarPoderes = () => {
-    let act = -1;
     cartas.forEach((c, i) => {
       const r = c.getBoundingClientRect(), sig = cartas[i + 1];
-      if (r.top < innerHeight * .6) act = i;
       const k = sig ? clamp(1 - (sig.getBoundingClientRect().top - r.top) / r.height) : 0;
       c.style.setProperty("--esc", 1 - .06 * k); c.style.setProperty("--luz", 1 - .6 * k);
     });
-    if (sec.getBoundingClientRect().bottom < innerHeight * .25) act = -1;
-    if (act === actual) return;
-    if (actual >= 0) activar(escenas[actual], false);
-    actual = act; if (act >= 0) activar(escenas[act], true);
   };
 }
 
