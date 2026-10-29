@@ -1261,3 +1261,14 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 @keyframes haz { from { stroke-dashoffset: 22; } to { stroke-dashoffset: -100; } }
 @keyframes hazAtras { from { stroke-dashoffset: -100; } to { stroke-dashoffset: 22; } }
 .flujo.fh .fx__bur--r { top: -10px; }
+
+/* ══ Optimizo es cuadrado: sin esquinas redondeadas (solo los puntos de estado siguen siendo puntos) ══ */
+.v6 *, .v6 *::before, .v6 *::after { border-radius: 0 !important; }
+.v6 .eti::before, .v6 .paso7::after, .v6 .fx__av, .v6 .fx__ok, .v6 .pn__vivo i, .v6 .banda__vivo, .v6 .rec, .v6 .fx__pasos span,
+.v6 .ch__cab small i, .v6 .pt__vivo i, .v6 .fx__baliza, .v6 .fx__punto, .v6 .tarea7 em::before, .v6 .ch__pensando i, .v6 .isla__sim, .v6 .isla__sim i, .v6 .isla__app,
+.v6 .area7__tags a::before, .v6 .cambiar button i, .v6 .lum__marcas i::after, .v6 .registro .baliza, .v6 .pulso7__cab i, .v6 .ar9__tags a::before { border-radius: 50% !important; }
+.v6 ::view-transition-group(*) { border-radius: 0; }
+/* …pero los botones y las píldoras siguen redondos */
+.v6 .btn7, .v6 .boton, .v6 .banda__ir span, .v6 .pt__ir, .v6 .cambiar__in, .v6 .cambiar button, .v6 .ch__form input, .v6 .ch__form button, .v6 .ch__sug,
+.v6 .ar9__mas, .v6 .ar9__tags > *, .v6 .area7__tags > *, .v6 .sp7c__con, .v6 .esc7__con, .v6 .isla, .v6 .fx__pild, .v6 .fx__pasos, .v6 .fx__pasos li,
+.v6 .lite, .v6 .nav7__menu, .v6 .fq7__otra, .v6 .ch__cta, .v6 .pn__vivo, .v6 .fx__baliza { border-radius: 999px !important; }

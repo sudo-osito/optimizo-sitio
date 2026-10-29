@@ -50,7 +50,7 @@ function cajas(t) {
   f.p.slice(0, 3).forEach((p) => out.push({ x: p[0], y: p[1], w: p[2], h: p[3], col: "#FFD37A", txt: "Persona" }));
   return out;
 }
-const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect ? c.roundRect(x, y, w, h, r) : c.rect(x, y, w, h); };
+const rr = (c, x, y, w, h) => { c.beginPath(); c.rect(x, y, w, h); }; // Optimizo es cuadrado: también las cajas de detección
 function pildora(c, x, y, txt, col, k, e) {
   const fs = 12.5 * e; c.font = LETRA(fs); const tw = c.measureText(txt).width + 22 * e, hh = 24 * e, ly = Math.max(y - hh - 6 * e, 4);
   c.globalAlpha = k; c.fillStyle = "rgba(15,11,6,.82)"; rr(c, x, ly, tw, hh, hh / 2); c.fill();
