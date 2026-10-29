@@ -314,14 +314,14 @@ function irA(y) { suave.activo = false; suave.y = suave.meta = y; scrollTo(0, y)
 /* ── La frase: al llegar, la página se detiene hasta que termina de escribirse ── */
 let pintarFrase = () => {};
 {
-  const sec = $("#frase"), ls = $$(".fr7__l", sec), op = $("#fr7-op"), ms = ls.map((l) => maquina($(".tipeo", l), { una: true, ms: 20 }));
+  const sec = $("#frase"), ls = $$(".fr7__l", sec), op = $("#fr7-op"), ms = ls.map((l) => maquina($(".tipeo", l), { una: true, ms: 6 }));
   let estado = 0; // 0 esperando · 1 escribiendo · 2 listo
   async function escribir() {
     estado = 1; suave.bloqueado = true;
     const r = sec.getBoundingClientRect(); irA(Math.round(scrollY + r.top + r.height / 2 - innerHeight / 2));
-    const suelta = setTimeout(() => (suave.bloqueado = false), 9000);
-    for (const [i, l] of ls.entries()) { l.classList.add("on"); await ms[i].iniciar(); await esperar(260); if (i < ls.length - 1) l.classList.remove("on"); }
-    op.classList.add("on"); await esperar(500);
+    const suelta = setTimeout(() => (suave.bloqueado = false), 5000);
+    for (const [i, l] of ls.entries()) { l.classList.add("on"); await ms[i].iniciar(); await esperar(150); if (i < ls.length - 1) l.classList.remove("on"); }
+    op.classList.add("on"); await esperar(250);
     clearTimeout(suelta); suave.bloqueado = false; estado = 2;
   }
   pintarFrase = () => {
