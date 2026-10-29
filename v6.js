@@ -434,12 +434,14 @@ let pintarFrase = () => {};
   const caja = $("#areas"), red = $(".ar8__red", caja), centro = $(".ar8__centro img", caja), areas = $$(".area7", caja);
   const trazar = () => {
     if (MOVIL()) { red.innerHTML = ""; return; }
-    const R = caja.getBoundingClientRect(), C = centro.getBoundingClientRect(), cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top;
+    // de la orilla del logo al borde de la celda que toca cada área (nunca entra a los videos)
+    const R = caja.getBoundingClientRect(), celda = $(".ar8__centro", caja).getBoundingClientRect(), C = centro.getBoundingClientRect();
+    const x0 = celda.left - R.left, y0 = celda.top - R.top, w = celda.width, h = celda.height, cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top, rad = C.width / 2 + 16;
+    const fines = [[x0 + w * .25, y0], [x0 + w * .75, y0], [x0, y0 + h / 2], [x0 + w, y0 + h / 2], [x0 + w * .25, y0 + h], [x0 + w * .75, y0 + h]];
     red.setAttribute("viewBox", `0 0 ${R.width} ${R.height}`);
-    red.innerHTML = areas.map((a, i) => {
-      const r = a.offsetLeft, t = a.offsetTop, x = r + a.offsetWidth / 2, y = t + a.offsetHeight * .36;
-      const d = `M${cx.toFixed(1)} ${cy.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}`;
-      return `<g data-i="${i}"><path class="l" d="${d}" pathLength="100"/><path class="p" d="${d}" pathLength="100" style="--d:${(i * .55).toFixed(2)}s"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
+    red.innerHTML = fines.map(([x, y]) => {
+      const dx = x - cx, dy = y - cy, l = Math.hypot(dx, dy), sx = cx + dx / l * rad, sy = cy + dy / l * rad;
+      return `<g><path class="l" d="M${sx.toFixed(1)} ${sy.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}" pathLength="100"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5"/></g>`;
     }).join("");
   };
   addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar();
