@@ -356,6 +356,18 @@ let pintarFrase = () => {};
 {
   const ob = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); ob.unobserve(e.target); } }), { threshold: .2, rootMargin: "0px 0px -8% 0px" });
   $$(".area7").forEach((a) => ob.observe(a));
+  // cada video corre solo mientras se ve
+  const vid = new IntersectionObserver((es) => es.forEach((e) => { const v = $("video", e.target); if (e.isIntersecting && !QUIETO) v.play().catch(() => {}); else v.pause(); }), { threshold: .25 });
+  $$(".area7").forEach((a) => vid.observe(a));
+  // líneas finas desde el logo a cada área; la del área bajo el mouse se enciende
+  const caja = $("#areas"), red = $(".ar8__red", caja), centro = $(".ar8__centro", caja), areas = $$(".area7", caja);
+  const trazar = () => {
+    if (MOVIL()) return;
+    const R = caja.getBoundingClientRect(), C = centro.getBoundingClientRect(), cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top;
+    red.innerHTML = areas.map((a, i) => { const r = a.getBoundingClientRect(), izq = i < 3, x = (izq ? r.right : r.left) - R.left, y = r.top + r.height / 2 - R.top, mx = (x + cx) / 2; return `<path d="M${cx} ${cy} C${mx} ${cy} ${mx} ${y} ${x} ${y}"/>`; }).join("");
+  };
+  addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar(); areas.forEach((a) => a.addEventListener("transitionend", trazar));
+  areas.forEach((a, i) => { a.addEventListener("pointerenter", () => red.children[i]?.classList.add("on")); a.addEventListener("pointerleave", () => red.children[i]?.classList.remove("on")); });
 }
 
 /* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */
