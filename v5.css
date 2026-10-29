@@ -108,7 +108,7 @@
 .sp5__cab { display: grid; justify-items: center; text-align: center; gap: 20px; margin-bottom: 60px; }
 .sp5__cab .t-1 { max-width: 18ch; }
 .sp5__cab .bajada { text-align: center; max-width: 52ch; }
-.pp { --ab: 4.2; display: flex; gap: 12px; height: 600px; }
+.pp { --ab: 4.2; display: flex; gap: 12px; height: clamp(500px, calc(100vh - 150px), 600px); }
 .pp__p { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; border-radius: 30px; background: linear-gradient(180deg, #13212C, #0E1821); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); overflow: hidden; transition: flex .9s var(--llegada), box-shadow .5s; }
 .pp__p.abierto { flex: var(--ab); box-shadow: inset 0 0 0 1px rgba(145, 206, 196, .26); }
 .pp__p::after { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--menta); transform-origin: left; transform: scaleX(var(--prog, 0)); opacity: 0; }
@@ -171,9 +171,17 @@ a.pp__con:hover { filter: brightness(1.25); }
 .esc-pulso .pulso { height: 120px; }
 .vivo .esc-pulso .pulso path { animation: traza 3s linear infinite; }
 
-/* ── Cómo trabajamos: remate con el Discovery ── */
-.mt5__remate { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 34px 38px; margin-top: 10px; border-radius: 30px; background: #fff; box-shadow: 0 1px 2px rgba(20, 33, 47, .04), 0 30px 70px -46px rgba(20, 33, 47, .35); }
-.mt5__remate p { font-size: clamp(1.25rem, 1rem + .8vw, 1.8rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.15; max-width: 30ch; color: var(--texto-2); }
+/* ── Cómo trabajamos: sin escena fija; los pasos avanzan solos y el entregable cambia al lado ── */
+.mt { height: auto; padding: 140px 0 40px; }
+.mt__fijo { position: static; height: auto; }
+.mt__pasos li { display: block; padding: 0; opacity: 1; }
+.mt__pasos li::after { transform-origin: left; width: 100% !important; transform: scaleX(0); transition: none; }
+.mt__pasos li.activo::after { transform: scaleX(var(--prog, 0)); }
+.mt__pasos button { display: grid; grid-template-columns: 44px 1fr; width: 100%; padding: 16px 0; text-align: left; opacity: .4; transition: opacity .4s; }
+.mt__pasos li.activo button, .mt__pasos button:hover { opacity: 1; }
+.mt__der { height: 470px; }
+.mt5__remate { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 34px 38px; margin-top: 60px; margin-bottom: 30px; border-radius: 30px; background: #fff; box-shadow: 0 1px 2px rgba(20, 33, 47, .04), 0 30px 70px -46px rgba(20, 33, 47, .35); }
+.mt5__remate p { font-size: clamp(1.15rem, .95rem + .7vw, 1.6rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.2; max-width: 40ch; color: var(--texto-2); }
 .mt5__remate b { color: var(--tinta); }
 
 /* ── Cierre + footer: una sola noche al final de la página ── */
@@ -263,6 +271,9 @@ a.pp__con:hover { filter: brightness(1.25); }
   .pp__pie { flex-direction: column; align-items: flex-start; gap: 14px; }
   .pp__pie p { font-size: 14.5px; }
 
+  .mt { padding: 100px 0 20px; }
+  .mt__der { height: auto; }
+  .mt__pasos button { opacity: 1; }
   .mt5__remate { flex-direction: column; align-items: flex-start; padding: 26px; margin-bottom: 20px; }
   .fin6 { padding: 100px 0 80px; }
   .fin6__in { grid-template-columns: 1fr; gap: 40px; }

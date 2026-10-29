@@ -234,14 +234,6 @@ function abrir(ruta, ir = true) {
 $$("[data-ruta]").forEach((b) => b.tagName === "BUTTON" && b.addEventListener("click", () => abrir(b.dataset.ruta)));
 $$("[data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
 
-/* ── Cómo trabajamos: cada paso muestra su entregable ── */
-const secMt = $("#metodo"), mtPasos = $$("#mt-pasos li"), mtVistas = $$(".mtv");
-function pintarMt() {
-  if (MOVIL()) return;
-  const k = Math.min(3, Math.floor(avance(secMt) * 4.1));
-  mtPasos.forEach((li, i) => li.classList.toggle("activo", i === k)); mtVistas.forEach((v, i) => v.classList.toggle("activo", i === k));
-}
-
 /* ── Héroe: la palabra del bloque va cambiando ── */
 {
   const rota = $("#rota"), txt = $("span", rota), PAL = ["tu operación", "tus ventas", "tu planta", "tu gerencia", "tus finanzas", "tu empresa"];
@@ -408,6 +400,22 @@ const svgIco = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
   const items = $$("#fin6-lista li");
   alVer($("#fin6-lista"), () => items.forEach((li, i) => setTimeout(() => li.classList.add("on"), QUIETO ? 0 : 400 + i * 450)), null, .4);
 }
+
+/* ── Cómo trabajamos: los pasos avanzan solos; tocar uno muestra su entregable ── */
+{
+  const sec = $("#metodo"), pasos = $$("#mt-pasos li"), vistas = $$(".mtv"), DUR = 5500;
+  let actual = 0, t0 = performance.now(), pausa = false;
+  const ir = (i) => { actual = i; t0 = performance.now(); pasos.forEach((li, j) => li.classList.toggle("activo", j === i)); vistas.forEach((v, j) => v.classList.toggle("activo", j === i)); };
+  pasos.forEach((li, i) => $("button", li).addEventListener("click", () => ir(i)));
+  sec.addEventListener("pointerenter", (e) => e.pointerType === "mouse" && (pausa = true)); sec.addEventListener("pointerleave", () => { pausa = false; t0 = performance.now() - (pasos[actual].prog || 0) * DUR; });
+  bucleVisible(sec, () => {
+    if (QUIETO || MOVIL()) return;
+    if (pausa) return;
+    const k = clamp((performance.now() - t0) / DUR); pasos[actual].prog = k; pasos[actual].style.setProperty("--prog", k);
+    if (k >= 1) ir((actual + 1) % pasos.length);
+  }, 30);
+}
+function pintarMt() {}
 
 /* ── Menú del celular y progreso de lectura ── */
 {
