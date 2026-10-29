@@ -406,17 +406,67 @@ const svgIco = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
   }, 60);
 }
 
-/* ── Superpoderes: un panel siempre abierto; pasar el mouse o tocar abre otro ── */
+/* ── Superpoderes: el panel abierto muestra el superpoder en acción; avanzan solos y el mouse toma el control ── */
 {
-  const paneles = $$("#pp .pp__p");
-  const abrirP = (i) => paneles.forEach((p, j) => { const on = i === j; p.classList.toggle("abierto", on); $(".pp__cab", p).setAttribute("aria-expanded", on); if (on) p.classList.add("visto"); });
+  const pp = $("#pp"), paneles = $$(".pp__p", pp), DUR = 7000;
+  const tiempo = (p, f, ms) => p.timers.push(setTimeout(f, ms));
+  const ESCENAS = {
+    tareas(p, on) {
+      $$(".tarea2", p).forEach((t, i) => {
+        const em = $("em", t); t.classList.remove("on", "hecha"); em.textContent = "En curso";
+        if (on) { tiempo(p, () => t.classList.add("on"), 250 + i * 650); tiempo(p, () => { t.classList.add("hecha"); em.textContent = em.dataset.ok; }, 850 + i * 650); }
+      });
+    },
+    camara(p, on) {
+      const cont = $(".esc-cam", p), video = $("video", cont), cv = $("canvas", cont), aviso = $(".esc-cam__aviso", cont);
+      aviso.classList.remove("on"); cancelAnimationFrame(p.raf);
+      if (!on) { video.pause(); return; }
+      video.play().catch(() => {}); tiempo(p, () => aviso.classList.add("on"), 1600);
+      const cuadro = () => { p.raf = requestAnimationFrame(cuadro); const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(video.currentTime), 1, clamp(w / 700, .75, 1)); };
+      cuadro();
+    },
+    insight(p, on) {
+      const caja = $(".esc-insight", p), txt = $(".esc-insight__txt", p), todo = txt.dataset.txt;
+      caja.classList.remove("on"); txt.textContent = "";
+      if (!on) return;
+      if (QUIETO) { txt.textContent = todo; caja.classList.add("on"); return; }
+      [...todo].forEach((_, i) => tiempo(p, () => (txt.textContent = todo.slice(0, i + 1)), 400 + i * 26));
+      tiempo(p, () => caja.classList.add("on"), 400 + todo.length * 26);
+    },
+    lotes(p, on) { $$(".esc-lotes div", p).forEach((d, i) => { d.classList.remove("on"); if (on) tiempo(p, () => d.classList.add("on"), 300 + i * 500); }); },
+    barras() {}, pulso() {},
+  };
+  const activar = (p, on) => {
+    (p.timers || []).forEach(clearTimeout); p.timers = [];
+    p.classList.toggle("vivo", on); ESCENAS[p.dataset.escena](p, on);
+  };
+  let actual = 0, t0 = performance.now(), pausa = false, visible = false;
+  const abrirP = (i) => {
+    actual = i; t0 = performance.now();
+    paneles.forEach((p, j) => { const on = i === j; p.classList.toggle("abierto", on); $(".pp__cab", p).setAttribute("aria-expanded", on); p.style.setProperty("--prog", 0); if (!MOVIL()) activar(p, on && visible); });
+  };
   paneles.forEach((p, i) => {
     let espera = 0;
     $(".pp__cab", p).addEventListener("click", () => abrirP(i));
-    p.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse" || MOVIL()) return; espera = setTimeout(() => abrirP(i), 130); });
+    p.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse" || MOVIL() || i === actual) return; espera = setTimeout(() => abrirP(i), 140); });
     p.addEventListener("pointerleave", () => clearTimeout(espera));
   });
-  alVer($("#pp"), () => paneles[0].classList.add("visto"), null, .3);
+  $$("[data-ir]", pp).forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
+  pp.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") pausa = true; });
+  pp.addEventListener("pointerleave", () => { pausa = false; t0 = performance.now(); });
+  alVer(pp, () => { if (visible) return; visible = true; if (MOVIL()) return; t0 = performance.now(); activar(paneles[actual], true); }, () => { visible = false; paneles.forEach((p) => activar(p, false)); }, .25);
+  bucleVisible(pp, () => {
+    if (MOVIL() || QUIETO) return;
+    const ahora = performance.now(); if (pausa) t0 = ahora - (paneles[actual].prog || 0) * DUR;
+    const k = clamp((ahora - t0) / DUR); paneles[actual].prog = k; paneles[actual].style.setProperty("--prog", k);
+    if (k >= 1) abrirP((actual + 1) % paneles.length);
+  }, 30);
+  // celular: tarjetas que se deslizan; la que se ve es la que se mueve
+  if (MOVIL()) {
+    paneles.forEach((p) => p.classList.add("abierto"));
+    const ob = new IntersectionObserver((es) => es.forEach((e) => activar(e.target, e.isIntersecting)), { root: pp, threshold: .6 });
+    paneles.forEach((p) => ob.observe(p));
+  }
 }
 
 /* ── Un solo bucle de scroll ── */

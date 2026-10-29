@@ -298,59 +298,87 @@
     </div>
   </section>
 
-  <!-- 06 · Superpoderes: paneles que se abren, sin ruido -->
+  <!-- 06 · Superpoderes: seis paneles; el abierto muestra el superpoder en acción y avanzan solos -->
   <section class="sp5 oscuro" id="superpoderes" aria-labelledby="h-poderes">
     <div class="envoltura">
       <div class="sp5__cab">
         <h2 class="t-1 arma" id="h-poderes">La tecnología es la herramienta. <span class="acento">El superpoder es lo que logras con ella.</span></h2>
-        <p class="bajada" data-r>Seis capacidades que tu empresa gana cuando la inteligencia artificial trabaja a su favor.</p>
+        <p class="bajada" data-r>No como una promesa de resultados imposibles, sino como las mejoras concretas que podemos desarrollar con inteligencia artificial y tecnología.</p>
       </div>
       <div class="pp" id="pp">
-        <article class="pp__p abierto">
+        <article class="pp__p abierto" data-escena="tareas">
           <button class="pp__cab" aria-expanded="true"><h3>Eficiencia</h3><p>Aprovecha mejor cada recurso.</p></button>
+          <span class="pp__senal" aria-hidden="true"><b>4/4</b>tareas</span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Automatizamos lo que consume tiempo sin generar valor, para que tu equipo se concentre en lo que importa.</p>
-            <div class="vin vin--tareas">
-              <div class="tarea2"><img src="recursos/logos/gmail.svg" alt=""><span>Cotización enviada</span><em>Listo</em></div>
-              <div class="tarea2"><img src="recursos/marcas/sap.svg" alt=""><span>Orden de compra cargada</span><em>Listo</em></div>
-              <div class="tarea2"><img src="recursos/logos/microsoftexcel.svg" alt=""><span>Inventario semanal</span><em>Listo</em></div>
-              <div class="tarea2"><img src="recursos/logos/whatsapp.svg" alt=""><span>Aviso de despacho</span><em>Listo</em></div>
+            <div class="pp__escena">
+              <div class="esc-tareas">
+                <div class="tarea2"><img src="recursos/logos/gmail.svg" alt=""><span>Cotización a Quillay</span><em data-ok="Enviada">En curso</em></div>
+                <div class="tarea2"><img src="recursos/logos/bsale.png" alt=""><span>Factura de octubre</span><em data-ok="Emitida">En curso</em></div>
+                <div class="tarea2"><img src="recursos/logos/microsoftexcel.svg" alt=""><span>Inventario semanal</span><em data-ok="Actualizado">En curso</em></div>
+                <div class="tarea2"><img src="recursos/logos/whatsapp.svg" alt=""><span>Aviso de despacho</span><em data-ok="Avisado">En curso</em></div>
+              </div>
             </div>
+            <div class="pp__pie"><p>Simplificamos tareas, automatizamos procesos y reducimos actividades que consumen tiempo sin generar valor. Buscamos que las personas y los equipos puedan concentrarse en lo que realmente importa.</p><span class="pp__con"><i></i>Automatización y agentes</span></div>
           </div>
         </article>
-        <article class="pp__p">
-          <button class="pp__cab" aria-expanded="false"><h3>Seguridad</h3><p>Anticipa riesgos.</p></button>
+        <article class="pp__p" data-escena="camara">
+          <button class="pp__cab" aria-expanded="false"><h3>Seguridad</h3><p>Anticipa riesgos y protege tu operación.</p></button>
+          <span class="pp__senal pp__senal--lum" aria-hidden="true"><i></i>CAM 02</span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Detectamos condiciones de riesgo y avisamos a tiempo, junto a tus protocolos.</p>
-            <div class="vin vin--alerta"><div class="vin__cam"><span>CAM 02</span></div><div><small>LUMINA · AHORA</small><b>Persona en zona restringida</b><span>Centro de distribución · Pasillo 4</span></div></div>
+            <div class="pp__escena">
+              <div class="esc-cam">
+                <video muted loop playsinline preload="none" poster="recursos/video/bodega.jpg" aria-hidden="true"><source src="recursos/video/bodega.mp4" type="video/mp4"></video>
+                <canvas aria-hidden="true"></canvas>
+                <span class="pt__vivo"><i></i>CAM 02 · EN VIVO</span>
+                <div class="esc-cam__aviso"><div class="aviso__ico"><svg><use href="#i-alerta"/></svg></div><div><small>LUMINA · AHORA</small><b>Persona en zona restringida</b><span>Pasillo 4 · CAM 02</span></div></div>
+              </div>
+            </div>
+            <div class="pp__pie"><p>Desarrollamos herramientas inteligentes para identificar condiciones de riesgo, generar alertas oportunas y fortalecer la prevención, complementando los controles y protocolos de seguridad existentes.</p><a class="pp__con pp__con--lum" href="#camino" data-ir="lumina"><i></i>Con Lumina</a></div>
           </div>
         </article>
-        <article class="pp__p">
-          <button class="pp__cab" aria-expanded="false"><h3>Inteligencia</h3><p>Decide con información.</p></button>
+        <article class="pp__p" data-escena="insight">
+          <button class="pp__cab" aria-expanded="false"><h3>Inteligencia</h3><p>Convierte información en decisiones ágiles.</p></button>
+          <span class="pp__senal" aria-hidden="true"><svg viewBox="0 0 40 16"><polyline points="0,3 8,5 16,2 24,8 32,9 40,14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Conectamos datos y encontramos patrones para entender lo que ocurre.</p>
-            <div class="vin vin--insight"><div class="vin__m"><img src="recursos/medula-marca.svg" alt="">Médula</div><p>Las ventas de la zona norte bajaron este mes. Tres clientes no han vuelto a comprar.</p><svg viewBox="0 0 200 44" class="spark"><polyline points="0,10 30,14 60,8 90,18 120,16 150,28 180,30 200,36" fill="none" stroke="#63A7FC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pp__escena">
+              <div class="esc-insight">
+                <div class="vin__m"><img src="recursos/medula-marca.svg" alt="">Médula</div>
+                <p class="esc-insight__txt" data-txt="Las ventas de la zona norte bajaron este mes. Tres clientes no han vuelto a comprar."></p>
+                <svg viewBox="0 0 200 44" class="spark"><polyline points="0,10 30,14 60,8 90,18 120,16 150,28 180,30 200,36" fill="none" stroke="#63A7FC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="100"/></svg>
+                <div class="cita"><span><img src="recursos/logos/bsale.png" alt="">Bsale</span><span><img src="recursos/logos/zoho.svg" alt="">Zoho CRM</span></div>
+              </div>
+            </div>
+            <div class="pp__pie"><p>Conectamos información, identificamos patrones y desarrollamos herramientas que permiten comprender mejor lo que ocurre, anticipar situaciones y tomar decisiones con mayor respaldo.</p><a class="pp__con pp__con--med" href="#camino" data-ir="medula"><i></i>Con Médula</a></div>
           </div>
         </article>
-        <article class="pp__p">
-          <button class="pp__cab" aria-expanded="false"><h3>Calidad</h3><p>Precisión y consistencia.</p></button>
+        <article class="pp__p" data-escena="lotes">
+          <button class="pp__cab" aria-expanded="false"><h3>Calidad</h3><p>Mejora la precisión y consistencia.</p></button>
+          <span class="pp__senal" aria-hidden="true"><b>OK</b>lote</span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Estandarizamos procesos y detectamos desviaciones antes de que lleguen al cliente.</p>
-            <div class="vin vin--insp"><div><span>Lote 0412</span><em class="ok">OK</em></div><div><span>Lote 0413</span><em class="ok">OK</em></div><div class="mal"><span>Lote 0414</span><em>Revisar</em></div><div><span>Lote 0415</span><em class="ok">OK</em></div></div>
+            <div class="pp__escena">
+              <div class="vin--insp esc-lotes"><div><span>Lote 0412</span><em class="ok">OK</em></div><div><span>Lote 0413</span><em class="ok">OK</em></div><div class="mal"><span>Lote 0414</span><em>Revisar</em></div><div><span>Lote 0415</span><em class="ok">OK</em></div></div>
+            </div>
+            <div class="pp__pie"><p>Incorporamos herramientas que ayudan a estandarizar procesos, detectar desviaciones, fortalecer la trazabilidad y reducir errores que afectan la calidad del trabajo.</p><a class="pp__con pp__con--lum" href="#camino" data-ir="lumina"><i></i>Con Lumina</a></div>
           </div>
         </article>
-        <article class="pp__p">
-          <button class="pp__cab" aria-expanded="false"><h3>Rentabilidad</h3><p>Más valor por recurso.</p></button>
+        <article class="pp__p" data-escena="barras">
+          <button class="pp__cab" aria-expanded="false"><h3>Rentabilidad</h3><p>Haz que tus recursos generen más valor.</p></button>
+          <span class="pp__senal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Reducimos costos y desperdicios, y recuperamos tiempo de tu equipo.</p>
-            <div class="vin vin--barras"><div class="barras"><i style="--h:92%"></i><i style="--h:80%"></i><i style="--h:71%"></i><i style="--h:58%"></i><i style="--h:46%" class="hoy"></i></div><div class="barras__l"><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span></div><small>Horas en tareas manuales · ejemplo</small></div>
+            <div class="pp__escena">
+              <div class="vin--barras esc-barras"><div class="barras"><i style="--h:92%"></i><i style="--h:80%"></i><i style="--h:71%"></i><i style="--h:58%"></i><i style="--h:46%" class="hoy"></i></div><div class="barras__l"><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span></div><small>Horas en tareas manuales · ejemplo</small></div>
+            </div>
+            <div class="pp__pie"><p>Identificamos oportunidades para reducir costos, disminuir desperdicios, recuperar tiempo y mejorar el aprovechamiento de los recursos disponibles.</p></div>
           </div>
         </article>
-        <article class="pp__p">
-          <button class="pp__cab" aria-expanded="false"><h3>Continuidad</h3><p>Procesos bajo control.</p></button>
+        <article class="pp__p" data-escena="pulso">
+          <button class="pp__cab" aria-expanded="false"><h3>Continuidad</h3><p>Mantén tus procesos bajo control.</p></button>
+          <span class="pp__senal pp__senal--ok" aria-hidden="true"><i></i>Línea 2</span>
           <div class="pp__cuerpo">
-            <p class="pp__txt">Monitoreo y alertas para detectar desviaciones a tiempo y evitar interrupciones.</p>
-            <div class="vin vin--pulso"><div class="pulso__cab"><span><i></i>Línea 2 · operando</span><span>Alerta resuelta 09:14</span></div><svg viewBox="0 0 600 70" preserveAspectRatio="none" class="pulso"><path d="M0 40 H120 L135 40 L145 14 L158 62 L170 40 H300 L315 40 L325 14 L338 62 L350 40 H480 L495 40 L505 14 L518 62 L530 40 H600" fill="none" stroke="#91CEC4" stroke-width="2.5" stroke-linejoin="round" pathLength="100" stroke-dasharray="100"/></svg></div>
+            <div class="pp__escena">
+              <div class="vin--pulso esc-pulso"><div class="pulso__cab"><span><i></i>Línea 2 · operando</span><span>Alerta resuelta 09:14</span></div><svg viewBox="0 0 600 70" preserveAspectRatio="none" class="pulso"><path d="M0 40 H120 L135 40 L145 14 L158 62 L170 40 H300 L315 40 L325 14 L338 62 L350 40 H480 L495 40 L505 14 L518 62 L530 40 H600" fill="none" stroke="#91CEC4" stroke-width="2.5" stroke-linejoin="round" pathLength="100" stroke-dasharray="100"/></svg></div>
+            </div>
+            <div class="pp__pie"><p>Desarrollamos capacidades de monitoreo, alertas y análisis que ayudan a identificar desviaciones oportunamente y reducir el impacto de interrupciones evitables.</p></div>
           </div>
         </article>
       </div>
