@@ -503,3 +503,68 @@
 .h7__video.sin-gl video { opacity: 1; }
 .h7__video.sin-gl::after { content: ""; position: absolute; inset: 0; background: radial-gradient(90% 90% at 0% 100%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(to bottom, rgba(255,255,255,0) 70%, #fff); }
 @media (max-width: 1020px) { .h7__video { background-image: url("recursos/video/agua-vertical.jpg"); } .h7__video.sin-gl::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 30%, rgba(255,255,255,.92) 62%, #fff); } }
+
+/* ══ Retícula como la de Neiden: 4 columnas iguales, el contenido calza con las líneas ══
+   Cabecera: línea horizontal arriba · col 1 la etiqueta · cols 2–4 el título.
+   Cuerpo: col 1 el apoyo (bajada, botón; queda fijo) · cols 2–4 el contenido. Se separa de las líneas con --celda. */
+.v6 { --celda: 24px; }
+.d7__in, .mt7__in, .fq7__in, .pr7__in, .sp7__cab, .v6 .camino__cab { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 0; row-gap: 0; align-items: start; border-top: 1px solid var(--linea7); padding-top: 28px; text-align: left; justify-items: stretch; margin-bottom: 0; }
+.d7__izq, .mt7__izq, .fq7__izq, .pr7__izq { display: contents; }
+.d7__in .eti, .mt7__in .eti, .fq7__in .eti, .pr7__in .eti, .sp7__cab .eti, .v6 .camino__cab .eti { grid-column: 1; grid-row: 1; padding-right: var(--celda); margin-top: .9em; }
+.d7__in .t7, .mt7__in .t7, .fq7__in .t7, .pr7__in .t7, .sp7__cab .t7, .v6 .camino__cab .t7 { grid-column: 2 / 5; grid-row: 1; padding-left: var(--celda); max-width: none; font-size: clamp(2.3rem, 1.2rem + 3.2vw, 4.4rem); }
+.d7__in > .d7__izq > .bajada, .mt7__in .bajada, .pr7__in .bajada, .sp7__cab .bajada { grid-column: 1; grid-row: 2; padding-right: var(--celda); margin-top: 40px; font-size: 16px; max-width: none; }
+.mt7__in .btn7, .pr7__in .btn7 { grid-column: 1; grid-row: 3; margin-top: 24px; justify-self: start; }
+.fq7__otra { grid-column: 1; grid-row: 2; margin-top: 40px !important; max-width: calc(100% - var(--celda)); position: sticky; top: 100px; }
+.d7__in > .d7__izq > .bajada { position: sticky; top: 100px; }
+.d7__lista { grid-column: 2 / 5; grid-row: 2 / span 2; margin-top: 40px; padding-left: var(--celda); }
+.fq7__lista { grid-column: 2 / 5; grid-row: 2 / span 2; margin-top: 40px; padding-left: var(--celda); }
+.sp7__cab { margin-bottom: 56px; }
+.sp7__cab .bajada { grid-row: 2; margin-top: 28px; }
+.v6 .camino__cab { margin-bottom: 48px; }
+
+/* Cómo trabajamos: una etapa por columna */
+.mt7__grilla { grid-column: 1 / 5; grid-row: 4; margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--linea7); border-bottom: 1px solid var(--linea7); }
+.paso7 { border-radius: 0; min-height: 340px; padding: 26px var(--celda) 30px; background: transparent; box-shadow: none; transform: none; }
+.paso7 + .paso7 { box-shadow: -1px 0 0 var(--linea7); }
+.paso7.activo { background: var(--nube); box-shadow: none; transform: none; }
+.paso7 + .paso7.activo { box-shadow: -1px 0 0 var(--linea7); }
+.paso7__et { right: var(--celda); }
+.paso7__barra { left: 0; right: 0; }
+
+/* Propuesta: las áreas calzan en la retícula (tarjetas en las columnas 1 y 4, el logo en las del centro) */
+.pr7__areas { grid-column: 1 / 5; grid-row: 4; grid-template-columns: repeat(4, 1fr); column-gap: 0; }
+.area7:nth-child(n + 4) { grid-column: 4; }
+.ar8__centro { grid-column: 2 / 4; }
+.area7 { border-radius: 20px; margin-inline: 0; }
+
+/* Superpoderes: el texto de cada tarjeta en la columna 1, la escena en las otras tres */
+.sp7c { grid-template-columns: 1fr 3fr; }
+.sp7c__txt { padding: 32px var(--celda); }
+.sp7c h3 { font-size: clamp(2rem, 1.2rem + 1.6vw, 3rem); }
+
+/* Footer en las mismas 4 columnas */
+.pie7__arriba { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.pie7__cols { display: contents; }
+.pie7__cols > div { padding-left: var(--celda); }
+
+@media (max-width: 1020px) {
+  .d7__in, .mt7__in, .fq7__in, .pr7__in, .sp7__cab, .v6 .camino__cab { grid-template-columns: 1fr; }
+  .d7__in > *, .d7__in .d7__izq > *, .mt7__in .mt7__izq > *, .fq7__in .fq7__izq > *, .pr7__in .pr7__izq > *, .sp7__cab > *, .v6 .camino__cab > *, .d7__lista, .fq7__lista, .mt7__grilla, .pr7__areas, .fq7__otra { grid-column: 1 !important; grid-row: auto !important; position: static !important; }
+  .d7__in .eti, .d7__in .t7, .d7__in .bajada, .d7__lista, .fq7__lista, .mt7__in .eti, .mt7__in .t7, .mt7__in .bajada, .fq7__in .eti, .fq7__in .t7, .pr7__in .eti, .pr7__in .t7, .pr7__in .bajada, .sp7__cab .eti, .sp7__cab .t7, .sp7__cab .bajada, .v6 .camino__cab .eti, .v6 .camino__cab .t7 { padding-left: 0 !important; padding-right: 0 !important; }
+  .d7__in .t7, .mt7__in .t7, .fq7__in .t7, .pr7__in .t7, .sp7__cab .t7, .v6 .camino__cab .t7 { margin-top: 14px; }
+  .mt7__grilla { grid-template-columns: 1fr; }
+  .paso7 + .paso7 { box-shadow: 0 -1px 0 var(--linea7); }
+  .paso7 { min-height: 0; }
+  .sp7c { grid-template-columns: 1fr; }
+  .pie7__arriba { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .pie7__marca { grid-column: 1 / -1; }
+  .pie7__cols > div { padding-left: 0; }
+}
+.sp7c__det { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.sp7c__frase { font-size: 1.05rem; }
+.sp7__remate { padding-left: calc(25% + var(--celda)); max-width: none; }
+.sp7__remate .pal:first-child { margin-left: 0; }
+@media (max-width: 1020px) { .sp7__remate { padding-left: 0; } }
+@media (min-width: 1021px) { .area7 { height: 290px; } }
+
+@media (max-width: 560px) { .sp7c__det { display: none; } }

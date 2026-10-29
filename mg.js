@@ -261,7 +261,7 @@ export function cuadro(cv, nombre, t) {
   const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
   if (!w || !h) return;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
-  const c = cv.getContext("2d"), s = Math.min(w / 800, h / 600);
+  const c = cv.getContext("2d"), s = w < 520 ? Math.min(w / 600, h / 520) : Math.min(w / 800, h / 600); // en el celular se acerca y recorta un poco los bordes
   c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
   c.translate((w - 800 * s) / 2, (h - 600 * s) / 2); c.scale(s, s);
   ESCENAS[nombre](c, t);
