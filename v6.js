@@ -300,7 +300,7 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
 
 /* El agua turquesa (horizontal en PC, vertical en el celular) y su lectura como datos: cada celda toma el brillo real del video
    y lo escribe como un carácter técnico; una línea de escaneo la recorre. «zona» elige dónde: a la derecha (héroe) o a los lados (cierre) */
-function agua(caja, { zona = "derecha", rotulos = true } = {}) {
+function agua(caja, { zona = "derecha" } = {}) {
   const video = $("video", caja), vertical = innerWidth / innerHeight < .9;
   const base = vertical ? "recursos/video/mar-turquesa-vertical-hd" : "recursos/video/mar-turquesa-hd";
   video.poster = `${base}.jpg`;
@@ -309,7 +309,7 @@ function agua(caja, { zona = "derecha", rotulos = true } = {}) {
   if (QUIETO) video.removeAttribute("autoplay");
   alVer(caja, () => !QUIETO && video.play().catch(() => {}), () => video.pause(), 0);
   const cv = $("canvas", caja), c = cv.getContext("2d"), muestra = document.createElement("canvas"), m = muestra.getContext("2d", { willReadFrequently: true });
-  const CAR = " ·:+×01ABCDEF#".split(""), tiempo = rotulos && $(".r-tiempo", caja), scan = rotulos && $(".r-scan", caja), t0 = performance.now();
+  const CAR = " ·:+×01ABCDEF#".split(""), t0 = performance.now();
   let previo = 0;
   bucleVisible(caja, () => {
     const ahora = performance.now(); if (ahora - previo < 55) return; previo = ahora;
@@ -317,7 +317,6 @@ function agua(caja, { zona = "derecha", rotulos = true } = {}) {
     if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
     c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
     const t = (ahora - t0) / 1000, f = Math.floor(t * 24);
-    if (tiempo) tiempo.textContent = [Math.floor(t / 3600), Math.floor(t / 60) % 60, Math.floor(t) % 60, f % 24].map((n) => String(n).padStart(2, "0")).join(":");
     if (video.readyState < 2) return;
     const vert = w / h < .9, celdaX = vert ? 10 : 12, celdaY = vert ? 15 : 17;
     const env = Math.min(1240, w - 40), x0 = zona === "derecha" && !vert ? (w - env) / 2 + env * .5 : 0, y0 = 0, x1 = w, y1 = vert && zona === "derecha" ? h * .5 : h;
@@ -328,7 +327,6 @@ function agua(caja, { zona = "derecha", rotulos = true } = {}) {
     const px = m.getImageData(0, 0, cols, filas).data;
     let lmin = 1, lmax = 0; for (let k = 0; k < px.length; k += 16) { const l = (px[k] * .3 + px[k + 1] * .59 + px[k + 2] * .11) / 255; if (l < lmin) lmin = l; if (l > lmax) lmax = l; }
     const rango = Math.max(.08, lmax - lmin), periodo = 7, bx = ((t % periodo) / periodo) * cols;
-    if (scan) scan.textContent = `SCAN ${String(Math.floor(t / periodo) % 12 + 1).padStart(2, "0")}/12`;
     c.font = `500 ${vert ? 10 : 11}px ui-monospace, "SF Mono", Menlo, monospace`; c.textBaseline = "top";
     for (let j = 0; j < filas; j++) for (let i = 0; i < cols; i++) {
       const k = (j * cols + i) * 4, l = Math.min(1, Math.max(0, ((px[k] * .3 + px[k + 1] * .59 + px[k + 2] * .11) / 255 - lmin) / rango));
@@ -344,8 +342,8 @@ function agua(caja, { zona = "derecha", rotulos = true } = {}) {
   }, 30);
 }
 agua($("#agua"));
-// el cierre: el mismo mar con la lectura a los lados (con ?cierre=aurora se ve la versión anterior, para comparar)
-if (new URLSearchParams(location.search).get("cierre") === "aurora") document.body.classList.add("cierre-aurora"); else agua($("#agua-fin"), { zona: "lados" });
+// el cierre: el mismo mar, con la lectura a los lados
+agua($("#agua-fin"), { zona: "lados" });
 
 /* Héroe: la palabra se escribe, espera, se borra y llega la siguiente */
 { const m = maquina($("#tipeo")); m.iniciar(); }
