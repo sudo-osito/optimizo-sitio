@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { cuadro as mgCuadro } from "./mg.js";
+import { cuadro as mgCuadro } from "./mg.js?v=1793286346";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
