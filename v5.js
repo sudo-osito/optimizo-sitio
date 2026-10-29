@@ -1,4 +1,4 @@
-// Optimizo · sitio v5. Sin dependencias. La firma es el punto del isotipo: se escapa en el héroe, tacha los dolores y pone a la empresa en órbita.
+// Optimizo · sitio v5. Sin dependencias. Una sola escena fija (el desafío); lo demás se entiende de un vistazo y se mueve solo.
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -242,75 +242,6 @@ function pintarMt() {
   mtPasos.forEach((li, i) => li.classList.toggle("activo", i === k)); mtVistas.forEach((v, i) => v.classList.toggle("activo", i === k));
 }
 
-/* ── El isotipo como objeto: disco con agujero y mordida, y su punto que se escapa en órbita ── */
-const ISO_V = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }";
-const ISO_F = `precision highp float;
-uniform vec2 uRes, uCentro; uniform mat3 uRot; uniform vec3 uPunto; uniform float uEscala;
-const vec2 MORDIDA = vec2(-.7135, .7086);
-float plano(vec2 p){ float r = length(p); return max(max(r - 1., .25 - r), .5 - length(p - MORDIDA)); }
-float disco(vec3 p){ const float h = .16, b = .075; vec2 w = vec2(plano(p.xy) + b, abs(p.z) - h + b); return min(max(w.x, w.y), 0.) + length(max(w, 0.)) - b; }
-vec2 mapa(vec3 p){ float a = disco(p), b = length(p - uPunto) - .25; return a < b ? vec2(a, 0.) : vec2(b, 1.); }
-vec3 normal(vec3 p){ const vec2 e = vec2(.001, -.001); return normalize(e.xyy * mapa(p + e.xyy).x + e.yyx * mapa(p + e.yyx).x + e.yxy * mapa(p + e.yxy).x + e.xxx * mapa(p + e.xxx).x); }
-float oclusion(vec3 p, vec3 n){ float o = 0., s = 1.; for (int i = 1; i <= 4; i++){ float h = .06 * float(i); o += (h - mapa(p + n * h).x) * s; s *= .6; } return clamp(1. - 2. * o, 0., 1.); }
-void main(){
-  vec2 uv = (gl_FragCoord.xy - uCentro * uRes) / (uRes.y * uEscala);
-  vec3 ro = uRot * vec3(0., 0., 4.6), rd = uRot * normalize(vec3(uv, -2.4));
-  float b = dot(ro, rd), c = dot(ro, ro) - 4.4, d = b * b - c;
-  if (d < 0.) { gl_FragColor = vec4(0.); return; }
-  float t = max(0., -b - sqrt(d)), tf = -b + sqrt(d); vec2 h = vec2(1., 0.);
-  for (int i = 0; i < 96; i++){ h = mapa(ro + rd * t); if (h.x < .0007 || t > tf) break; t += h.x * .92; }
-  if (t > tf || h.x > .004) { gl_FragColor = vec4(0.); return; }
-  vec3 p = ro + rd * t, n = normal(p);
-  vec3 c1 = vec3(.569, .808, .769), c2 = vec3(.22, .494, .502);
-  vec3 base = h.y < .5 ? mix(c1, c2, smoothstep(-1.05, 1.05, p.x)) : mix(c1, c2, .12);
-  vec3 L = normalize(uRot * vec3(-.55, .75, .85)), L2 = normalize(uRot * vec3(.8, -.45, .4)), U = uRot * vec3(0., 1., 0.);
-  float dif = max(dot(n, L), 0.), dif2 = max(dot(n, L2), 0.), amb = .55 + .45 * dot(n, U), ao = oclusion(p, n);
-  float fr = pow(1. - max(dot(n, -rd), 0.), 3.), es = pow(max(dot(reflect(rd, n), L), 0.), 30.);
-  vec3 col = base * (.2 + .42 * amb * ao + .72 * dif) + vec3(.35, .75, .72) * dif2 * .16 + vec3(.78, 1., .96) * fr * .3 * ao + es * .2;
-  gl_FragColor = vec4(col, 1.);
-}`;
-const MORD = [-.7135, .7086], R_MORD = Math.hypot(...MORD), A_MORD = Math.atan2(MORD[1], MORD[0]);
-const ss = (a, b, x) => { x = clamp((x - a) / (b - a)); return x * x * (3 - 2 * x); };
-/* dónde está el punto: quieto en su mordida, y cada tanto da una vuelta en órbita */
-function puntoEn(t, ciclo = 11, quieto = .36) {
-  const u0 = (t % ciclo) / ciclo; if (u0 < quieto) return [MORD[0], MORD[1], 0];
-  const u = (u0 - quieto) / (1 - quieto), env = ss(0, .24, u) * ss(1, .76, u), a = A_MORD + Math.PI * 2 * eio(u);
-  const r = lerp(R_MORD, 1.74, env), inc = env * 1.05, x = r * Math.cos(a), y = r * Math.sin(a);
-  return [x, y * Math.cos(inc), y * Math.sin(inc) + env * .12];
-}
-/* rotación del objeto (guiñada y cabeceo) → matriz mundo→objeto, por columnas para WebGL */
-function rotacion(gu, ca) {
-  const cy = Math.cos(gu), sy = Math.sin(gu), cx = Math.cos(ca), sx = Math.sin(ca);
-  const R = [[cy, sy * sx, sy * cx], [0, cx, -sx], [-sy, cy * sx, cy * cx]]; // R = Ry·Rx (filas)
-  return new Float32Array([R[0][0], R[0][1], R[0][2], R[1][0], R[1][1], R[1][2], R[2][0], R[2][1], R[2][2]]); // Rᵀ por columnas
-}
-function isotipo(cv, op) {
-  const gl = cv.getContext("webgl", { antialias: false, premultipliedAlpha: true });
-  if (!gl) { cv.outerHTML = `<img class="${cv.className}" src="recursos/optimizo-isotipo.svg" alt="" style="object-fit:contain;padding:12%">`; return () => {}; }
-  const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; };
-  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, ISO_V)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, ISO_F)); gl.bindAttribLocation(pr, 0, "p"); gl.linkProgram(pr); gl.useProgram(pr);
-  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-  const U = {}; ["uRes", "uCentro", "uRot", "uPunto", "uEscala"].forEach((n) => (U[n] = gl.getUniformLocation(pr, n)));
-  const ajustar = () => { const dpr = Math.min(1.6, devicePixelRatio || 1); cv.width = Math.max(2, Math.round(cv.clientWidth * dpr)); cv.height = Math.max(2, Math.round(cv.clientHeight * dpr)); gl.viewport(0, 0, cv.width, cv.height); };
-  ajustar(); addEventListener("resize", ajustar);
-  const ptr = { x: 0, y: 0, sx: 0, sy: 0 };
-  addEventListener("pointermove", (e) => { ptr.x = e.clientX / innerWidth - .5; ptr.y = e.clientY / innerHeight - .5; }, { passive: true });
-  return (t) => {
-    ptr.sx += (ptr.x - ptr.sx) * .05; ptr.sy += (ptr.y - ptr.sy) * .05;
-    const q = op.scroll ? op.scroll() : 0, mov = MOVIL();
-    const gu = op.guinada + .16 * Math.sin(t * .31) + ptr.sx * .5 + q * 1.3, ca = op.cabeceo + .08 * Math.sin(t * .23) + ptr.sy * .3 + q * .25;
-    gl.uniform2f(U.uRes, cv.width, cv.height); gl.uniform2f(U.uCentro, ...(mov ? op.centroMovil : op.centro));
-    gl.uniform1f(U.uEscala, mov ? op.escalaMovil : op.escala); gl.uniformMatrix3fv(U.uRot, false, rotacion(gu, ca));
-    gl.uniform3fv(U.uPunto, QUIETO ? [MORD[0], MORD[1], 0] : puntoEn(t + (op.desfase || 0)));
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  };
-}
-{
-  const cv2 = $("#iso-cierre");
-  bucleVisible(cv2, isotipo(cv2, { guinada: .55, cabeceo: .18, centro: [.76, .5], escala: .36, centroMovil: [.5, .52], escalaMovil: .36, desfase: 7 }), 60);
-}
-
 /* ── Héroe: la palabra del bloque va cambiando ── */
 {
   const rota = $("#rota"), txt = $("span", rota), PAL = ["tu operación", "tus ventas", "tu planta", "tu gerencia", "tus finanzas", "tu empresa"];
@@ -454,7 +385,10 @@ const svgIco = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
   $$("[data-ir]", pp).forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
   pp.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") pausa = true; });
   pp.addEventListener("pointerleave", () => { pausa = false; t0 = performance.now(); });
-  alVer(pp, () => { if (visible) return; visible = true; if (MOVIL()) return; t0 = performance.now(); activar(paneles[actual], true); }, () => { visible = false; paneles.forEach((p) => activar(p, false)); }, .25);
+  alVer(pp, () => {
+    if (visible) return; visible = true;
+    if (MOVIL()) paneles.forEach((p) => p.enVista && activar(p, true)); else { t0 = performance.now(); activar(paneles[actual], true); }
+  }, () => { visible = false; paneles.forEach((p) => activar(p, false)); }, .25);
   bucleVisible(pp, () => {
     if (MOVIL() || QUIETO) return;
     const ahora = performance.now(); if (pausa) t0 = ahora - (paneles[actual].prog || 0) * DUR;
@@ -464,13 +398,30 @@ const svgIco = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
   // celular: tarjetas que se deslizan; la que se ve es la que se mueve
   if (MOVIL()) {
     paneles.forEach((p) => p.classList.add("abierto"));
-    const ob = new IntersectionObserver((es) => es.forEach((e) => activar(e.target, e.isIntersecting)), { root: pp, threshold: .6 });
+    const ob = new IntersectionObserver((es) => es.forEach((e) => { e.target.enVista = e.isIntersecting; if (visible || !e.isIntersecting) activar(e.target, e.isIntersecting && visible); }), { root: pp, threshold: .6 });
     paneles.forEach((p) => ob.observe(p));
   }
 }
 
+/* ── Cierre: las situaciones del visitante se marcan una a una ── */
+{
+  const items = $$("#fin6-lista li");
+  alVer($("#fin6-lista"), () => items.forEach((li, i) => setTimeout(() => li.classList.add("on"), QUIETO ? 0 : 400 + i * 450)), null, .4);
+}
+
+/* ── Menú del celular y progreso de lectura ── */
+{
+  const boton = $("#nav-menu"), menu = $("#menu-movil");
+  const cerrar = () => { nav.classList.remove("abierto"); boton.setAttribute("aria-expanded", false); boton.setAttribute("aria-label", "Abrir el menú"); };
+  boton.addEventListener("click", () => { const ab = nav.classList.toggle("abierto"); boton.setAttribute("aria-expanded", ab); boton.setAttribute("aria-label", ab ? "Cerrar el menú" : "Abrir el menú"); });
+  $$("a", menu).forEach((a) => a.addEventListener("click", cerrar));
+  addEventListener("keydown", (e) => e.key === "Escape" && cerrar());
+}
+const progreso = $("#progreso");
+function pintarProgreso() { progreso.style.setProperty("--p", clamp(scrollY / (document.documentElement.scrollHeight - innerHeight))); }
+
 /* ── Un solo bucle de scroll ── */
 let pendiente = false;
-function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarDesafio(); pintarLumina(); pintarMt(); }); }
+function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarLumina(); pintarMt(); }); }
 addEventListener("scroll", alScroll, { passive: true }); addEventListener("resize", alScroll); addEventListener("ruta", alScroll);
 alScroll();
