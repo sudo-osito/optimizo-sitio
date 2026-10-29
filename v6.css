@@ -914,3 +914,98 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
   .nos7__caps::-webkit-scrollbar { display: none; }
   .cap7 { flex: 0 0 84%; scroll-snap-align: start; }
 }
+
+/* ══ Escenas visuales: cada capacidad y cada dolor se entienden con una imagen antes de leerlos ══ */
+.vz { position: relative; height: 196px; border-radius: 18px; background: var(--nube); padding: 14px; overflow: hidden; margin-bottom: 18px; font-size: 12.5px; }
+.vz__bar { display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: var(--texto7-2); margin-bottom: 10px; }
+.vz__bar img { width: 14px; height: 14px; }
+.vz__bar em { font-style: normal; margin-left: auto; padding: 1px 7px; border-radius: 999px; background: #E5484D; color: #fff; font-size: 10.5px; }
+.vz [class*="tipeo"] { white-space: nowrap; }
+/* aparición: cada pieza entra cuando el dolor/capacidad se activa */
+.vz > *:not(.vz__bar) { opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .7s var(--llegada); }
+.on .vz > *, .visto .vz > *, .cap7.visto .vz > *, .vz.quieto > * { opacity: 1; transform: none; }
+.on .vz > :nth-child(3), .cap7.visto .vz > :nth-child(2) { transition-delay: .25s; } .on .vz > :nth-child(4) { transition-delay: .5s; }
+/* chat */
+.bb { width: fit-content; max-width: 88%; margin: 0 0 6px; padding: 7px 10px; border-radius: 12px; line-height: 1.3; background: #fff; box-shadow: 0 1px 1px rgba(11,19,27,.05); }
+.bb--yo { margin-left: auto; background: #DCF8C6; }
+.bb--clave { font-weight: 600; min-width: 40px; min-height: 30px; }
+/* correo */
+.ml { margin: 0 0 6px; padding: 7px 10px; border-radius: 10px; background: #fff; display: grid; line-height: 1.3; }
+.ml b { font-weight: 600; } .ml span { color: var(--texto7-3); font-size: 11.5px; }
+.ml--clave { box-shadow: inset 3px 0 0 #E5484D; } .ml--clave b { min-height: 1.3em; }
+/* planilla */
+.hj { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #D9DEE1; border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 11.5px; }
+.hj > span { background: #fff; padding: 7px 8px; min-height: 30px; }
+.hj > span:nth-child(-n+3) { background: #EEF2F0; font-weight: 600; font-family: var(--letra); }
+.hj--mal { color: var(--mandarina-texto); font-weight: 700; background: #FFF1EA !important; }
+/* calendario */
+.cl { position: relative; display: grid; grid-template-columns: 38px 1fr; grid-template-rows: repeat(3, 44px); }
+.cl__h { grid-column: 1; font-size: 10.5px; color: var(--texto7-3); border-top: 1px solid #DDE2E4; padding-top: 2px; }
+.cl::after { content: ""; position: absolute; left: 38px; right: 0; top: 44px; height: 88px; border-top: 1px solid #DDE2E4; border-bottom: 1px solid #DDE2E4; }
+.cl__ev { position: absolute; left: 44px; top: 48px; height: 38px; padding: 5px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; line-height: 1.25; }
+.cl__ev--a { right: 34%; background: #D7EEE9; color: #1D5F5E; }
+.cl__ev--b { left: 38%; right: 0; top: 56px; background: #FFE3D3; color: var(--mandarina-texto); box-shadow: 0 6px 16px -8px rgba(194,65,12,.5); white-space: normal; }
+/* alerta */
+.vz--al { display: grid; place-items: center; }
+.al { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 14px; background: #fff; box-shadow: 0 10px 24px -12px rgba(11,19,27,.3); width: 100%; }
+.al__ico { width: 34px; height: 34px; flex: none; border-radius: 10px; display: grid; place-items: center; background: #FFE3D3; color: var(--mandarina-texto); }
+.al__ico svg { width: 18px; height: 18px; }
+.al small { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--texto7-3); }
+.al b { display: block; font-size: 13.5px; min-height: 1.3em; } .al div > span { font-size: 12px; color: var(--texto7-2); }
+.on .al { animation: alertaLate 2.4s 1s ease-in-out infinite; }
+@keyframes alertaLate { 50% { box-shadow: 0 0 0 5px rgba(194,65,12,.12), 0 10px 24px -12px rgba(11,19,27,.3); } }
+/* el texto de cada dolor bajo su escena */
+.dolor7 { padding-top: 18px !important; }
+.dolor7__txt h3 { margin-bottom: 8px; }
+.dolor7 .cursor { opacity: 0; } .dolor7.on .cursor { opacity: 1; }
+
+/* capacidades */
+.cap7 { gap: 10px; }
+.cap7 .vz { margin-bottom: 14px; }
+.vz--doc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center; }
+.dc { position: relative; background: #fff; border-radius: 10px; padding: 14px 12px; display: grid; gap: 8px; box-shadow: 0 8px 20px -12px rgba(11,19,27,.3); }
+.dc i { display: block; height: 6px; border-radius: 3px; background: #E3E8EA; } .dc i:nth-child(odd) { width: 80%; } .dc i.c { background: #BFE3DC; }
+.dc__scan { position: absolute; left: 6px; right: 6px; top: 8px; height: 2px; background: var(--tealp); box-shadow: 0 0 10px var(--tealp); opacity: 0; }
+.cap7.visto .dc__scan { animation: lee 2.6s ease-in-out infinite; }
+@keyframes lee { 0% { top: 8px; opacity: 0; } 10%, 90% { opacity: 1; } 100% { top: calc(100% - 10px); opacity: 0; } }
+.dc__out { display: grid; gap: 8px; }
+.dc__out span { padding: 6px 10px; border-radius: 8px; background: #fff; font-weight: 600; font-size: 11.5px; color: var(--tealp); box-shadow: inset 3px 0 0 var(--menta); }
+.ap { display: grid; grid-template-columns: 34px 1fr; gap: 8px; height: 100%; background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 8px 20px -12px rgba(11,19,27,.3); }
+.ap__lado { display: grid; align-content: start; gap: 8px; } .ap__lado i { height: 8px; border-radius: 4px; background: #E3E8EA; } .ap__lado i:first-child { background: var(--menta); }
+.ap__main { display: grid; grid-template-rows: auto 1fr; gap: 10px; }
+.ap__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .ap__kpis i { height: 28px; border-radius: 7px; background: var(--nube); }
+.ap__barras { display: flex; align-items: flex-end; gap: 6px; }
+.ap__barras i { flex: 1; height: 0; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, var(--menta), var(--tealp)); transition: height 1s var(--llegada); }
+.cap7.visto .ap__barras i { height: var(--h); }
+.cap7.visto .ap__barras i:nth-child(2) { transition-delay: .08s; } .cap7.visto .ap__barras i:nth-child(3) { transition-delay: .16s; } .cap7.visto .ap__barras i:nth-child(4) { transition-delay: .24s; } .cap7.visto .ap__barras i:nth-child(5) { transition-delay: .32s; } .cap7.visto .ap__barras i:nth-child(6) { transition-delay: .4s; }
+.vz--flujo { display: grid; place-items: center; align-content: center; gap: 18px; }
+.fl { display: flex; align-items: center; width: 100%; }
+.fl__n { width: 48px; height: 48px; flex: none; border-radius: 14px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px -12px rgba(11,19,27,.3); }
+.fl__n img { width: 22px; height: 22px; }
+.fl__l { flex: 1; height: 2px; background: var(--linea7); position: relative; overflow: hidden; }
+.fl__l::after { content: ""; position: absolute; inset: 0; background: var(--tealp); transform: scaleX(0); transform-origin: left; transition: transform .8s var(--llegada) .3s; }
+.fl__l + .fl__n + .fl__l::after { transition-delay: 1s; }
+.cap7.visto .fl__l::after { transform: scaleX(1); }
+.fl__ok { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #fff; font-size: 12px; font-weight: 600; color: var(--tealp); }
+.fl__ok svg { width: 14px; height: 14px; }
+.cap7__ico { display: none; }
+@media (prefers-reduced-motion: reduce) { .vz > * { opacity: 1 !important; transform: none !important; } }
+@media (min-width: 1021px) {
+  .d7__lista { grid-template-columns: repeat(6, 1fr); }
+  .dolor7 { grid-column: span 2; padding: 22px var(--celda) 28px !important; }
+  .dolor7:nth-child(n+4) { grid-column: span 3; border-top: 1px solid var(--linea7); }
+  .dolor7:nth-child(4) { border-left: 0; }
+  .dolor7 .vz { height: 200px; }
+  .dolor7__txt { display: grid; grid-template-columns: 1fr; }
+  .dolor7 h3 { font-size: 1.3rem; } .dolor7 p { font-size: 15px; max-width: 46ch; }
+}
+@media (max-width: 1020px) { .dolor7 .vz, .cap7 .vz { background: #fff; } .vz { height: 200px; } }
+.cl__ev--b { left: 30%; right: 2%; }
+.cl__ev--b .tipeo, .cl__ev .tipeo { white-space: normal; }
+.cl__ev--a { right: 40%; }
+.ml { padding: 5px 10px; margin-bottom: 5px; }
+.ml span { font-size: 11px; }
+.vz--mail .vz__bar { margin-bottom: 8px; }
+@media (min-width: 1021px) { .dolor7 .vz { height: 222px; } }
+.cl__ev--a { right: 18%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cl__ev--b { left: 24%; top: 66px; }
