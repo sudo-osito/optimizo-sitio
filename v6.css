@@ -362,30 +362,6 @@
 /* Títulos dentro de una columna fija: un punto más chicos */
 .d7__izq .t7, .pr7__izq .t7, .mt7__izq .t7, .fq7__izq .t7 { font-size: clamp(2.2rem, 1.2rem + 2.5vw, 3.7rem); }
 
-/* ── Lumina y Médula: el fondo se mueve y el texto va sobre vidrio (de Neiden) ── */
-.v6 .pts { gap: 14px; }
-.v6 .pt { position: relative; height: min(680px, calc(100vh - 120px)); border-radius: 30px; overflow: hidden; background: #E6E9EB; box-shadow: none; isolation: isolate; }
-.v6 .pt:hover { transform: none; }
-.v6 .pt__vista { position: absolute; inset: 0; height: auto; }
-.v6 .pt__vista video { transition: transform 1.4s var(--llegada); }
-.v6 .pt:hover .pt__vista video { transform: scale(1.04); }
-.v6 .pt__info { position: absolute; left: 14px; right: 14px; bottom: 14px; padding: 26px 28px 28px; border-radius: 22px; background: rgba(255, 255, 255, .6); -webkit-backdrop-filter: blur(24px) saturate(170%); backdrop-filter: blur(24px) saturate(170%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55), 0 20px 50px -30px rgba(11, 19, 27, .45); color: var(--tinta7); flex: none; }
-.v6 .pt p, .v6 .pt--lumina p { color: var(--texto7-2); opacity: 1; }
-.v6 .pt__ir { margin-top: 20px; }
-.v6 .pt--lumina .pt__ir { background: var(--tinta7); color: #fff; }
-.v6 .pt__sim { top: 34%; }
-.v6 .pt__lite { top: 22px; bottom: auto; }
-.v6 .pt__vivo { background: rgba(255, 255, 255, .7); color: var(--tinta7); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-.lum7 { position: relative; height: min(760px, calc(100vh - 110px)); margin-top: 96px; margin-bottom: 30px; border-radius: 34px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding: 18px; }
-.lum7__fondo { position: absolute; inset: 0; background: #DCE0E2; }
-.lum7__fondo video, .lum7__fondo canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.lum7__vidrio { position: relative; width: min(760px, 100%); padding: 34px 40px 38px; border-radius: 26px; text-align: center; display: grid; justify-items: center; gap: 16px; background: rgba(255, 255, 255, .62); -webkit-backdrop-filter: blur(26px) saturate(170%); backdrop-filter: blur(26px) saturate(170%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55), 0 30px 70px -40px rgba(11, 19, 27, .5); }
-.lum7__vidrio .bajada { text-align: center; }
-@media (max-width: 1020px) {
-  .v6 .pt { height: 560px; }
-  .lum7 { height: 620px; margin-top: 80px; border-radius: 26px; padding: 10px; }
-  .lum7__vidrio { padding: 24px 20px 26px; }
-}
 @media (max-width: 560px) {
   .sp7c__det { display: none; }
   .cam7 { aspect-ratio: 4 / 3; }
@@ -394,17 +370,70 @@
   .cam7__aviso b { font-size: 13px; }
 }
 
-/* Médula por dentro: el aura en un marco y el texto sobre vidrio, igual que Lumina */
-.v6 .med__escenario { width: min(var(--ancho), 100% - 40px); margin: 96px auto 30px; min-height: min(760px, calc(100vh - 110px)); border-radius: 34px; }
-.v6 .med__in { padding: 40px; width: 100%; }
-.v6 .med__texto { padding: 38px 40px 40px; border-radius: 26px; background: rgba(255, 255, 255, .62); -webkit-backdrop-filter: blur(26px) saturate(170%); backdrop-filter: blur(26px) saturate(170%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55), 0 30px 70px -40px rgba(1, 20, 90, .5); }
-.v6 .med__texto .t-heroe { color: var(--m-tinta); font-size: clamp(2.4rem, 1.2rem + 3.4vw, 4.6rem); }
-.v6 .med__texto .bajada { color: var(--m-texto-2); }
-.v6 .med__texto .marca-m b { color: var(--m-tinta); }
-.v6 .med__texto .marca-m span { background: var(--m-hielo); color: var(--m-texto-2); }
+/* ── Lumina y Médula: el fondo se mueve y el texto va en franjas translúcidas pegadas a los bordes, alineadas a la retícula (de Neiden) ── */
+.v6 .pts { grid-template-columns: 1fr; gap: 14px; }
+.v6 .pt { position: relative; display: block; height: min(760px, calc(100vh - 100px)); border-radius: 0; overflow: hidden; background: #DDE2E4; box-shadow: none; text-align: left; }
+.v6 .pt:hover { transform: none; }
+.v6 .pt.elegida { box-shadow: none; }
+.v6 .pt__vista { position: absolute; inset: 0; height: auto; }
+.v6 .pt__vista video { transition: transform 1.6s var(--llegada); }
+.v6 .pt:hover .pt__vista video { transform: scale(1.03); }
+.v6 .pt__sim { top: 46%; width: 150px; }
+.banda { position: absolute; left: 0; right: 0; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); color: var(--tinta7); background: rgba(255, 255, 255, .4); -webkit-backdrop-filter: blur(30px) saturate(150%); backdrop-filter: blur(30px) saturate(150%); }
+.banda--arriba { top: 0; height: 92px; align-items: center; }
+.banda--abajo { bottom: 0; padding: 30px 0 32px; align-items: end; }
+.banda__c { min-width: 0; padding: 0 22px; font-size: 14px; font-weight: 500; letter-spacing: -.01em; }
+.banda__c + .banda__c { box-shadow: -1px 0 0 rgba(11, 19, 27, .1); }
+.banda--arriba .banda__c { display: flex; align-items: center; gap: 8px; height: 100%; }
+.banda__c em { font-style: normal; font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--texto7-2); }
+.banda__c b { font-size: 22px; font-weight: 650; letter-spacing: -.04em; }
+.banda__c svg, .banda__c > img { width: 24px; height: 24px; flex: none; }
+.banda__vivo { width: 8px; height: 8px; border-radius: 50%; background: var(--rojo); animation: latido 1.4s infinite; flex: none; }
+.banda__c--ancho { grid-column: 2 / 5; }
+.banda h3 { font-size: clamp(1.8rem, 1.1rem + 2.2vw, 3.3rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.02; }
+.banda p { margin-top: 10px; font-size: 16.5px; color: var(--texto7-2); max-width: 52ch; }
+.banda__ir { justify-content: flex-end; }
+.banda__ir span { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 20px; border-radius: 999px; background: var(--tinta7); color: #fff; font-size: 14.5px; font-weight: 600; transition: transform .5s var(--llegada); }
+.banda__ir svg { width: 16px; height: 16px; }
+.pt:hover .banda__ir span { transform: translateX(-4px); }
+.banda__c .lite__txt { transition: opacity .25s; }
+
+/* las portadas de cada ruta, con la misma franja */
+.lum7 { position: relative; height: min(760px, calc(100vh - 100px)); margin-top: 96px; margin-bottom: 30px; overflow: hidden; }
+.lum7__fondo { position: absolute; inset: 0; background: #DCE0E2; }
+.lum7__fondo video, .lum7__fondo canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lum7__vidrio, .v6 .med__texto { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); align-items: start; padding: 32px 0 36px; text-align: left; color: var(--tinta7); background: rgba(255, 255, 255, .4); -webkit-backdrop-filter: blur(30px) saturate(150%); backdrop-filter: blur(30px) saturate(150%); }
+.lum7__vidrio > *, .v6 .med__texto > * { grid-column: 2 / 5; padding: 0 22px; margin: 0; justify-self: start; }
+.lum7__vidrio > :first-child, .v6 .med__texto > :first-child { grid-column: 1; grid-row: 1 / 4; }
+.lum7__vidrio > :not(:first-child), .v6 .med__texto > :not(:first-child) { box-shadow: -1px 0 0 rgba(11, 19, 27, .1); }
+.lum7__vidrio .t7, .v6 .med__texto .t-heroe { font-size: clamp(2rem, 1.1rem + 2.6vw, 3.6rem); max-width: 18ch; }
+.lum7__vidrio .bajada, .v6 .med__texto .bajada { margin-top: 12px; text-align: left; color: var(--texto7-2); }
+.v6 .lum__marca b { font-size: 26px; }
+.v6 .lum__marca svg { width: 30px; height: 30px; }
+.v6 .med__escenario { width: min(var(--ancho), 100% - 40px); margin: 96px auto 30px; height: min(760px, calc(100vh - 100px)); min-height: 0; display: block; }
+.v6 .med__in { position: static; display: block; padding: 0; width: auto; }
+.v6 .med__simbolo { position: absolute; left: 50%; top: 34%; transform: translate(-50%, -50%); z-index: 1; }
+.v6 .med__texto .t-heroe { color: var(--m-tinta); }
+.v6 .med__texto .marca-m { margin: 0; }
+.v6 .med__texto .marca-m b { color: var(--m-tinta); font-size: 26px; }
+.v6 .med__texto .marca-m span { background: rgba(255, 255, 255, .6); color: var(--m-texto-2); }
+.v6 .med__texto .med__acc { margin-top: 16px; }
 @media (max-width: 1020px) {
-  .v6 .med__escenario { margin-top: 80px; border-radius: 26px; }
-  .v6 .med__in { padding: 90px 10px 10px; gap: 24px; }
-  .v6 .med__simbolo img { width: 130px; }
-  .v6 .med__texto { padding: 24px 20px 26px; }
+  .v6 .pt, .lum7, .v6 .med__escenario { height: 620px; }
+  .lum7, .v6 .med__escenario { margin-top: 80px; }
+  .banda { grid-template-columns: 1fr 1fr; }
+  .banda--arriba { height: auto; }
+  .banda--arriba .banda__c { padding-top: 14px; padding-bottom: 14px; }
+  .banda--arriba .banda__c:nth-child(1), .banda--arriba .banda__c:nth-child(3) { display: none; }
+  .banda__c + .banda__c { box-shadow: none; }
+  .banda--abajo { padding: 20px 0 22px; grid-template-columns: 1fr; gap: 10px; }
+  .banda__c--ancho { grid-column: 1; }
+  .banda h3 { font-size: 1.8rem; }
+  .banda p { font-size: 15px; }
+  .banda__ir span { height: 40px; padding: 0 14px; font-size: 13.5px; }
+  .lum7__vidrio, .v6 .med__texto { grid-template-columns: 1fr; padding: 20px 0 22px; gap: 10px; }
+  .lum7__vidrio > *, .v6 .med__texto > *, .lum7__vidrio > :first-child, .v6 .med__texto > :first-child { grid-column: 1; grid-row: auto; box-shadow: none; padding: 0 18px; }
+  .v6 .med__simbolo img { width: 120px; }
 }
+.lum7 .acento, .banda__c em { color: #4A555B; }
+.banda__ir span { white-space: nowrap; }

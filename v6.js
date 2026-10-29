@@ -232,10 +232,10 @@ $$("[data-ruta]").forEach((b) => b.tagName === "BUTTON" && b.addEventListener("c
 $$("[data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
 
 /* ── Texto que se escribe y se borra, como un teclado ── */
-function maquina(el, { una = false, lento = false } = {}) {
+function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
   const palabras = el.dataset.palabras.split("|");
   let i = el.textContent ? 1 : 0, vivo = false, turno = 0;
-  const tipear = lento ? 28 : 62, borrar = 30;
+  const tipear = ms || (lento ? 28 : 62), borrar = 30;
   async function correr() {
     const mio = ++turno, sigue = () => vivo && mio === turno;
     if (el.textContent) { await esperar(2200); }
@@ -244,7 +244,7 @@ function maquina(el, { una = false, lento = false } = {}) {
       let letras = Array.from(el.textContent);
       while (letras.length && sigue()) { letras.pop(); el.textContent = letras.join(""); await esperar(borrar); }
       const w = Array.from(palabras[i % palabras.length]);
-      for (let k = 1; k <= w.length && sigue(); k++) { el.textContent = w.slice(0, k).join(""); await esperar(tipear + Math.random() * (lento ? 18 : 45)); }
+      for (let k = 1; k <= w.length && sigue(); k++) { el.textContent = w.slice(0, k).join(""); await esperar(tipear + Math.random() * (ms ? ms * .6 : lento ? 18 : 45)); }
       el.classList.remove("escribiendo");
       if (una || !sigue()) { vivo = false; return; }
       i++; await esperar(2400);
@@ -278,15 +278,58 @@ function pintarDesafio() {
   });
 }
 
-/* ── La frase: se escribe en pantalla, una parte a la vez ── */
+/* ── Scroll suave (solo con mouse o trackpad; en el celular queda el nativo) y bloqueo mientras algo se escribe ── */
+const suave = { y: scrollY, meta: scrollY, activo: false, bloqueado: false };
 {
-  const sec = $("#fr7"), ls = $$(".fr7__l", sec), op = $("#fr7-op"), ms = ls.map((l) => maquina($(".tipeo", l), { una: true, lento: true }));
-  let hecho = false;
-  alVer(sec, async () => {
-    if (hecho) return; hecho = true;
-    for (const [i, l] of ls.entries()) { l.classList.add("on"); await ms[i].iniciar(); await esperar(300); if (i < ls.length - 1) l.classList.remove("on"); }
-    op.classList.add("on");
-  }, null, .5);
+  const fino = !QUIETO && matchMedia("(pointer: fine)").matches;
+  const paso = () => {
+    suave.y += (suave.meta - suave.y) * .12;
+    if (Math.abs(suave.meta - suave.y) < .5) { suave.y = suave.meta; suave.activo = false; suave.viaje = false; }
+    scrollTo(0, suave.y);
+    if (suave.activo) requestAnimationFrame(paso);
+  };
+  addEventListener("wheel", (e) => {
+    if (e.ctrlKey) return;
+    if (suave.bloqueado) { e.preventDefault(); return; }
+    if (!fino || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault(); suave.viaje = false;
+    if (!suave.activo) suave.y = suave.meta = scrollY;
+    const d = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? innerHeight : 1);
+    suave.meta = clamp(suave.meta + d, 0, document.documentElement.scrollHeight - innerHeight);
+    if (!suave.activo) { suave.activo = true; requestAnimationFrame(paso); }
+  }, { passive: false });
+  addEventListener("touchmove", (e) => suave.bloqueado && e.preventDefault(), { passive: false });
+  addEventListener("keydown", (e) => { if (suave.bloqueado && [" ", "PageDown", "PageUp", "ArrowDown", "ArrowUp", "End", "Home"].includes(e.key)) e.preventDefault(); });
+  addEventListener("scroll", () => { if (!suave.activo) suave.y = suave.meta = scrollY; }, { passive: true });
+  // los enlaces internos viajan suave y no se detienen en la frase
+  $$('a[href^="#"]:not([data-ir])').forEach((a) => a.addEventListener("click", (e) => {
+    const t = a.getAttribute("href") === "#inicio" ? document.body : $(a.getAttribute("href")); if (!t || QUIETO) return;
+    e.preventDefault(); suave.viaje = true; suave.y = scrollY;
+    suave.meta = clamp(t.getBoundingClientRect().top + scrollY - (t === document.body ? 0 : 64), 0, document.documentElement.scrollHeight - innerHeight);
+    if (!suave.activo) { suave.activo = true; requestAnimationFrame(paso); }
+  }));
+}
+function irA(y) { suave.activo = false; suave.y = suave.meta = y; scrollTo(0, y); }
+
+/* ── La frase: al llegar, la página se detiene hasta que termina de escribirse ── */
+let pintarFrase = () => {};
+{
+  const sec = $("#frase"), ls = $$(".fr7__l", sec), op = $("#fr7-op"), ms = ls.map((l) => maquina($(".tipeo", l), { una: true, ms: 20 }));
+  let estado = 0; // 0 esperando · 1 escribiendo · 2 listo
+  async function escribir() {
+    estado = 1; suave.bloqueado = true;
+    const r = sec.getBoundingClientRect(); irA(Math.round(scrollY + r.top + r.height / 2 - innerHeight / 2));
+    const suelta = setTimeout(() => (suave.bloqueado = false), 9000);
+    for (const [i, l] of ls.entries()) { l.classList.add("on"); await ms[i].iniciar(); await esperar(260); if (i < ls.length - 1) l.classList.remove("on"); }
+    op.classList.add("on"); await esperar(500);
+    clearTimeout(suelta); suave.bloqueado = false; estado = 2;
+  }
+  pintarFrase = () => {
+    if (estado || suave.viaje) return;
+    const r = sec.getBoundingClientRect(), centro = r.top + r.height / 2;
+    if (QUIETO) { if (r.top < innerHeight) { estado = 2; ms.forEach((m) => m.iniciar()); op.classList.add("on"); } return; }
+    if (centro <= innerHeight * .55 && r.bottom > innerHeight * .3) escribir();
+  };
 }
 
 /* ── Propuesta: las áreas entran una a una ── */
@@ -381,6 +424,6 @@ function pintarProgreso() { progreso.style.setProperty("--p", clamp(scrollY / (d
 
 /* ── Un solo bucle de scroll ── */
 let pendiente = false;
-function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarPoderes(); pintarLumina(); }); }
+function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarFrase(); pintarPoderes(); pintarLumina(); }); }
 addEventListener("scroll", alScroll, { passive: true }); addEventListener("resize", alScroll); addEventListener("ruta", alScroll);
 alScroll();
