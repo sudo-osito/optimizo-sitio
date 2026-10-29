@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Optimizo · Superpoderes para tu empresa</title>
+<meta name="description" content="Inteligencia artificial, software y automatización que optimizan tus procesos, potencian a tu equipo y agilizan cada decisión. Lumina y Médula, de Optimizo.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="recursos/optimizo-isotipo.svg" type="image/svg+xml">
+<link rel="preload" href="recursos/fuentes/inter-opsz.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="recursos/fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css">
+<link rel="stylesheet" href="v4.css">
+<link rel="stylesheet" href="v6.css">
+</head>
+<body class="v6">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-abajo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-pausa" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></symbol>
+    <symbol id="i-alerta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.8 19.5h18.4z"/><path d="M12 10v4.2M12 17.2v.01"/></symbol>
+    <symbol id="i-ojo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-memoria" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6" r="1.8"/><circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="18" r="1.8"/><path d="M6.4 7.2l3.6 3M17.6 7.2l-3.6 3M6.4 16.8l3.6-3M17.6 16.8l-3.6-3"/></symbol>
+    <symbol id="i-agentes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16.5 14.6c2.3.2 4 1.7 4.5 4.4"/></symbol>
+    <symbol id="i-candado" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-rayo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z"/></symbol>
+    <symbol id="i-campana" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></symbol>
+    <symbol id="i-registro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-escudo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></symbol>
+    <symbol id="i-trafico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2.5" width="8" height="19" rx="3"/><circle cx="12" cy="7" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="17" r="1.5"/></symbol>
+    <symbol id="i-reloj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></symbol>
+    <symbol id="i-cuerpo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="4.8" r="2"/><path d="M8 21l2-6.5-3-2.5 2.5-4h5l2.5 4-3 2.5 2 6.5"/></symbol>
+    <symbol id="iso" viewBox="0 0 80 80"><defs><linearGradient id="g-iso" x1="0" x2="1"><stop offset="0" stop-color="#91CEC4"/><stop offset="1" stop-color="#387E80"/></linearGradient><mask id="m-iso"><rect width="80" height="80" fill="#fff"/><circle cx="44" cy="46" r="7" fill="#000"/><circle cx="26.6" cy="28.6" r="10" fill="#000"/></mask></defs><circle cx="44" cy="46" r="27" fill="url(#g-iso)" mask="url(#m-iso)"/><circle cx="19.5" cy="21.5" r="8" fill="url(#g-iso)"/></symbol>
+    <!-- Lumina (provisorio): un lente con el punto de luz que se escapa, primo del punto de Optimizo -->
+    <symbol id="lumina" viewBox="0 0 48 48"><circle cx="22" cy="26" r="17" fill="none" stroke="#FFAE1A" stroke-width="3.6"/><circle cx="22" cy="26" r="7.5" fill="#FFAE1A"/><circle cx="38.5" cy="9.5" r="4.2" fill="#FFD37A"/></symbol>
+  </defs>
+</svg>
+
+<div class="reticula" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header class="nav7" id="nav">
+  <div class="envoltura nav7__in">
+    <a class="nav7__logo" href="#inicio" aria-label="Optimizo, inicio"><img src="recursos/optimizo-logo.svg" alt="optimizo" width="96" height="30"></a>
+    <nav class="nav7__links" aria-label="Secciones">
+      <a href="#camino" data-ir="lumina">Lumina</a>
+      <a href="#camino" data-ir="medula">Médula</a>
+      <a href="#propuesta">Propuesta</a>
+      <a href="#superpoderes">Superpoderes</a>
+      <a href="#metodo">Cómo trabajamos</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <a class="btn7 btn7--chico" href="#conversemos" data-discovery>Agenda tu Discovery</a>
+    <button class="nav7__menu" id="nav-menu" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir el menú"><i></i><i></i></button>
+  </div>
+  <nav class="menu7" id="menu-movil" aria-label="Menú">
+    <a href="#camino" data-ir="lumina">Lumina</a>
+    <a href="#camino" data-ir="medula">Médula</a>
+    <a href="#propuesta">Propuesta de valor</a>
+    <a href="#superpoderes">Superpoderes</a>
+    <a href="#metodo">Cómo trabajamos</a>
+    <a href="#preguntas">Preguntas</a>
+    <a class="btn7" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+  </nav>
+  <div class="progreso7" aria-hidden="true"><i id="progreso"></i></div>
+</header>
+
+<main id="inicio">
+
+  <!-- 01 · Héroe: aurora clara con los colores de Optimizo. Cuando llegue el video del banner, va dentro de .h7__video -->
+  <section class="h7" id="heroe" aria-labelledby="h-heroe">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="h7__video" aria-hidden="true"><!-- <video autoplay muted loop playsinline poster="…"><source src="…" type="video/mp4"></video> --></div>
+    <div class="envoltura h7__in">
+      <p class="eti" data-r>Inteligencia artificial · Software · Automatización</p>
+      <h1 class="h7__t" id="h-heroe"><span class="arma">Diseñamos superpoderes</span><span class="h7__linea">para <span class="tipeo" id="tipeo" data-palabras="tu operación|tus ventas|tu planta|tu gerencia|tus finanzas|tu empresa">tu operación</span><i class="cursor" aria-hidden="true"></i></span></h1>
+      <div class="h7__pie">
+        <p class="bajada" data-r style="--d:.35s">Inteligencia artificial, software y automatización que optimizan tus procesos, potencian a tu equipo y agilizan cada decisión.</p>
+        <a class="btn7" href="#conversemos" data-discovery data-r style="--d:.5s">Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · El desafío: columna fija a la izquierda; los cinco dolores se encienden al pasar, y cada uno escribe su síntoma -->
+  <section class="d7" id="desafio" aria-labelledby="h-desafio">
+    <div class="envoltura d7__in">
+      <div class="d7__izq">
+        <p class="eti" data-r>El desafío</p>
+        <h2 class="t7 arma" id="h-desafio">La tecnología avanza. <span class="gris">¿Tus procesos avanzan con ella?</span></h2>
+        <p class="bajada" data-r>Hoy las empresas cuentan con más herramientas tecnológicas que nunca. Sin embargo, muchas siguen enfrentando problemas que llevan años intentando resolver.</p>
+      </div>
+      <ol class="d7__lista" id="d7">
+        <li class="dolor7">
+          <h3>Información fragmentada</h3>
+          <p>Los datos existen, pero están dispersos entre aplicaciones, documentos, planillas y personas.</p>
+          <div class="eco"><img src="recursos/logos/whatsapp.svg" alt=""><span class="eco__de">Equipo operaciones</span><span class="tipeo" data-palabras="¿Cuál Excel? 😅" data-una></span><i class="cursor"></i></div>
+        </li>
+        <li class="dolor7">
+          <h3>Tiempo dedicado a tareas repetitivas</h3>
+          <p>Profesionales capacitados destinan parte importante de su jornada a buscar información, actualizar registros y ejecutar tareas que podrían automatizarse.</p>
+          <div class="eco"><img src="recursos/logos/gmail.svg" alt=""><span class="eco__de">Recibidos</span><span class="tipeo" data-palabras="RE: RE: RE: Cotización" data-una></span><i class="cursor"></i></div>
+        </li>
+        <li class="dolor7">
+          <h3>Falta de visibilidad y control</h3>
+          <p>Lo que sucede en la operación no siempre se transforma en información útil para anticipar problemas y tomar decisiones.</p>
+          <div class="eco"><img src="recursos/logos/microsoftexcel.svg" alt=""><span class="eco__de">Inventario_FINAL_v3 (2).xlsx</span><span class="tipeo eco--riesgo" data-palabras="#REF!" data-una></span><i class="cursor"></i></div>
+        </li>
+        <li class="dolor7">
+          <h3>Procesos desconectados</h3>
+          <p>Las personas y los sistemas trabajan, pero muchas veces lo hacen de manera aislada, duplicando esfuerzos y dificultando la coordinación.</p>
+          <div class="eco"><img src="recursos/logos/googlecalendar.svg" alt=""><span class="eco__de">Hoy</span><span class="tipeo" data-palabras="10:00 Revisión de inventario · 10:00 Reunión con Quillay" data-una></span><i class="cursor"></i></div>
+        </li>
+        <li class="dolor7">
+          <h3>Gestión reactiva</h3>
+          <p>Los problemas suelen detectarse cuando ya ocurrieron, en lugar de contar con herramientas que permitan identificar condiciones de riesgo y actuar oportunamente.</p>
+          <div class="eco"><span class="eco__alerta" aria-hidden="true"><svg><use href="#i-alerta"/></svg></span><span class="eco__de">Pasillo 2</span><span class="tipeo" data-palabras="Accidente evitado por poco. Nadie lo vio venir." data-una></span><i class="cursor"></i></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 03 · La frase: se lee al ritmo del scroll, palabra por palabra -->
+  <section class="fr7" id="frase" aria-label="El problema">
+    <div class="fr7__fijo">
+      <div class="envoltura">
+        <p class="fr7__t" id="fr7">El problema no siempre es la falta de tecnología. Muchas veces es que la tecnología disponible todavía no está trabajando a favor de la empresa.</p>
+        <p class="fr7__op" id="fr7-op">Ahí es donde encontramos nuestra oportunidad de generar valor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Lumina y Médula: elige tu camino -->
+  <section class="camino envoltura" id="camino" aria-labelledby="h-camino">
+    <div class="camino__cab">
+      <p class="eti" data-r>Soluciones</p>
+      <h2 class="t7 arma" id="h-camino">Superpoderes que ya estamos construyendo. <span class="gris">Elige tu camino.</span></h2>
+    </div>
+    <div class="pts">
+      <button class="pt pt--lumina" data-ruta="lumina" aria-controls="ruta-lumina">
+        <div class="pt__vista">
+          <video muted loop playsinline preload="metadata" poster="recursos/video/bodega.jpg" aria-hidden="true"><source src="recursos/video/bodega.mp4" type="video/mp4"></video>
+          <canvas aria-hidden="true"></canvas>
+          <span class="pt__vivo"><i></i>CAM 01 · EN VIVO</span>
+        </div>
+        <div class="pt__info">
+          <span class="pt__marca"><svg><use href="#lumina"/></svg><b>Lumina</b><small>de Optimizo</small></span>
+          <h3>Cámaras que entienden lo que ven.</h3>
+          <p>Detecta riesgos, avisa a tiempo y activa respuestas en tu operación.</p>
+          <span class="pt__ir">Entrar a Lumina <svg><use href="#i-flecha"/></svg></span>
+        </div>
+      </button>
+      <button class="pt pt--medula" data-ruta="medula" aria-controls="ruta-medula">
+        <div class="pt__vista">
+          <canvas data-aura="puerta" aria-hidden="true"></canvas>
+          <img class="pt__sim" src="recursos/medula-marca-blanca.svg" alt="">
+          <span class="lite pt__lite" data-lite><span class="lite__sim"><img src="recursos/medula-marca-blanca.svg" alt=""></span><span class="lite__txt">Leyendo Bsale…</span></span>
+        </div>
+        <div class="pt__info">
+          <span class="pt__marca"><img src="recursos/medula-marca.svg" alt=""><b>Médula</b><small>de Optimizo</small></span>
+          <h3>El sistema nervioso de tu empresa.</h3>
+          <p>Conecta tus sistemas para que personas y agentes trabajen con el mismo contexto.</p>
+          <span class="pt__ir">Entrar a Médula <svg><use href="#i-flecha"/></svg></span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <div class="rutas" id="rutas">
+    <div class="cambiar"><div class="cambiar__in" role="group" aria-label="Cambiar de solución">
+      <button data-ruta="lumina" aria-pressed="false"><i style="background:var(--lumina)"></i>Lumina</button>
+      <button data-ruta="medula" aria-pressed="false"><i style="background:var(--m-impulso)"></i>Médula</button>
+    </div></div>
+    <p class="sin-ruta">Elige un camino para ver la solución por dentro.</p>
+
+    <!-- Ruta · Lumina -->
+    <section class="ruta lumina" id="ruta-lumina" data-ruta="lumina" aria-labelledby="h-lumina">
+      <div class="lum__heroe envoltura">
+        <span class="lum__marca" data-r><svg><use href="#lumina"/></svg><b>Lumina</b><small>de Optimizo</small></span>
+        <h2 class="t-heroe arma" id="h-lumina">Convertimos cámaras en <span class="acento">decisiones.</span></h2>
+        <p class="bajada" data-r>Registrar lo que pasa no es lo mismo que entenderlo. Lumina reconoce lo que importa en tu operación, avisa a tiempo y activa respuestas.</p>
+      </div>
+      <div class="lum__escena" id="lum-escena">
+        <div class="lum__fijo envoltura">
+          <div class="lum__pasos">
+            <div class="lum__paso activo"><span class="num">01 · DETECTA</span><h3>Ve a cada persona y vehículo.</h3><p>Desde el primer cuadro, el modelo reconoce personas, montacargas y objetos. Cuadro a cuadro, en tiempo real.</p></div>
+            <div class="lum__paso"><span class="num">02 · ENTIENDE</span><h3>Sabe cuándo algo es un riesgo.</h3><p>Zonas restringidas, distancias mínimas, condiciones definidas para tu proceso.</p></div>
+            <div class="lum__paso"><span class="num">03 · ACTÚA</span><h3>Avisa y responde en segundos.</h3><p>Notifica a la persona correcta, enciende balizas y registra el evento.</p></div>
+            <div class="lum__paso"><span class="num">04 · MIDE</span><h3>Cada evento te enseña algo.</h3><p>Indicadores por zona y por semana para decidir dónde mejorar.</p></div>
+            <div class="lum__marcas" id="lum-marcas"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div>
+            <div class="monitor" id="monitor" data-paso="0">
+              <video muted loop playsinline preload="auto" poster="recursos/video/bodega.jpg" aria-label="Centro de distribución visto por Lumina"><source src="recursos/video/bodega.mp4" type="video/mp4"></video>
+              <canvas aria-hidden="true"></canvas>
+              <div class="hud"><span><i></i>CAM 01 · CENTRO DE DISTRIBUCIÓN</span><span class="conteo" id="conteo-cam"><b>2</b> PERSONAS · <b>1</b> MONTACARGAS</span></div>
+              <div class="registro">
+                <div style="--d:.1s"><span class="baliza"></span><b>BALIZA</b> pasillo 2 encendida</div>
+                <div style="--d:.25s"><b>AVISO</b> → Diego · Operaciones</div>
+                <div style="--d:.4s"><b>REGISTRO</b> evento #0147 guardado</div>
+              </div>
+              <div class="aviso" role="status">
+                <div class="aviso__ico"><svg><use href="#i-alerta"/></svg></div>
+                <div><small>LUMINA · AHORA</small><b>Montacargas cerca de una persona</b><span>Zona 2 · Cámara 01</span></div>
+              </div>
+              <div class="tablero" aria-hidden="true">
+                <div><h5>Eventos esta semana</h5><div class="tablero__num" id="num-eventos">0<small>en 4 zonas</small></div>
+                  <div class="semana"><i data-h="30%"></i><i data-h="18%" style="--d:.05s"></i><i data-h="45%" style="--d:.1s"></i><i class="pico" data-h="100%" style="--d:.15s"></i><i data-h="36%" style="--d:.2s"></i><i data-h="20%" style="--d:.25s"></i><i data-h="8%" style="--d:.3s"></i></div></div>
+                <div><h5>Por zona</h5><div class="zonas">
+                  <div class="zona"><span>Zona 1</span><div class="zona__barra"><i data-w="14%"></i></div><b>1</b></div>
+                  <div class="zona zona--alta"><span>Zona 2</span><div class="zona__barra"><i data-w="100%" style="--d:.1s"></i></div><b>7</b></div>
+                  <div class="zona"><span>Zona 3</span><div class="zona__barra"><i data-w="29%" style="--d:.2s"></i></div><b>2</b></div>
+                  <div class="zona"><span>Zona 4</span><div class="zona__barra"><i data-w="3%" style="--d:.3s"></i></div><b>0</b></div></div></div>
+              </div>
+            </div>
+            <p class="lum__nota">Video de referencia con detecciones reales del modelo · indicadores de demostración</p>
+          </div>
+        </div>
+      </div>
+      <div class="lum__usos envoltura">
+        <h3 class="t-1 arma">Una cámara. <span class="acento">Muchos superpoderes.</span></h3>
+        <div class="usos">
+          <div class="uso" data-r><svg><use href="#i-escudo"/></svg><b>Seguridad industrial</b><p>Zonas restringidas, EPP y proximidad persona–vehículo.</p></div>
+          <div class="uso" data-r style="--d:.05s"><svg><use href="#i-trafico"/></svg><b>Tráfico interno</b><p>Cruces, puntos ciegos y balizas que se encienden solas.</p></div>
+          <div class="uso" data-r style="--d:.1s"><svg><use href="#i-reloj"/></svg><b>Productividad</b><p>Tiempos de espera, conteos y cuellos de botella.</p></div>
+          <div class="uso" data-r style="--d:.15s"><svg><use href="#i-lupa"/></svg><b>Control de calidad</b><p>Defectos visibles y piezas fuera de parámetro.</p></div>
+          <div class="uso" data-r style="--d:.2s"><svg><use href="#i-cuerpo"/></svg><b>Ergonomía</b><p>Posturas y movimientos que conviene evaluar.</p></div>
+        </div>
+        <div class="lum__planta">
+          <div data-r><b>Hacemos visible lo que pasa inadvertido.</b><p>Partimos definiendo qué observar, qué reconocer y qué respuesta necesita cada evento.</p></div>
+          <div data-r style="--d:.06s"><b>Inteligencia en tu planta.</b><p>El análisis ocurre donde se generan las imágenes, sin enviar video continuamente afuera.</p></div>
+          <div data-r style="--d:.12s"><b>Validado en tu operación real.</b><p>Probamos detección, alertas y respuestas en terreno, junto a tus medidas de seguridad.</p></div>
+        </div>
+      </div>
+      <div class="otro"><button class="boton boton--vidrio" data-ruta="medula">Ahora mira Médula <svg><use href="#i-flecha"/></svg></button></div>
+    </section>
+
+    <!-- Ruta · Médula -->
+    <section class="ruta medula" id="ruta-medula" data-ruta="medula" aria-labelledby="h-medula">
+      <div class="med__escenario">
+        <canvas data-aura="escenario" aria-hidden="true"></canvas>
+        <div class="med__in">
+          <div class="med__simbolo" data-r><img src="recursos/medula-marca-blanca.svg" alt=""></div>
+          <div class="med__texto">
+            <span class="marca-m" data-r><img src="recursos/medula-marca-blanca.svg" alt=""><b>Médula</b><span>de Optimizo</span></span>
+            <h2 class="t-heroe arma" id="h-medula">El sistema nervioso de tu empresa.</h2>
+            <p class="bajada" data-r>Médula conecta lo que hoy trabaja separado: tus aplicaciones, sistemas e información, en un solo ecosistema donde personas y agentes de IA trabajan con el mismo contexto.</p>
+            <div class="med__acc" data-r>
+              <span class="lite" data-lite><span class="lite__sim"><img src="recursos/medula-marca-blanca.svg" alt=""></span><span class="lite__txt">Leyendo Bsale…</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="med__bloque">
+        <div class="med__cab envoltura">
+          <span class="rotulo" data-r>Conecta</span>
+          <h3 class="t-1 arma">Todo lo que ya usas, <span style="color:var(--m-acento)">en una sola memoria.</span></h3>
+        </div>
+        <div class="cinta-apps" aria-label="Integraciones">
+          <div class="cinta-apps__fila" id="fila-a"></div>
+          <div class="cinta-apps__fila cinta-apps__fila--b" id="fila-b"></div>
+        </div>
+        <div class="desde envoltura">Úsalo desde <span><img src="recursos/logos/claude.svg" alt="">Claude</span><span><img src="recursos/logos/openai.svg" alt="">ChatGPT</span> el que tu equipo ya tiene.</div>
+      </div>
+      <div class="envoltura">
+        <div class="med__demo" id="med-demo">
+          <canvas data-aura="demo" aria-hidden="true"></canvas>
+          <div class="med__demo__txt">
+            <span class="rotulo" data-r>Pregunta. Médula actúa.</span>
+            <h3 class="t-1 arma">Información confiable. Acciones coordinadas.</h3>
+            <p data-r>Médula busca en cada sistema, cita sus fuentes y, cuando lo apruebas, ejecuta.</p>
+          </div>
+          <div class="chat" id="chat" aria-live="polite">
+            <div class="chat__cab"><img src="recursos/medula-marca.svg" alt="">Médula<span>Quillay · contexto compartido</span></div>
+            <div class="msj chat__yo">¿Qué cotizaciones de Quillay siguen abiertas?</div>
+            <div class="msj chat__lite"><span class="lite__sim"><img src="recursos/medula-marca-blanca.svg" alt=""></span><span class="lite__txt">Revisando Bsale, Gmail y Zoho…</span></div>
+            <div class="msj chat__resp">Tres, por <b>$18,4 M</b>. La más antigua lleva <b>12 días</b> sin respuesta. ¿Le escribo a Camila para hacer seguimiento?
+              <div class="cita"><span><img src="recursos/logos/bsale.png" alt="">Bsale</span><span><img src="recursos/logos/gmail.svg" alt="">Gmail</span><span><img src="recursos/logos/zoho.svg" alt="">Zoho CRM</span></div>
+              <div class="chat__botones"><span class="si">Sí, escríbele</span><span>Ahora no</span></div></div>
+            <div class="msj chat__hecho">✓ Correo enviado a Camila · seguimiento creado en Zoho</div>
+          </div>
+        </div>
+        <div class="pilares">
+          <div class="pilar" data-r><em>CONECTA</em><b>Integra lo que ya usas.</b><p>ERP, correo, planillas, CRM y mensajería conversan entre sí.</p></div>
+          <div class="pilar" data-r style="--d:.06s"><em>ENTIENDE</em><b>Un mismo contexto para todos.</b><p>La información correcta para quien la necesita, con permisos y reglas.</p></div>
+          <div class="pilar" data-r style="--d:.12s"><em>ACTÚA</em><b>Agentes que ejecutan.</b><p>Automatizan procesos y coordinan acciones, con tu aprobación.</p></div>
+        </div>
+      </div>
+      <div class="otro"><button class="boton boton--m" data-ruta="lumina">Ahora mira Lumina <svg><use href="#i-flecha"/></svg></button></div>
+    </section>
+  </div>
+
+  <!-- 05 · Propuesta de valor: columna fija y las áreas de la empresa como filas -->
+  <section class="pr7" id="propuesta" aria-labelledby="h-prop">
+    <div class="envoltura pr7__in">
+      <div class="pr7__izq">
+        <p class="eti" data-r>Propuesta de valor</p>
+        <h2 class="t7 arma" id="h-prop">Entendemos tus procesos. <span class="gris">Diseñamos cómo optimizarlos.</span></h2>
+        <p class="bajada" data-r>Nuestro punto de partida no es un software, una herramienta o una tecnología determinada. <b>Nuestro punto de partida es tu operación.</b></p>
+        <a class="btn7" href="#conversemos" data-discovery data-r>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+      </div>
+      <div class="pr7__areas" id="areas">
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span>
+          <h3>Operaciones</h3>
+          <p>Procesos que se coordinan solos y alertas cuando algo se desvía.</p>
+          <div class="area7__tags"><a href="#camino" data-ir="medula">Médula</a><span>Automatización</span></div>
+        </article>
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h11v9.5H3zM14 10h4l3 3.2V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
+          <h3>Logística</h3>
+          <p>Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.</p>
+          <div class="area7__tags"><a href="#camino" data-ir="lumina">Lumina</a></div>
+        </article>
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/></svg></span>
+          <h3>Ventas</h3>
+          <p>Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.</p>
+          <div class="area7__tags"><a href="#camino" data-ir="medula">Médula</a><span>Agentes</span></div>
+        </article>
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
+          <h3>Administración y finanzas</h3>
+          <p>Facturas, conciliaciones y reportes que se arman solos.</p>
+          <div class="area7__tags"><span>Automatización</span><a href="#camino" data-ir="medula">Médula</a></div>
+        </article>
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg></span>
+          <h3>Prevención de riesgos</h3>
+          <p>EPP, zonas restringidas y registro de eventos con evidencia.</p>
+          <div class="area7__tags"><a href="#camino" data-ir="lumina">Lumina</a></div>
+        </article>
+        <article class="area7">
+          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4M7 12.5l3-3 2 2 4-4"/></svg></span>
+          <h3>Gerencia</h3>
+          <p>La información de toda la empresa, lista para decidir.</p>
+          <div class="area7__tags"><a href="#camino" data-ir="medula">Médula</a><a href="#camino" data-ir="lumina">Lumina</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · Superpoderes: la palabra corre de lado a lado; a la izquierda los seis, a la derecha el que está activo, funcionando -->
+  <section class="sp7" id="superpoderes" aria-labelledby="h-poderes">
+    <div class="marq" aria-hidden="true"><div class="marq__in"><span>Superpoderes.</span><span>Superpoderes.</span><span>Superpoderes.</span><span>Superpoderes.</span></div></div>
+    <div class="envoltura sp7__cab">
+      <p class="eti" data-r>Superpoderes</p>
+      <h2 class="t7 arma" id="h-poderes">La tecnología es la herramienta. <span class="gris">El superpoder es lo que logras con ella.</span></h2>
+      <p class="bajada" data-r>No como una promesa de resultados imposibles, sino como las mejoras concretas que podemos desarrollar con inteligencia artificial y tecnología.</p>
+    </div>
+    <div class="envoltura sp7__in" id="sp7">
+      <div class="sp7__lista" role="tablist" aria-label="Superpoderes">
+        <button class="sp7__tab" role="tab" aria-selected="true" aria-controls="esc-tareas"><span class="sp7__nom">Eficiencia</span><span class="sp7__frase">Aprovecha mejor cada recurso.</span><span class="sp7__det"><span>Simplificamos tareas, automatizamos procesos y reducimos actividades que consumen tiempo sin generar valor. Buscamos que las personas y los equipos puedan concentrarse en lo que realmente importa.</span></span><i class="sp7__barra"></i></button>
+        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-camara"><span class="sp7__nom">Seguridad</span><span class="sp7__frase">Anticipa riesgos y protege tu operación.</span><span class="sp7__det"><span>Desarrollamos herramientas inteligentes para identificar condiciones de riesgo, generar alertas oportunas y fortalecer la prevención, complementando los controles y protocolos de seguridad existentes.</span></span><i class="sp7__barra"></i></button>
+        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-insight"><span class="sp7__nom">Inteligencia</span><span class="sp7__frase">Convierte información en decisiones ágiles.</span><span class="sp7__det"><span>Conectamos información, identificamos patrones y desarrollamos herramientas que permiten comprender mejor lo que ocurre, anticipar situaciones y tomar decisiones con mayor respaldo.</span></span><i class="sp7__barra"></i></button>
+        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-lotes"><span class="sp7__nom">Calidad</span><span class="sp7__frase">Mejora la precisión y consistencia.</span><span class="sp7__det"><span>Incorporamos herramientas que ayudan a estandarizar procesos, detectar desviaciones, fortalecer la trazabilidad y reducir errores que afectan la calidad del trabajo.</span></span><i class="sp7__barra"></i></button>
+        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-barras"><span class="sp7__nom">Rentabilidad</span><span class="sp7__frase">Haz que tus recursos generen más valor.</span><span class="sp7__det"><span>Identificamos oportunidades para reducir costos, disminuir desperdicios, recuperar tiempo y mejorar el aprovechamiento de los recursos disponibles.</span></span><i class="sp7__barra"></i></button>
+        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-pulso"><span class="sp7__nom">Continuidad</span><span class="sp7__frase">Mantén tus procesos bajo control.</span><span class="sp7__det"><span>Desarrollamos capacidades de monitoreo, alertas y análisis que ayudan a identificar desviaciones oportunamente y reducir el impacto de interrupciones evitables.</span></span><i class="sp7__barra"></i></button>
+      </div>
+      <div class="sp7__escenario">
+        <div class="esc7 activa" id="esc-tareas" data-escena="tareas" role="tabpanel">
+          <div class="tareas7">
+            <div class="tarea7"><img src="recursos/logos/gmail.svg" alt=""><span>Cotización a Quillay</span><em data-ok="Enviada">En curso</em></div>
+            <div class="tarea7"><img src="recursos/logos/bsale.png" alt=""><span>Factura de octubre</span><em data-ok="Emitida">En curso</em></div>
+            <div class="tarea7"><img src="recursos/logos/microsoftexcel.svg" alt=""><span>Inventario semanal</span><em data-ok="Actualizado">En curso</em></div>
+            <div class="tarea7"><img src="recursos/logos/whatsapp.svg" alt=""><span>Aviso de despacho</span><em data-ok="Avisado">En curso</em></div>
+          </div>
+        </div>
+        <div class="esc7" id="esc-camara" data-escena="camara" role="tabpanel">
+          <div class="cam7">
+            <video muted loop playsinline preload="none" poster="recursos/video/bodega.jpg" aria-hidden="true"><source src="recursos/video/bodega.mp4" type="video/mp4"></video>
+            <canvas aria-hidden="true"></canvas>
+            <div class="cam7__aviso"><span class="cam7__ico"><svg><use href="#i-alerta"/></svg></span><div><small>Lumina · ahora</small><b>Persona en zona restringida</b><span>Pasillo 4 · CAM 02</span></div></div>
+          </div>
+          <a class="esc7__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+        </div>
+        <div class="esc7" id="esc-insight" data-escena="insight" role="tabpanel">
+          <div class="ins7">
+            <div class="ins7__cab"><img src="recursos/medula-marca.svg" alt="">Médula</div>
+            <p class="ins7__txt"><span class="tipeo" data-palabras="Las ventas de la zona norte bajaron este mes. Tres clientes no han vuelto a comprar." data-una data-lento></span><i class="cursor"></i></p>
+            <svg viewBox="0 0 200 44" class="ins7__linea" aria-hidden="true"><polyline points="0,10 30,14 60,8 90,18 120,16 150,28 180,30 200,36" fill="none" stroke="#1B75FD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="100"/></svg>
+            <div class="ins7__citas"><span><img src="recursos/logos/bsale.png" alt="">Bsale</span><span><img src="recursos/logos/zoho.svg" alt="">Zoho CRM</span></div>
+          </div>
+          <a class="esc7__con" href="#camino" data-ir="medula"><img src="recursos/medula-marca.svg" alt="">Con Médula</a>
+        </div>
+        <div class="esc7" id="esc-lotes" data-escena="lotes" role="tabpanel">
+          <div class="lotes7"><div><span>Lote 0412</span><em>OK</em></div><div><span>Lote 0413</span><em>OK</em></div><div class="mal"><span>Lote 0414</span><em>Revisar</em></div><div><span>Lote 0415</span><em>OK</em></div></div>
+          <a class="esc7__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+        </div>
+        <div class="esc7" id="esc-barras" data-escena="barras" role="tabpanel">
+          <div class="barras7"><div class="barras7__g"><i style="--h:92%"><b>Jun</b></i><i style="--h:80%"><b>Jul</b></i><i style="--h:71%"><b>Ago</b></i><i style="--h:58%"><b>Sep</b></i><i style="--h:46%" class="hoy"><b>Oct</b></i></div><small>Horas en tareas manuales · ejemplo</small></div>
+        </div>
+        <div class="esc7" id="esc-pulso" data-escena="pulso" role="tabpanel">
+          <div class="pulso7"><div class="pulso7__cab"><span><i></i>Línea 2 · operando</span><span>Alerta resuelta 09:14</span></div><svg viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 H120 L135 70 L145 24 L158 110 L170 70 H300 L315 70 L325 24 L338 110 L350 70 H480 L495 70 L505 24 L518 110 L530 70 H600" fill="none" stroke="#387E80" stroke-width="2.5" stroke-linejoin="round" pathLength="100"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <p class="envoltura sp7__remate arma">No se trata de sumar tecnología. <span class="gris">Se trata de multiplicar lo que tu empresa es capaz de hacer.</span></p>
+  </section>
+
+  <!-- 07 · Cómo trabajamos: cuatro etapas en grilla; la activa se levanta y avanza sola -->
+  <section class="mt7" id="metodo" aria-labelledby="h-metodo">
+    <div class="envoltura mt7__in">
+      <div class="mt7__izq">
+        <p class="eti" data-r>Cómo trabajamos</p>
+        <h2 class="t7 arma" id="h-metodo">Primero entendemos. Después diseñamos. <span class="gris">Finalmente, medimos.</span></h2>
+        <p class="bajada" data-r>No prometemos un porcentaje universal de mejora. <b>Establecemos qué queremos mejorar, cómo lo vamos a medir y qué valor genera la solución.</b></p>
+        <a class="btn7" href="#conversemos" data-discovery data-r>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+      </div>
+      <div class="mt7__grilla" id="mt7">
+        <button class="paso7 activo"><span class="paso7__n">01</span><span class="paso7__et">Descubrir</span><h3>Descubrimos oportunidades</h3><p>Escuchamos a las personas, conocemos sus procesos y analizamos cómo funciona la operación.</p><i class="paso7__barra"></i></button>
+        <button class="paso7"><span class="paso7__n">02</span><span class="paso7__et">Priorizar</span><h3>Evaluamos y priorizamos</h3><p>Consideramos beneficios, costos, complejidad y recursos. Incluimos mejoras rápidas cuando son viables.</p><i class="paso7__barra"></i></button>
+        <button class="paso7"><span class="paso7__n">03</span><span class="paso7__et">Implementar</span><h3>Diseñamos e implementamos</h3><p>Por etapas que permiten validar avances, incorporar aprendizajes e integrar lo que ya usas.</p><i class="paso7__barra"></i></button>
+        <button class="paso7"><span class="paso7__n">04</span><span class="paso7__et">Medir</span><h3>Medimos y evolucionamos</h3><p>Comparamos la condición anterior con los resultados y acompañamos la evolución.</p><i class="paso7__barra"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · Preguntas -->
+  <section class="fq7" id="preguntas" aria-labelledby="h-faq">
+    <div class="envoltura fq7__in">
+      <div class="fq7__izq">
+        <p class="eti" data-r>Preguntas</p>
+        <h2 class="t7 arma" id="h-faq">Lo que todos nos preguntan.</h2>
+        <div class="fq7__otra" data-r><b>¿Tienes otra duda?</b><p>Cuéntanos qué necesitas mejorar.</p><a class="btn7" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a></div>
+      </div>
+      <div class="fq7__lista">
+        <details><summary><span>01</span>¿Tengo que llegar con la solución definida?<i></i></summary><p>No. Puedes llegar solo con el problema: un proceso que demora demasiado, información que cuesta encontrar o un riesgo que quieres controlar. Partimos entendiendo tu operación y juntos definimos qué conviene hacer.</p></details>
+        <details><summary><span>02</span>¿Tengo que cambiar los sistemas que ya uso?<i></i></summary><p>No necesariamente. Trabajamos con lo que tu empresa ya tiene (ERP, planillas, correo, CRM, mensajería) y lo conectamos. Si una herramienta nueva aporta, lo evaluamos contigo.</p></details>
+        <details><summary><span>03</span>¿Qué es Lumina?<i></i></summary><p>Es nuestro servicio de cámaras con inteligencia artificial. Reconoce personas, vehículos y condiciones definidas para tu proceso, avisa a la persona correcta y puede activar balizas o señales. Cada evento queda registrado para medir y mejorar.</p></details>
+        <details><summary><span>04</span>¿El video de Lumina sale de mi planta?<i></i></summary><p>La arquitectura prioriza el procesamiento local: el análisis ocurre cerca de donde se generan las imágenes, sin enviar video continuamente a servicios externos. La configuración final depende de cada instalación.</p></details>
+        <details><summary><span>05</span>¿Qué es Médula?<i></i></summary><p>Es el sistema nervioso de tu empresa: conecta tus aplicaciones, sistemas e información para que personas y agentes de IA trabajen con el mismo contexto, respetando los permisos de cada uno. Se puede usar desde ChatGPT o Claude.</p></details>
+        <details><summary><span>06</span>¿La IA va a reemplazar a mi equipo?<i></i></summary><p>No es el objetivo. La IA aporta velocidad y capacidad de análisis; las personas aportan experiencia, contexto y criterio. Buscamos que tu equipo dedique menos tiempo a lo repetitivo y más a lo que requiere su conocimiento.</p></details>
+        <details><summary><span>07</span>¿Cuánto demora ver resultados?<i></i></summary><p>Depende del desafío. Trabajamos por etapas y priorizamos victorias rápidas cuando son viables, para entregar valor desde el principio mientras avanzamos en lo más grande.</p></details>
+        <details><summary><span>08</span>¿Cómo saben si funcionó?<i></i></summary><p>Definimos los indicadores en el diagnóstico (tiempo por tarea, errores, cumplimiento, eventos de riesgo, etc.) y comparamos contra el punto de partida. No prometemos un porcentaje universal: acordamos qué mejorar y cómo medirlo.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · Cierre: vuelve la aurora; las situaciones del visitante se escriben y se borran -->
+  <section class="fin7" id="conversemos" aria-labelledby="h-cierre">
+    <div class="aurora aurora--fin" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="envoltura fin7__in">
+      <p class="eti" data-r>Conversemos</p>
+      <h2 class="fin7__t arma" id="h-cierre">¿Qué podríamos optimizar en tu empresa?</h2>
+      <p class="fin7__quizas" data-r>Quizás hoy tienes <span class="fin7__linea"><span class="tipeo" data-palabras="un proceso que consume demasiado tiempo.|información que cuesta encontrar.|controles que dependen de tareas manuales.|oportunidades de mejora que todavía no sabes cómo abordar."></span><i class="cursor"></i></span></p>
+      <p class="bajada" data-r>No necesitas llegar con la solución definida. Cuéntanos qué necesitas mejorar. Nosotros te ayudamos a explorar cómo hacerlo posible.</p>
+      <a class="btn7 btn7--grande" href="#conversemos" data-discovery data-r>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+      <p class="fin7__alcance" data-r>Desde una mejora puntual hasta un proyecto de transformación de mayor alcance.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="pie7">
+  <div class="envoltura">
+    <div class="pie7__arriba">
+      <div class="pie7__marca">
+        <a href="#inicio" aria-label="Optimizo, inicio"><img src="recursos/optimizo-logo.svg" alt="optimizo" width="110" height="34"></a>
+        <p>Diseñamos superpoderes para tu empresa.</p>
+      </div>
+      <nav class="pie7__cols" aria-label="Mapa del sitio">
+        <div><h4>Soluciones</h4><a href="#camino" data-ir="lumina">Lumina</a><a href="#camino" data-ir="medula">Médula</a></div>
+        <div><h4>Optimizo</h4><a href="#propuesta">Propuesta de valor</a><a href="#superpoderes">Superpoderes</a><a href="#metodo">Cómo trabajamos</a><a href="#preguntas">Preguntas</a></div>
+        <div><h4>Contacto</h4><a href="#conversemos" data-discovery>Agenda tu Discovery</a></div>
+      </nav>
+    </div>
+    <div class="pie7__abajo"><span>© 2026 Optimizo</span><span><a href="#">Términos</a><a href="#">Privacidad</a></span></div>
+  </div>
+</footer>
+
+<script src="recursos/video/detecciones.js"></script>
+<script src="v6.js" type="module"></script>
+</body>
+</html>
