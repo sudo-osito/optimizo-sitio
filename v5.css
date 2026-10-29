@@ -2,6 +2,7 @@
    Liviana de recorrer: una sola escena fija (el desafío), el resto se entiende de un vistazo y se mueve solo.
    Textos de la narrativa de Bastián. Sin píldoras, sin cuadraditos, sin ruido. */
 :root { --mandarina: #FF6A13; --mandarina-texto: #C2410C; }
+section[id] { scroll-margin-top: 64px; }
 
 /* ── Héroe: rubro en texto plano, una sola acción, el isotipo sólido ── */
 .h5 { position: relative; margin-top: -68px; overflow: hidden; background: radial-gradient(60% 70% at 74% 50%, #10222B 0%, var(--noche) 70%); }
@@ -221,12 +222,12 @@ a.pp__con:hover { filter: brightness(1.25); }
 
 /* ── Celular ── */
 @media (max-width: 1020px) {
-  .nav .boton { display: none; }
+  .nav__in > .boton { display: none; }
   .nav__menu { display: grid; margin-left: auto; }
   .menu-movil { display: grid; gap: 2px; max-height: 0; overflow: hidden; padding: 0 20px; transition: max-height .6s var(--llegada), padding .6s var(--llegada); }
   .nav.abierto .menu-movil { max-height: 520px; padding: 8px 20px 24px; }
   .menu-movil a:not(.boton) { padding: 13px 0; font-size: 19px; font-weight: 600; letter-spacing: -.02em; border-bottom: 1px solid currentColor; border-color: rgba(127, 127, 127, .18); }
-  .menu-movil .boton { margin-top: 16px; }
+  .nav .menu-movil .boton { margin-top: 18px; height: 52px; background: #fff; color: var(--tinta); }
   .nav.abierto { background: var(--noche); color: #fff; }
   .nav.abierto .logo-claro { display: none; } .nav.abierto .logo-oscuro { display: block; }
 
