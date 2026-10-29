@@ -816,3 +816,54 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 .area7__tags a.tag-marca { gap: 6px; padding-left: 8px; }
 .area7__tags a.tag-marca svg, .area7__tags a.tag-marca img { width: 15px; height: 15px; flex: none; }
 .area7__tags a.tag-marca[data-ir="medula"] { font-family: var(--geist); }
+
+/* ══════════ Celular: un recorrido propio ══════════ */
+@media (max-width: 1020px) {
+  /* sin las líneas de la retícula: en una columna cruzan el texto */
+  .reticula, .h7__video::after { display: none; }
+  .d7__in, .mt7__in, .fq7__in, .pr7__in, .sp7__cab, .v6 .camino__cab { border-top: 0; padding-top: 0; }
+  .d7, .pr7, .mt7, .fq7 { padding-top: 72px; padding-bottom: 24px; }
+  .v6 .camino { padding-top: 64px; }
+  .sp7 { padding-top: 64px; }
+  .marq { margin-bottom: 32px; }
+  .sp7__cab { margin-bottom: 36px; }
+  .sp7__remate { margin-top: 64px; font-size: 1.7rem; }
+  .fr7 { min-height: 70vh; padding: 72px 0; }
+  .sin-ruta { padding: 18px 20px 8px; }
+
+  /* El desafío: tarjetas que se deslizan, todas a color, cada una con su síntoma */
+  .d7__lista { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 28px -20px 0 !important; padding: 0 20px 10px !important; scroll-padding-inline: 20px; scrollbar-width: none; }
+  .d7__lista::-webkit-scrollbar { display: none; }
+  .dolor7 { flex: 0 0 84%; scroll-snap-align: start; border: 0 !important; padding: 24px 22px 22px; border-radius: 24px; background: var(--nube); display: flex; flex-direction: column; }
+  .dolor7 h3 { color: var(--tinta7); font-size: 1.45rem; }
+  .dolor7 p { color: var(--texto7-2); font-size: 15.5px; }
+  .dolor7 .eco { margin-top: auto; opacity: 1; transform: none; background: #fff; padding-top: 10px; }
+  .dolor7 p { margin-bottom: 18px; }
+  .d7__in > .d7__izq > .bajada { margin-top: 18px; }
+
+  /* Propuesta: el logo más chico y sin aire de sobra */
+  .ar8__centro { height: 96px; margin-bottom: 4px; }
+  .ar8__centro img { width: 72px; }
+  .pr7__areas { margin-top: 28px !important; }
+
+  /* Cómo trabajamos: una línea de tiempo vertical, compacta */
+  .mt7__grilla { margin-top: 40px; border: 0; gap: 0; padding-left: 28px; position: relative; }
+  .mt7__grilla::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--linea7); }
+  .paso7, .paso7 + .paso7 { min-height: 0; padding: 4px 0 26px; box-shadow: none !important; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: baseline; }
+  .paso7::before { display: none; }
+  .paso7::after { left: -26px; top: 9px; width: 12px; height: 12px; transform: none; box-shadow: inset 0 0 0 2px var(--apagado); }
+  .paso7.hecho::after, .paso7.activo::after { box-shadow: 0 0 0 4px rgba(56, 126, 128, .15); }
+  .paso7__n { font-size: 1.6rem; grid-row: 1; }
+  .paso7__et { position: static; grid-column: 2; grid-row: 1; justify-self: end; }
+  .paso7 h3 { grid-column: 1 / -1; margin-top: 6px; font-size: 1.25rem; }
+  .paso7 p { grid-column: 1 / -1; margin-top: 4px; font-size: 15px; }
+
+  /* Preguntas: primero las preguntas, después la invitación */
+  .fq7__lista { margin-top: 28px !important; order: 3; }
+  .fq7__otra { order: 4; margin-top: 28px !important; }
+  .fq7__in { display: flex; flex-direction: column; }
+
+  /* Lumina y Médula: tarjetas un poco más bajas */
+  .v6 .pt { height: 540px; }
+}
+@media (max-width: 1020px) { .mt7__in .mt7__grilla { position: relative !important; } }
