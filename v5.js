@@ -38,16 +38,6 @@ function pintarNav() {
   nav.classList.toggle("clara", !sobre);
 }
 
-/* ── Credibilidad: dos cintas de marcas ── */
-{
-  const A = [["whatsapp", "WhatsApp"], ["gmail", "Gmail"], ["googlesheets", "Google Sheets"], ["slack", "Slack"], ["notion", "Notion"], ["hubspot", "HubSpot"], ["shopify", "Shopify"], ["mercadopago", "Mercado Pago"], ["zoho", "Zoho"], ["salesforce", "Salesforce"], ["sap", "SAP"], ["odoo", "Odoo"], ["openai", "ChatGPT"], ["claude", "Claude"], ["googledrive", "Google Drive"], ["googlecalendar", "Calendar"], ["meta", "Meta"], ["instagram", "Instagram"]];
-  const B = [["googlemeet", "Meet"], ["zoom", "Zoom"], ["trello", "Trello"], ["asana", "Asana"], ["clickup", "ClickUp"], ["jira", "Jira"], ["airtable", "Airtable"], ["dropbox", "Dropbox"], ["stripe", "Stripe"], ["woocommerce", "WooCommerce"], ["wordpress", "WordPress"], ["quickbooks", "QuickBooks"], ["xero", "Xero"], ["zapier", "Zapier"], ["make", "Make"], ["n8n", "n8n"], ["telegram", "Telegram"], ["canva", "Canva"]];
-  const loc = [["", "Bsale"], ["../logos/defontana.svg", "Defontana"], ["../logos/softland.png", "Softland"]];
-  const m = ([f, n]) => `<span class="marca">${f ? `<img src="recursos/marcas/${f.includes(".") ? f : f + ".svg"}" alt="">` : ""}${n}</span>`;
-  const a = [...A.slice(0, 9), ...loc, ...A.slice(9)], b = B;
-  $("#marcas-a").innerHTML = [...a, ...a].map(m).join(""); $("#marcas-b").innerHTML = [...b, ...b].map(m).join("");
-}
-
 /* ── Detecciones reales sobre video (Lumina) ── */
 const DET = window.DETECCIONES || [];
 const LETRA = (px) => `600 ${px}px -apple-system, "SF Pro Text", Inter, system-ui, sans-serif`;

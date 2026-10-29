@@ -75,13 +75,6 @@
     </div>
   </section>
 
-  <!-- Credibilidad: las herramientas que conectamos -->
-  <section class="marcas oscuro" aria-label="Herramientas con las que trabajamos">
-    <p class="marcas__t">Conectamos y automatizamos las herramientas que tu empresa ya usa</p>
-    <div class="marcas__cinta"><div class="marcas__fila" id="marcas-a"></div></div>
-    <div class="marcas__cinta"><div class="marcas__fila marcas__fila--b" id="marcas-b"></div></div>
-  </section>
-
   <!-- 02 · El desafío: un dolor = una escena = una metáfora -->
   <section class="d5" id="desafio" aria-labelledby="h-desafio">
     <div class="d5__fijo">
@@ -174,49 +167,6 @@
           <div class="sincon__fila"><s>Procesos desconectados</s><b>Todas las áreas trabajan con el mismo dato.</b></div>
           <div class="sincon__fila"><s>Gestión reactiva</s><b>Alertas antes de que el problema ocurra.</b></div>
           <i class="sincon__punto" id="sincon-punto"></i>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 · ¿Cuánto le cuesta? Con los números del visitante -->
-  <section class="costo envoltura" id="costo" aria-labelledby="h-costo">
-    <div class="costo__caja">
-      <div class="costo__txt">
-        <h2 class="t-1 arma" id="h-costo">¿Cuánto le cuesta esto <span class="acento">a tu empresa?</span></h2>
-        <p class="bajada" data-r>Mueve los números de tu operación. Lo que ves es el tiempo que hoy se va en tareas que no generan valor.</p>
-      </div>
-      <div class="costo__panel" data-r>
-        <label class="perilla"><span>Personas que hacen tareas manuales <output id="o-personas">40</output></span><input type="range" id="c-personas" min="5" max="500" step="5" value="40"></label>
-        <label class="perilla"><span>Horas a la semana, por persona <output id="o-horas">6 h</output></span><input type="range" id="c-horas" min="1" max="20" step="1" value="6"></label>
-        <label class="perilla"><span>Costo hora promedio <output id="o-valor">$9.000</output></span><input type="range" id="c-valor" min="4000" max="40000" step="500" value="9000"></label>
-        <div class="costo__res">
-          <div><small>Horas al año</small><b id="r-horas">11.520 h</b></div>
-          <div class="costo__plata"><small>Costo al año</small><b id="r-plata">$104 M</b></div>
-        </div>
-        <p class="costo__nota">Cálculo referencial con tus números (48 semanas al año). En el Discovery lo medimos de verdad.</p>
-        <a class="boton boton--tinta" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 · Propuesta de valor: Optimizo al centro, la empresa en órbita -->
-  <section class="orb oscuro" id="propuesta" aria-labelledby="h-orb">
-    <div class="orb__fijo">
-      <div class="envoltura orb__grid">
-        <div class="orb__txt">
-          <h2 class="t-1" id="h-orb">Un mismo punto de partida. <span class="acento">Toda tu empresa en órbita.</span></h2>
-          <p class="bajada">Conectamos tus áreas a una misma base. Cada una gana su superpoder y ninguna trabaja aislada.</p>
-          <div class="orb__panel" id="orb-panel" aria-live="polite"></div>
-        </div>
-        <div class="orb__escena" id="orb-escena">
-          <svg class="orb__anillo" viewBox="-100 -100 200 200" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="0" cy="0" rx="99" ry="99"/></svg>
-          <div class="orb__centro" aria-hidden="true">
-            <svg viewBox="0 0 138.305 138.305"><defs><linearGradient id="g-orb" gradientUnits="userSpaceOnUse" x1="6.05" y1="0" x2="144.36" y2="0"><stop offset="0" stop-color="#91CEC4"/><stop offset="1" stop-color="#387E80"/></linearGradient></defs><g transform="translate(-6.054688 -2.601562)"><path fill="url(#g-orb)" fill-rule="evenodd" d="M 55.757812 5.390625 C 58.730469 10.496094 60.441406 16.425781 60.441406 22.753906 C 60.441406 41.851562 44.960938 57.332031 25.863281 57.332031 C 19.621094 57.332031 13.769531 55.667969 8.710938 52.773438 C 6.992188 58.804688 6.054688 65.167969 6.054688 71.753906 C 6.054688 109.945312 37.011719 140.90625 75.207031 140.90625 C 113.398438 140.90625 144.359375 109.945312 144.359375 71.753906 C 144.359375 33.5625 113.398438 2.601562 75.207031 2.601562 C 68.453125 2.601562 61.929688 3.585938 55.757812 5.390625 Z M 57.917969 71.753906 C 57.917969 62.207031 65.65625 54.464844 75.207031 54.464844 C 84.753906 54.464844 92.492188 62.207031 92.492188 71.753906 C 92.492188 81.300781 84.753906 89.042969 75.207031 89.042969 C 65.65625 89.042969 57.917969 81.300781 57.917969 71.753906 Z"/></g></svg>
-          </div>
-          <svg class="orb__hilo" aria-hidden="true"><line id="orb-hilo"/></svg>
-          <i class="orb__punto" id="orb-punto" aria-hidden="true"></i>
-          <div class="orb__areas" id="orb-areas" role="tablist" aria-label="Áreas de tu empresa"></div>
         </div>
       </div>
     </div>
@@ -381,6 +331,28 @@
     </section>
   </div>
 
+  <!-- 04 · Propuesta de valor: Optimizo al centro, la empresa en órbita -->
+  <section class="orb oscuro" id="propuesta" aria-labelledby="h-orb">
+    <div class="orb__fijo">
+      <div class="envoltura orb__grid">
+        <div class="orb__txt">
+          <h2 class="t-1" id="h-orb">Un mismo punto de partida. <span class="acento">Toda tu empresa en órbita.</span></h2>
+          <p class="bajada">Conectamos tus áreas a una misma base. Cada una gana su superpoder y ninguna trabaja aislada.</p>
+          <div class="orb__panel" id="orb-panel" aria-live="polite"></div>
+        </div>
+        <div class="orb__escena" id="orb-escena">
+          <svg class="orb__anillo" viewBox="-100 -100 200 200" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="0" cy="0" rx="99" ry="99"/></svg>
+          <div class="orb__centro" aria-hidden="true">
+            <svg viewBox="0 0 138.305 138.305"><defs><linearGradient id="g-orb" gradientUnits="userSpaceOnUse" x1="6.05" y1="0" x2="144.36" y2="0"><stop offset="0" stop-color="#91CEC4"/><stop offset="1" stop-color="#387E80"/></linearGradient></defs><g transform="translate(-6.054688 -2.601562)"><path fill="url(#g-orb)" fill-rule="evenodd" d="M 55.757812 5.390625 C 58.730469 10.496094 60.441406 16.425781 60.441406 22.753906 C 60.441406 41.851562 44.960938 57.332031 25.863281 57.332031 C 19.621094 57.332031 13.769531 55.667969 8.710938 52.773438 C 6.992188 58.804688 6.054688 65.167969 6.054688 71.753906 C 6.054688 109.945312 37.011719 140.90625 75.207031 140.90625 C 113.398438 140.90625 144.359375 109.945312 144.359375 71.753906 C 144.359375 33.5625 113.398438 2.601562 75.207031 2.601562 C 68.453125 2.601562 61.929688 3.585938 55.757812 5.390625 Z M 57.917969 71.753906 C 57.917969 62.207031 65.65625 54.464844 75.207031 54.464844 C 84.753906 54.464844 92.492188 62.207031 92.492188 71.753906 C 92.492188 81.300781 84.753906 89.042969 75.207031 89.042969 C 65.65625 89.042969 57.917969 81.300781 57.917969 71.753906 Z"/></g></svg>
+          </div>
+          <svg class="orb__hilo" aria-hidden="true"><line id="orb-hilo"/></svg>
+          <i class="orb__punto" id="orb-punto" aria-hidden="true"></i>
+          <div class="orb__areas" id="orb-areas" role="tablist" aria-label="Áreas de tu empresa"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 06 · Superpoderes: paneles que se abren, sin ruido -->
   <section class="sp5 oscuro" id="superpoderes" aria-labelledby="h-poderes">
     <div class="envoltura">
@@ -438,6 +410,27 @@
         </article>
       </div>
       <p class="sp__remate" data-r>No se trata de sumar tecnología. <span class="acento">Se trata de multiplicar lo que tu empresa es capaz de hacer.</span></p>
+    </div>
+  </section>
+
+  <!-- 03 · ¿Cuánto le cuesta? Con los números del visitante -->
+  <section class="costo envoltura" id="costo" aria-labelledby="h-costo">
+    <div class="costo__caja">
+      <div class="costo__txt">
+        <h2 class="t-1 arma" id="h-costo">¿Cuánto le cuesta esto <span class="acento">a tu empresa?</span></h2>
+        <p class="bajada" data-r>Mueve los números de tu operación. Lo que ves es el tiempo que hoy se va en tareas que no generan valor.</p>
+      </div>
+      <div class="costo__panel" data-r>
+        <label class="perilla"><span>Personas que hacen tareas manuales <output id="o-personas">40</output></span><input type="range" id="c-personas" min="5" max="500" step="5" value="40"></label>
+        <label class="perilla"><span>Horas a la semana, por persona <output id="o-horas">6 h</output></span><input type="range" id="c-horas" min="1" max="20" step="1" value="6"></label>
+        <label class="perilla"><span>Costo hora promedio <output id="o-valor">$9.000</output></span><input type="range" id="c-valor" min="4000" max="40000" step="500" value="9000"></label>
+        <div class="costo__res">
+          <div><small>Horas al año</small><b id="r-horas">11.520 h</b></div>
+          <div class="costo__plata"><small>Costo al año</small><b id="r-plata">$104 M</b></div>
+        </div>
+        <p class="costo__nota">Cálculo referencial con tus números (48 semanas al año). En el Discovery lo medimos de verdad.</p>
+        <a class="boton boton--tinta" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
+      </div>
     </div>
   </section>
 

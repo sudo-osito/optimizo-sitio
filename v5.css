@@ -16,7 +16,7 @@
 .h5__acc { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ── Desafío: título al centro que se aparta, cinco escenas, cierre con el punto ── */
-.d5 { position: relative; height: 900vh; background: var(--fondo); }
+.d5 { position: relative; height: 520vh; background: var(--fondo); }
 .d5__fijo { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 .d5__t { position: absolute; z-index: 3; left: max(20px, calc((100vw - var(--ancho)) / 2)); top: 14vh; width: min(430px, 31vw); font-size: clamp(1.9rem, 1rem + 1.7vw, 2.8rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 700; transform-origin: 0 0; will-change: transform, opacity; }
 .d5__grid { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(300px, .78fr) 1.3fr; gap: 64px; padding-top: calc(14vh + var(--alto-t, 120px) + 34px); align-items: start; }
