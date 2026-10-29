@@ -275,7 +275,7 @@ function pintarDesafio() {
   d6.mk.forEach((k) => k.classList.toggle("on", activo && +k.dataset.d === i));
   d6.dol.forEach((d, j) => d.classList.toggle("on", activo && j === i));
   d6.marcas.forEach((k, j) => k.classList.toggle("on", p > .13 && j <= i));
-  $(".d6__marcas").style.opacity = 1 - eo(kr / .25);
+  $(".d6__marcas").style.opacity = eo((p - .1) / .04) * (1 - eo(kr / .25));
   // el remate: todo se ordena, se conecta al punto y la frase se enciende
   d6.esc.classList.toggle("orden", orden);
   d6.esc.style.setProperty("--k", eio(kr / .55)); d6.esc.style.setProperty("--kl", eo((kr - .45) / .35)); d6.esc.style.setProperty("--kr", eo((kr - .05) / .3));
