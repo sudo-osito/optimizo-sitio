@@ -112,6 +112,10 @@ videoConCapa(lum.mon, (t) => {
 });
 if (MOVIL()) setInterval(() => { if (secLum.offsetParent) { lum.paso = (Math.max(0, lum.paso) + 1) % 4; const p = lum.paso; lum.paso = -1; const fake = p; lum.pasos.forEach((s, i) => s.classList.toggle("activo", i === fake)); lum.paso = fake; lum.mon.dataset.paso = fake; lum.aviso.classList.toggle("on", fake === 2); lum.tablero.classList.toggle("on", fake === 3); $$(".zona__barra i", lum.tablero).forEach((b) => (b.style.width = fake === 3 ? b.dataset.w : "0")); $$(".semana i", lum.tablero).forEach((b) => (b.style.height = fake === 3 ? b.dataset.h : "0")); lum.marcas.forEach((m, i) => m.style.setProperty("--k", i <= fake ? 1 : 0)); if (fake === 3) lum.num.firstChild.textContent = "10"; } }, 4500);
 
+/* héroe de Lumina: el video de fondo, detectando, detrás del vidrio */
+{ const f = $("#lum7"), cv = $("canvas", f);
+  videoConCapa(f, (t) => { const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(t), 1, clamp(w / 900, .8, 1.2)); }); }
+
 /* ── El aura de Médula (portada de su guion: un fluido que se arma con puntos; el grano ES el degradado) ── */
 const AURA_V = "attribute vec2 p; varying vec2 vUv; void main(){ vUv = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }";
 const RUIDO = `vec3 permute(vec3 x){return mod(((x*34.0)+1.0)*x,289.0);}
@@ -274,14 +278,15 @@ function pintarDesafio() {
   });
 }
 
-/* ── La frase: cada palabra se enciende al ritmo del scroll ── */
-const fr = { sec: $("#frase"), t: $("#fr7"), op: $("#fr7-op") };
-fr.t.innerHTML = fr.t.textContent.split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(" ");
-fr.w = $$(".w", fr.t);
-function pintarFrase() {
-  const p = avance(fr.sec), n = Math.ceil(clamp((p - .04) / .7) * fr.w.length);
-  fr.w.forEach((w, j) => w.classList.toggle("on", j < n));
-  fr.op.style.setProperty("--op", eo((p - .76) / .14));
+/* ── La frase: se escribe en pantalla, una parte a la vez ── */
+{
+  const sec = $("#fr7"), ls = $$(".fr7__l", sec), op = $("#fr7-op"), ms = ls.map((l) => maquina($(".tipeo", l), { una: true, lento: true }));
+  let hecho = false;
+  alVer(sec, async () => {
+    if (hecho) return; hecho = true;
+    for (const [i, l] of ls.entries()) { l.classList.add("on"); await ms[i].iniciar(); await esperar(300); if (i < ls.length - 1) l.classList.remove("on"); }
+    op.classList.add("on");
+  }, null, .5);
 }
 
 /* ── Propuesta: las áreas entran una a una ── */
@@ -290,9 +295,10 @@ function pintarFrase() {
   $$(".area7").forEach((a) => ob.observe(a));
 }
 
-/* ── Superpoderes: a la izquierda los seis, a la derecha el activo funcionando. Avanzan solos; un clic elige ── */
+/* ── Superpoderes: tarjetas que entran una a una y se apilan; la de arriba funciona ── */
+let pintarPoderes = () => {};
 {
-  const sec = $("#sp7"), tabs = $$(".sp7__tab", sec), escenas = $$(".esc7", sec), DUR = 6500;
+  const sec = $("#sp7"), cartas = $$(".sp7c", sec), escenas = $$(".esc7", sec);
   const ins = $(".ins7", sec), insM = maquina($(".tipeo", ins), { una: true, lento: true });
   const luego = (e, f, ms) => e.timers.push(setTimeout(f, ms));
   const ESCENAS = {
@@ -323,34 +329,20 @@ function pintarFrase() {
     (e.timers || []).forEach(clearTimeout); e.timers = [];
     e.classList.toggle("vivo", on); ESCENAS[e.dataset.escena](e, on);
   };
-  let actual = 0, t0 = performance.now(), pausa = false, visible = false;
-  const ir = (i, foco = false) => {
-    if (i !== actual) activar(escenas[actual], false);
-    actual = i; t0 = performance.now();
-    tabs.forEach((t, j) => { const on = j === i; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; t.style.setProperty("--prog", 0); });
-    escenas.forEach((e, j) => e.classList.toggle("activa", j === i));
-    if (visible) activar(escenas[i], true);
-    if (foco) tabs[i].focus();
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener("click", () => ir(i));
-    t.addEventListener("keydown", (ev) => {
-      if (ev.key === "ArrowDown" || ev.key === "ArrowRight") { ev.preventDefault(); ir((i + 1) % tabs.length, true); }
-      if (ev.key === "ArrowUp" || ev.key === "ArrowLeft") { ev.preventDefault(); ir((i - 1 + tabs.length) % tabs.length, true); }
+  let actual = -1;
+  pintarPoderes = () => {
+    let act = -1;
+    cartas.forEach((c, i) => {
+      const r = c.getBoundingClientRect(), sig = cartas[i + 1];
+      if (r.top < innerHeight * .6) act = i;
+      const k = sig ? clamp(1 - (sig.getBoundingClientRect().top - r.top) / r.height) : 0;
+      c.style.setProperty("--esc", 1 - .06 * k); c.style.setProperty("--luz", 1 - .6 * k);
     });
-  });
-  sec.addEventListener("pointerenter", (e) => e.pointerType === "mouse" && (pausa = true));
-  sec.addEventListener("pointerleave", () => (pausa = false));
-  alVer(sec, () => { if (visible) return; visible = true; t0 = performance.now(); activar(escenas[actual], true); }, () => { visible = false; escenas.forEach((e) => activar(e, false)); }, .2);
-  let previo = performance.now();
-  bucleVisible(sec, () => {
-    const ahora = performance.now(), dt = ahora - previo; previo = ahora;
-    if (QUIETO) return;
-    if (pausa) { t0 += dt; return; }
-    const k = clamp((ahora - t0) / DUR); tabs[actual].style.setProperty("--prog", k);
-    if (k >= 1) ir((actual + 1) % tabs.length);
-  }, 30);
-  ir(0);
+    if (sec.getBoundingClientRect().bottom < innerHeight * .25) act = -1;
+    if (act === actual) return;
+    if (actual >= 0) activar(escenas[actual], false);
+    actual = act; if (act >= 0) activar(escenas[act], true);
+  };
 }
 
 /* ── Cómo trabajamos: la etapa activa se levanta y avanza sola; un clic elige ── */
@@ -389,6 +381,6 @@ function pintarProgreso() { progreso.style.setProperty("--p", clamp(scrollY / (d
 
 /* ── Un solo bucle de scroll ── */
 let pendiente = false;
-function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarFrase(); pintarLumina(); }); }
+function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarPoderes(); pintarLumina(); }); }
 addEventListener("scroll", alScroll, { passive: true }); addEventListener("resize", alScroll); addEventListener("ruta", alScroll);
 alScroll();

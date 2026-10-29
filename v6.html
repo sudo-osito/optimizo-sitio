@@ -124,13 +124,12 @@
     </div>
   </section>
 
-  <!-- 03 · La frase: se lee al ritmo del scroll, palabra por palabra -->
+  <!-- 03 · La frase: centrada y corta; se escribe en pantalla, una parte a la vez -->
   <section class="fr7" id="frase" aria-label="El problema">
-    <div class="fr7__fijo">
-      <div class="envoltura">
-        <p class="fr7__t" id="fr7">El problema no siempre es la falta de tecnología. Muchas veces es que la tecnología disponible todavía no está trabajando a favor de la empresa.</p>
-        <p class="fr7__op" id="fr7-op">Ahí es donde encontramos nuestra oportunidad de generar valor.</p>
-      </div>
+    <div class="envoltura fr7__in" id="fr7">
+      <p class="fr7__l fr7__l--a"><span class="fant">El problema no siempre es la falta de tecnología.</span><span class="vivo"><span class="tipeo" data-palabras="El problema no siempre es la falta de tecnología." data-una></span><i class="cursor"></i></span></p>
+      <p class="fr7__l fr7__l--b"><span class="fant">Muchas veces es que la tecnología disponible todavía no está trabajando a favor de la empresa.</span><span class="vivo"><span class="tipeo" data-palabras="Muchas veces es que la tecnología disponible todavía no está trabajando a favor de la empresa." data-una></span><i class="cursor"></i></span></p>
+      <p class="fr7__op" id="fr7-op">Ahí es donde encontramos nuestra oportunidad de generar valor.</p>
     </div>
   </section>
 
@@ -179,10 +178,13 @@
 
     <!-- Ruta · Lumina -->
     <section class="ruta lumina" id="ruta-lumina" data-ruta="lumina" aria-labelledby="h-lumina">
-      <div class="lum__heroe envoltura">
-        <span class="lum__marca" data-r><svg><use href="#lumina"/></svg><b>Lumina</b><small>de Optimizo</small></span>
-        <h2 class="t-heroe arma" id="h-lumina">Convertimos cámaras en <span class="acento">decisiones.</span></h2>
-        <p class="bajada" data-r>Registrar lo que pasa no es lo mismo que entenderlo. Lumina reconoce lo que importa en tu operación, avisa a tiempo y activa respuestas.</p>
+      <div class="lum7 envoltura">
+        <div class="lum7__fondo" id="lum7"><video muted loop playsinline preload="none" poster="recursos/video/bodega.jpg" aria-hidden="true"><source src="recursos/video/bodega.mp4" type="video/mp4"></video><canvas aria-hidden="true"></canvas></div>
+        <div class="lum7__vidrio">
+          <span class="lum__marca" data-r><svg><use href="#lumina"/></svg><b>Lumina</b><small>de Optimizo</small></span>
+          <h2 class="t7 arma" id="h-lumina">Convertimos cámaras en <span class="acento">decisiones.</span></h2>
+          <p class="bajada" data-r>Registrar lo que pasa no es lo mismo que entenderlo. Lumina reconoce lo que importa en tu operación, avisa a tiempo y activa respuestas.</p>
+        </div>
       </div>
       <div class="lum__escena" id="lum-escena">
         <div class="lum__fijo envoltura">
@@ -246,7 +248,7 @@
         <div class="med__in">
           <div class="med__simbolo" data-r><img src="recursos/medula-marca-blanca.svg" alt=""></div>
           <div class="med__texto">
-            <span class="marca-m" data-r><img src="recursos/medula-marca-blanca.svg" alt=""><b>Médula</b><span>de Optimizo</span></span>
+            <span class="marca-m" data-r><img src="recursos/medula-marca.svg" alt=""><b>Médula</b><span>de Optimizo</span></span>
             <h2 class="t-heroe arma" id="h-medula">El sistema nervioso de tu empresa.</h2>
             <p class="bajada" data-r>Médula conecta lo que hoy trabaja separado: tus aplicaciones, sistemas e información, en un solo ecosistema donde personas y agentes de IA trabajan con el mismo contexto.</p>
             <div class="med__acc" data-r>
@@ -352,17 +354,15 @@
       <h2 class="t7 arma" id="h-poderes">La tecnología es la herramienta. <span class="gris">El superpoder es lo que logras con ella.</span></h2>
       <p class="bajada" data-r>No como una promesa de resultados imposibles, sino como las mejoras concretas que podemos desarrollar con inteligencia artificial y tecnología.</p>
     </div>
-    <div class="envoltura sp7__in" id="sp7">
-      <div class="sp7__lista" role="tablist" aria-label="Superpoderes">
-        <button class="sp7__tab" role="tab" aria-selected="true" aria-controls="esc-tareas"><span class="sp7__nom">Eficiencia</span><span class="sp7__frase">Aprovecha mejor cada recurso.</span><span class="sp7__det"><span>Simplificamos tareas, automatizamos procesos y reducimos actividades que consumen tiempo sin generar valor. Buscamos que las personas y los equipos puedan concentrarse en lo que realmente importa.</span></span><i class="sp7__barra"></i></button>
-        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-camara"><span class="sp7__nom">Seguridad</span><span class="sp7__frase">Anticipa riesgos y protege tu operación.</span><span class="sp7__det"><span>Desarrollamos herramientas inteligentes para identificar condiciones de riesgo, generar alertas oportunas y fortalecer la prevención, complementando los controles y protocolos de seguridad existentes.</span></span><i class="sp7__barra"></i></button>
-        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-insight"><span class="sp7__nom">Inteligencia</span><span class="sp7__frase">Convierte información en decisiones ágiles.</span><span class="sp7__det"><span>Conectamos información, identificamos patrones y desarrollamos herramientas que permiten comprender mejor lo que ocurre, anticipar situaciones y tomar decisiones con mayor respaldo.</span></span><i class="sp7__barra"></i></button>
-        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-lotes"><span class="sp7__nom">Calidad</span><span class="sp7__frase">Mejora la precisión y consistencia.</span><span class="sp7__det"><span>Incorporamos herramientas que ayudan a estandarizar procesos, detectar desviaciones, fortalecer la trazabilidad y reducir errores que afectan la calidad del trabajo.</span></span><i class="sp7__barra"></i></button>
-        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-barras"><span class="sp7__nom">Rentabilidad</span><span class="sp7__frase">Haz que tus recursos generen más valor.</span><span class="sp7__det"><span>Identificamos oportunidades para reducir costos, disminuir desperdicios, recuperar tiempo y mejorar el aprovechamiento de los recursos disponibles.</span></span><i class="sp7__barra"></i></button>
-        <button class="sp7__tab" role="tab" aria-selected="false" aria-controls="esc-pulso"><span class="sp7__nom">Continuidad</span><span class="sp7__frase">Mantén tus procesos bajo control.</span><span class="sp7__det"><span>Desarrollamos capacidades de monitoreo, alertas y análisis que ayudan a identificar desviaciones oportunamente y reducir el impacto de interrupciones evitables.</span></span><i class="sp7__barra"></i></button>
-      </div>
-      <div class="sp7__escenario">
-        <div class="esc7 activa" id="esc-tareas" data-escena="tareas" role="tabpanel">
+    <div class="envoltura sp7__pila" id="sp7">
+      <article class="sp7c" style="--i:0">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">01 / 06</span>
+          <h3>Eficiencia</h3>
+          <p class="sp7c__frase">Aprovecha mejor cada recurso.</p>
+          <p class="sp7c__det">Simplificamos tareas, automatizamos procesos y reducimos actividades que consumen tiempo sin generar valor. Buscamos que las personas y los equipos puedan concentrarse en lo que realmente importa.</p>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="tareas">
           <div class="tareas7">
             <div class="tarea7"><img src="recursos/logos/gmail.svg" alt=""><span>Cotización a Quillay</span><em data-ok="Enviada">En curso</em></div>
             <div class="tarea7"><img src="recursos/logos/bsale.png" alt=""><span>Factura de octubre</span><em data-ok="Emitida">En curso</em></div>
@@ -370,34 +370,74 @@
             <div class="tarea7"><img src="recursos/logos/whatsapp.svg" alt=""><span>Aviso de despacho</span><em data-ok="Avisado">En curso</em></div>
           </div>
         </div>
-        <div class="esc7" id="esc-camara" data-escena="camara" role="tabpanel">
+      </article>
+      <article class="sp7c" style="--i:1">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">02 / 06</span>
+          <h3>Seguridad</h3>
+          <p class="sp7c__frase">Anticipa riesgos y protege tu operación.</p>
+          <p class="sp7c__det">Desarrollamos herramientas inteligentes para identificar condiciones de riesgo, generar alertas oportunas y fortalecer la prevención, complementando los controles y protocolos de seguridad existentes.</p>
+          <a class="sp7c__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="camara">
           <div class="cam7">
             <video muted loop playsinline preload="none" poster="recursos/video/bodega.jpg" aria-hidden="true"><source src="recursos/video/bodega.mp4" type="video/mp4"></video>
             <canvas aria-hidden="true"></canvas>
             <div class="cam7__aviso"><span class="cam7__ico"><svg><use href="#i-alerta"/></svg></span><div><small>Lumina · ahora</small><b>Persona en zona restringida</b><span>Pasillo 4 · CAM 02</span></div></div>
           </div>
-          <a class="esc7__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
         </div>
-        <div class="esc7" id="esc-insight" data-escena="insight" role="tabpanel">
+      </article>
+      <article class="sp7c" style="--i:2">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">03 / 06</span>
+          <h3>Inteligencia</h3>
+          <p class="sp7c__frase">Convierte información en decisiones ágiles.</p>
+          <p class="sp7c__det">Conectamos información, identificamos patrones y desarrollamos herramientas que permiten comprender mejor lo que ocurre, anticipar situaciones y tomar decisiones con mayor respaldo.</p>
+          <a class="sp7c__con" href="#camino" data-ir="medula"><img src="recursos/medula-marca.svg" alt="">Con Médula</a>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="insight">
           <div class="ins7">
             <div class="ins7__cab"><img src="recursos/medula-marca.svg" alt="">Médula</div>
             <p class="ins7__txt"><span class="tipeo" data-palabras="Las ventas de la zona norte bajaron este mes. Tres clientes no han vuelto a comprar." data-una data-lento></span><i class="cursor"></i></p>
             <svg viewBox="0 0 200 44" class="ins7__linea" aria-hidden="true"><polyline points="0,10 30,14 60,8 90,18 120,16 150,28 180,30 200,36" fill="none" stroke="#1B75FD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="100"/></svg>
             <div class="ins7__citas"><span><img src="recursos/logos/bsale.png" alt="">Bsale</span><span><img src="recursos/logos/zoho.svg" alt="">Zoho CRM</span></div>
           </div>
-          <a class="esc7__con" href="#camino" data-ir="medula"><img src="recursos/medula-marca.svg" alt="">Con Médula</a>
         </div>
-        <div class="esc7" id="esc-lotes" data-escena="lotes" role="tabpanel">
+      </article>
+      <article class="sp7c" style="--i:3">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">04 / 06</span>
+          <h3>Calidad</h3>
+          <p class="sp7c__frase">Mejora la precisión y consistencia.</p>
+          <p class="sp7c__det">Incorporamos herramientas que ayudan a estandarizar procesos, detectar desviaciones, fortalecer la trazabilidad y reducir errores que afectan la calidad del trabajo.</p>
+          <a class="sp7c__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="lotes">
           <div class="lotes7"><div><span>Lote 0412</span><em>OK</em></div><div><span>Lote 0413</span><em>OK</em></div><div class="mal"><span>Lote 0414</span><em>Revisar</em></div><div><span>Lote 0415</span><em>OK</em></div></div>
-          <a class="esc7__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
         </div>
-        <div class="esc7" id="esc-barras" data-escena="barras" role="tabpanel">
+      </article>
+      <article class="sp7c" style="--i:4">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">05 / 06</span>
+          <h3>Rentabilidad</h3>
+          <p class="sp7c__frase">Haz que tus recursos generen más valor.</p>
+          <p class="sp7c__det">Identificamos oportunidades para reducir costos, disminuir desperdicios, recuperar tiempo y mejorar el aprovechamiento de los recursos disponibles.</p>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="barras">
           <div class="barras7"><div class="barras7__g"><i style="--h:92%"><b>Jun</b></i><i style="--h:80%"><b>Jul</b></i><i style="--h:71%"><b>Ago</b></i><i style="--h:58%"><b>Sep</b></i><i style="--h:46%" class="hoy"><b>Oct</b></i></div><small>Horas en tareas manuales · ejemplo</small></div>
         </div>
-        <div class="esc7" id="esc-pulso" data-escena="pulso" role="tabpanel">
+      </article>
+      <article class="sp7c" style="--i:5">
+        <div class="sp7c__txt">
+          <span class="sp7c__n">06 / 06</span>
+          <h3>Continuidad</h3>
+          <p class="sp7c__frase">Mantén tus procesos bajo control.</p>
+          <p class="sp7c__det">Desarrollamos capacidades de monitoreo, alertas y análisis que ayudan a identificar desviaciones oportunamente y reducir el impacto de interrupciones evitables.</p>
+        </div>
+        <div class="sp7c__esc esc7" data-escena="pulso">
           <div class="pulso7"><div class="pulso7__cab"><span><i></i>Línea 2 · operando</span><span>Alerta resuelta 09:14</span></div><svg viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 H120 L135 70 L145 24 L158 110 L170 70 H300 L315 70 L325 24 L338 110 L350 70 H480 L495 70 L505 24 L518 110 L530 70 H600" fill="none" stroke="#387E80" stroke-width="2.5" stroke-linejoin="round" pathLength="100"/></svg></div>
         </div>
-      </div>
+      </article>
     </div>
     <p class="envoltura sp7__remate arma">No se trata de sumar tecnología. <span class="gris">Se trata de multiplicar lo que tu empresa es capaz de hacer.</span></p>
   </section>
