@@ -1,5 +1,6 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
 import { cuadro as mgCuadro } from "./mg.js";
+import { banner } from "./banner.js";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -149,21 +150,26 @@ const AZULES = { uNucleo: "#013ecc", uMedula: "#0853e0", uImpulso: "#1b75fd", uA
 const hexA = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16) / 255);
 function aura(cv, op) {
   const gl = cv.getContext("webgl2", { antialias: false, alpha: false, powerPreference: "high-performance" });
-  if (!gl || !gl.getExtension("EXT_color_buffer_float")) { cv.style.background = "radial-gradient(60% 80% at 30% 50%, #0853e0, #63a7fc 45%, #c6dffd 70%, #f2f7fe)"; return; }
+  // respaldo: el degradado azul de Médula, para que el logo blanco nunca quede sobre blanco
+  cv.parentElement.style.background = "radial-gradient(70% 80% at 50% 45%, #0853e0, #1b75fd 40%, #63a7fc 70%, #c6dffd)";
+  if (!gl) return;
+  const flotante = !!(gl.getExtension("EXT_color_buffer_float") || gl.getExtension("EXT_color_buffer_half_float"));
   const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; };
   const prog = (f) => { const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, AURA_V)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, f)); gl.bindAttribLocation(p, 0, "p"); gl.linkProgram(p); return p; };
   const pc = prog(CAMPO_F), pp = prog(PUNTOS_F);
   const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   const tex = gl.createTexture(), fbo = gl.createFramebuffer();
-  let w = 1, h = 1, cw = 1, ch = 1, dpr = 1;
+  let w = 1, h = 1, cw = 1, ch = 1, dpr = 1, roto = false;
   const ajustar = () => {
     dpr = Math.min(2, devicePixelRatio || 1); w = Math.max(2, Math.round(cv.clientWidth * dpr)); h = Math.max(2, Math.round(cv.clientHeight * dpr)); cv.width = w; cv.height = h;
     cw = Math.max(2, w >> 1); ch = Math.max(2, h >> 1);
-    gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, cw, ch, 0, gl.RGBA, gl.HALF_FLOAT, null);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    if (flotante) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, cw, ch, 0, gl.RGBA, gl.HALF_FLOAT, null); else gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, cw, ch, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    roto = gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE; gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   };
   ajustar(); addEventListener("resize", ajustar); addEventListener("ruta", ajustar);
   const ptr = { x: .5, y: .5, px: .5, py: .5, vel: 0 };
@@ -172,7 +178,9 @@ function aura(cv, op) {
   gl.uniform1f(gl.getUniformLocation(pp, "uPuntillismo"), .7); gl.uniform1f(gl.getUniformLocation(pp, "uTamPunto"), 1.6); gl.uniform1f(gl.getUniformLocation(pp, "uArrastre"), 18);
   const U = (p, n) => gl.getUniformLocation(p, n);
   let tiempo = 12, scroll = 0, ultimo = performance.now();
+  cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); roto = true; cv.style.opacity = 0; });
   bucleVisible(cv, () => {
+    if (roto) { cv.style.opacity = 0; return; } // queda el degradado de respaldo del contenedor
     const ahora = performance.now(), dt = Math.min(.1, (ahora - ultimo) / 1000); ultimo = ahora;
     tiempo += dt * .35;
     const suav = 1 - Math.pow(1 - .027, dt * 60), dx = ptr.x - ptr.px, dy = ptr.y - ptr.py; ptr.px += dx * suav; ptr.py += dy * suav;
@@ -256,6 +264,17 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
     reiniciar() { el.textContent = ""; i = 0; if (QUIETO) { el.textContent = palabras[0]; return; } vivo = true; return correr(); },
     parar() { vivo = false; turno++; el.classList.remove("escribiendo"); },
   };
+}
+
+/* Héroe: el motion graphic del banner, dibujado en vivo */
+{
+  const cv = $("#banner"), t0 = performance.now();
+  bucleVisible(cv, () => {
+    const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const c = cv.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    banner(c, w, h, QUIETO ? 13 : (performance.now() - t0) / 1000);
+  }, 60);
 }
 
 /* Héroe: la palabra se escribe, espera, se borra y llega la siguiente */

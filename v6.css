@@ -484,4 +484,10 @@
 }
 .area7 { align-content: start; }
 .lum7 .lum__marca small { color: var(--texto7-2); }
-.v6 .pts { gap: 0; }
+
+/* Héroe con el motion graphic: el titular más contenido para dejar la derecha libre */
+.h7__video canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.h7__t { font-size: clamp(3rem, 1rem + 4.4vw, 5.6rem); max-width: 8.8em; }
+@media (max-width: 1020px) { .h7 { padding-top: 46svh; } }
+.v6 .pt__sim { left: calc(50% - 75px); top: calc(46% - 75px); transform: none; }
+@media (max-width: 1020px) { .v6 .pt__sim { width: 120px; left: calc(50% - 60px); top: calc(44% - 60px); } }
