@@ -27,7 +27,7 @@ const ESCENAS = {
   },
   seguridad: {
     html: `<div class="pn pn--cam"><div class="pn__cab pn__cab--sobre"><b><i class="rec"></i>CAM 02 · Pasillo 4</b><span>Lumina</span></div>
-      <video muted loop playsinline preload="none" poster="recursos/video/bodega.jpg"><source src="recursos/video/bodega.mp4" type="video/mp4"></video><canvas></canvas>
+      <video muted loop playsinline preload="none" poster="recursos/video/lumina-trafico.jpg"><source src="recursos/video/lumina-trafico.mp4" type="video/mp4"></video><canvas></canvas>
       <div class="zona"></div></div>
       <div class="fx fx--a fx--alerta"><span class="fx__ico">!</span><div><small>Lumina · ahora</small><b>Persona en zona restringida</b><span>Pasillo 4 · CAM 02</span></div></div>
       <div class="fx fx--b"><span class="fx__baliza"></span>Baliza encendida · aviso a Operaciones</div>`,

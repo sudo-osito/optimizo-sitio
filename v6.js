@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montar as montarPoder } from "./poderes.js?v=1793288876";
+import { montar as montarPoder } from "./poderes.js?v=1793291207";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -44,8 +44,8 @@ function mapa(w, h) { const s = Math.max(w / 16, h / 9), vw = 16 * s, vh = 9 * s
 function cajas(t) {
   const f = DET.length ? DET[Math.min(DET.length - 1, Math.round(t * 25))] : null, out = [];
   if (!f) return out;
-  if (f.m) { const [mx, my, mw, mh] = f.m, x0 = Math.max(mx, .43), x1 = Math.min(mx + mw, .84 - .08 * t / 5.96); out.push({ x: x0, y: Math.max(my, .02) + 40 / 630, w: x1 - x0, h: mh - 70 / 630, col: "#FF8A00", txt: "Montacargas", m: 1 }); }
-  f.p.slice(0, 2).forEach((p) => out.push({ x: p[0], y: p[1] + 30 / 630, w: p[2], h: p[3], col: "#FFD37A", txt: "Persona" }));
+  if (f.m) out.push({ x: f.m[0], y: f.m[1], w: f.m[2], h: f.m[3], col: "#FF8A00", txt: "Montacargas", m: 1 });
+  f.p.slice(0, 3).forEach((p) => out.push({ x: p[0], y: p[1], w: p[2], h: p[3], col: "#FFD37A", txt: "Persona" }));
   return out;
 }
 const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect ? c.roundRect(x, y, w, h, r) : c.rect(x, y, w, h); };
@@ -65,10 +65,10 @@ function dibujarCajas(c, M, lista, k, e) {
 }
 function dibujarRiesgo(c, M, lista, k, t, e) {
   if (k <= .01) return;
-  const P = [[.66, .99], [.7, .33], [.78, .25], [.995, .2], [.995, .99]];
+  const P = [[.5, .99], [.56, .5], [.74, .42], [.98, .46], [.98, .99]]; // zona de riesgo: el pasillo del montacargas
   c.globalAlpha = eo(k); c.beginPath(); P.forEach(([x, y], i) => (i ? c.lineTo(M.X(x), M.Y(y)) : c.moveTo(M.X(x), M.Y(y)))); c.closePath();
   c.fillStyle = `rgba(229,72,77,${.1 + .06 * Math.sin(t * 5)})`; c.fill(); c.strokeStyle = "#E5484D"; c.lineWidth = 2 * e; c.setLineDash([8 * e, 6 * e]); c.stroke(); c.setLineDash([]);
-  c.globalAlpha = 1; pildora(c, M.X(.69), M.Y(.97), "Zona de riesgo", "#E5484D", eo(k), e);
+  c.globalAlpha = 1; pildora(c, M.X(.53), M.Y(.97), "Zona de riesgo", "#E5484D", eo(k), e);
   const m = lista.find((b) => b.m), p = lista.find((b) => !b.m);
   if (m && p) {
     const ax = M.X(m.x + m.w), ay = M.Y(m.y + m.h * .45), bx = M.X(p.x), by = M.Y(p.y + p.h * .5), kk = eo(clamp(k * 1.5 - .3));

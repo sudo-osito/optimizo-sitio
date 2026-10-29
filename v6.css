@@ -810,3 +810,9 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 .paso7.hecho::after, .paso7.activo::after { box-shadow: none; background: var(--tealp); }
 .paso7::after { top: -3px; width: 8px; height: 8px; transform: none; }
 .paso7 { overflow: visible; }
+
+/* Etiquetas de las áreas con el logo real de Lumina y Médula */
+.area7__tags a.tag-marca::before { display: none; }
+.area7__tags a.tag-marca { gap: 6px; padding-left: 8px; }
+.area7__tags a.tag-marca svg, .area7__tags a.tag-marca img { width: 15px; height: 15px; flex: none; }
+.area7__tags a.tag-marca[data-ir="medula"] { font-family: var(--geist); }
