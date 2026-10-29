@@ -494,15 +494,13 @@
 }
 @media (max-width: 1020px) { .ar8__pista { scroll-padding-inline: 20px; } }
 
-/* ── Héroe: agua turquesa + vidrio líquido ── */
-.h7__video { background: #CFE7E3 url("recursos/video/agua.jpg") center / cover; }
-.h7__video video, .h7__video canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.h7__video video { opacity: 0; }
-.h7__video .agua__gl { opacity: 0; transition: opacity 1.2s; }
-.h7__video.listo .agua__gl { opacity: 1; }
-.h7__video.sin-gl video { opacity: 1; }
-.h7__video.sin-gl::after { content: ""; position: absolute; inset: 0; background: radial-gradient(90% 90% at 0% 100%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(to bottom, rgba(255,255,255,0) 70%, #fff); }
-@media (max-width: 1020px) { .h7__video { background-image: url("recursos/video/agua-vertical.jpg"); } .h7__video.sin-gl::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 30%, rgba(255,255,255,.92) 62%, #fff); } }
+/* ── Héroe: solo el agua, cortada limpia contra la página, con la retícula encima ── */
+.h7__video { background: #7FC3BD url("recursos/video/agua.jpg") center / cover; }
+.h7__video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.h7__video::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: min(var(--ancho), 100% - 40px); transform: translateX(-50%); border-inline: 1px solid rgba(255, 255, 255, .3); background: linear-gradient(90deg, transparent calc(25% - .5px), rgba(255, 255, 255, .3) calc(25% - .5px), rgba(255, 255, 255, .3) calc(25% + .5px), transparent calc(25% + .5px), transparent calc(50% - .5px), rgba(255, 255, 255, .3) calc(50% - .5px), rgba(255, 255, 255, .3) calc(50% + .5px), transparent calc(50% + .5px), transparent calc(75% - .5px), rgba(255, 255, 255, .3) calc(75% - .5px), rgba(255, 255, 255, .3) calc(75% + .5px), transparent calc(75% + .5px)); pointer-events: none; }
+.h7 .h7__pie { border-top-color: rgba(255, 255, 255, .35); }
+.h7 .bajada, .h7 .eti { color: #0B131B; }
+@media (max-width: 1020px) { .h7__video { background-image: url("recursos/video/agua-vertical.jpg"); } .h7__video::after { background: linear-gradient(90deg, transparent calc(50% - .5px), rgba(255, 255, 255, .3) calc(50% - .5px), rgba(255, 255, 255, .3) calc(50% + .5px), transparent calc(50% + .5px)); } }
 
 /* ══ Retícula como la de Neiden: 4 columnas iguales, el contenido calza con las líneas ══
    Cabecera: línea horizontal arriba · col 1 la etiqueta · cols 2–4 el título.

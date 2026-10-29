@@ -1,7 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
 import { cuadro as mgCuadro } from "./mg.js";
-import { crearVidrio } from "./vidrio.js";
-import { cuadro as aguaCuadro, capa as aguaCapa } from "./agua.js";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -267,26 +265,13 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
   };
 }
 
-/* Héroe: el agua turquesa con el vidrio líquido encima (agua.js + vidrio.js) */
+/* Héroe: el agua turquesa (horizontal en PC, vertical en el celular); corre solo mientras se ve */
 {
-  const caja = $("#agua"), video = $("video", caja), gl = $(".agua__gl", caja), capa = $(".agua__capa", caja);
-  const vertical = () => innerWidth / innerHeight < .9;
-  video.poster = vertical() ? "recursos/video/agua-vertical.jpg" : "recursos/video/agua.jpg";
-  video.src = vertical() ? "recursos/video/agua-vertical.mp4" : "recursos/video/agua.mp4";
-  let V = null;
-  try { V = crearVidrio(gl, video); } catch (e) { V = null; }
-  if (!V) caja.classList.add("sin-gl");
-  const t0 = performance.now();
-  bucleVisible(caja, () => {
-    if (!V || video.readyState < 2) return;
-    const dpr = Math.min(MOVIL() ? 1.5 : 2, devicePixelRatio || 1), w = caja.clientWidth, h = caja.clientHeight;
-    [gl, capa].forEach((cv) => { if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); } });
-    const q = aguaCuadro(w, h, QUIETO ? 18 : (performance.now() - t0) / 1000);
-    V.dibujar({ formas: q.formas.map((f) => ({ ...f })), k: q.k, onda: q.onda, dpr, vertical: vertical() });
-    const c = capa.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0); aguaCapa(c, w, h, q);
-    caja.classList.add("listo");
-  }, 60);
-  alVer(caja, () => video.play().catch(() => {}), () => video.pause(), 0);
+  const caja = $("#agua"), video = $("video", caja), vertical = innerWidth / innerHeight < .9;
+  video.poster = vertical ? "recursos/video/agua-vertical.jpg" : "recursos/video/agua.jpg";
+  video.src = vertical ? "recursos/video/agua-vertical.mp4" : "recursos/video/agua.mp4";
+  if (QUIETO) video.removeAttribute("autoplay");
+  alVer(caja, () => !QUIETO && video.play().catch(() => {}), () => video.pause(), 0);
 }
 
 /* Héroe: la palabra se escribe, espera, se borra y llega la siguiente */
