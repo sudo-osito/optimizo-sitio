@@ -127,5 +127,5 @@ export function montar(esc, nombre, { alVer, bucleVisible, dibujarCamara, QUIETO
   if (E.cuadro) { const t0 = performance.now(); bucleVisible(raiz, () => E.cuadro(raiz, (performance.now() - t0) / 1000), 30); }
   async function ciclo(mio) { while (visible && mio === turno) { await E.correr(raiz, () => visible && mio === turno, ctx); await esperar(200); } }
   if (QUIETO) { raiz.classList.add("quieto"); return; }
-  alVer(raiz, () => { if (visible) return; visible = true; ciclo(++turno); }, () => { visible = false; turno++; ctx.video(false); }, .35);
+  alVer(raiz, () => { if (visible) return; visible = true; raiz.classList.add("vivo"); ciclo(++turno); }, () => { visible = false; turno++; raiz.classList.remove("vivo"); ctx.video(false); }, .35);
 }

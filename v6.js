@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montar as montarPoder } from "./poderes.js?v=1793288581";
+import { montar as montarPoder } from "./poderes.js?v=1793288876";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -440,10 +440,12 @@ let pintarPoderes = () => {};
   const dibujarCamara = (cv, video) => { const { c, w, h } = lienzo(cv); dibujarCajas(c, mapa(w, h), cajas(video.currentTime), 1, clamp(w / 600, .7, 1)); };
   cartas.forEach((carta) => { const esc = $(".sp7c__esc", carta); montarPoder(esc, esc.dataset.mg, { alVer, bucleVisible, dibujarCamara, QUIETO }); });
   pintarPoderes = () => {
+    const tops = cartas.map((c) => c.getBoundingClientRect().top), alto = cartas[0].offsetHeight;   // una sola lectura, luego escrituras
     cartas.forEach((c, i) => {
-      const r = c.getBoundingClientRect(), sig = cartas[i + 1];
-      const k = sig ? clamp(1 - (sig.getBoundingClientRect().top - r.top) / r.height) : 0;
-      c.style.setProperty("--esc", 1 - .06 * k); c.style.setProperty("--luz", 1 - .6 * k);
+      if (tops[i] > innerHeight * 1.5 || tops[i] < -alto * 2) return;                               // solo las cartas cerca de la pantalla
+      const k = i < cartas.length - 1 ? clamp(1 - (tops[i + 1] - tops[i]) / alto) : 0, kk = Math.round(k * 100) / 100;
+      if (c._k === kk) return; c._k = kk;
+      c.style.setProperty("--esc", 1 - .06 * kk); c.style.setProperty("--luz", 1 - .6 * kk);
     });
   };
 }

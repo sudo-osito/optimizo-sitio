@@ -734,3 +734,15 @@
   .burbuja { font-size: 12.5px; padding: 9px 11px; } .burbuja--med { min-height: 0; } .graf { height: 44px; }
   .fx__ico { width: 30px; height: 30px; font-size: 14px; }
 }
+
+/* ── Rendimiento de Superpoderes: nada de desenfoque en vivo dentro de cartas que se escalan, capas propias, y quieto lo que no se ve ── */
+.sp7c { will-change: transform; contain: layout paint; }
+.sp7c > * { will-change: opacity; }
+.sp7c__esc { contain: strict; }
+.sp7c__esc::before, .sp7c__esc::after { animation: none; filter: none; display: none; }
+.pn { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .9); animation-play-state: paused; }
+.fx { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .94); filter: none; }
+.fx:not(.on) { filter: none; }
+.esc8.vivo .pn { animation-play-state: running; }
+.esc8:not(.vivo) * { animation-play-state: paused !important; }
+.pn__cab--sobre b, .pn__cab--sobre span { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .9); }
