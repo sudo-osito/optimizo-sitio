@@ -12,7 +12,7 @@
 <link rel="preload" href="recursos/fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilos.css">
 <link rel="stylesheet" href="v4.css">
-<link rel="stylesheet" href="v6.css?v=1793297777">
+<link rel="stylesheet" href="v6.css?v=1793308408">
 </head>
 <body class="v6">
 
@@ -176,8 +176,7 @@
       </button>
       <button class="pt pt--medula" data-ruta="medula" aria-controls="ruta-medula">
         <div class="pt__vista">
-          <canvas data-aura="puerta" aria-hidden="true"></canvas>
-          <img class="pt__sim" src="recursos/medula-marca-blanca.svg" alt="">
+          <div class="flujo" id="flujo-med" aria-hidden="true"></div>
         </div>
         <div class="banda banda--arriba">
           <span class="banda__c"><em>02.</em></span>
@@ -329,65 +328,49 @@
         <p class="bajada" data-r>Nuestro punto de partida no es un software, una herramienta o una tecnología determinada. <b>Nuestro punto de partida es tu operación.</b></p>
         <a class="btn7" href="#conversemos" data-discovery data-r>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
       </div>
-      <div class="pr7__areas" id="areas">
-        <div class="ar8__centro" aria-hidden="true"><img src="recursos/optimizo-isotipo.svg" alt=""></div>
-        <svg class="ar8__red" aria-hidden="true"></svg>
-        <div class="ar8__pista">
-        <article class="area7" style="--n:0" data-area="operaciones">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/operaciones.jpg" aria-hidden="true"><source src="recursos/video/areas/operaciones.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span>
-          <h3>Operaciones</h3>
-          <p>Procesos que se coordinan solos y alertas cuando algo se desvía.</p>
-          <div class="area7__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><span>Automatización</span></div>
-          </div>
+      <div class="ar9__grilla" id="areas">
+        <article class="ar9" data-area="operaciones" style="--n:0">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/operaciones.jpg" aria-hidden="true"><source src="recursos/video/areas/operaciones.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span><span class="ar9__nom">Operaciones</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>Procesos que se coordinan solos y alertas cuando algo se desvía.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><span>Automatización</span></div></div></div>
         </article>
-        <article class="area7" style="--n:1" data-area="logistica">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/logistica.jpg" aria-hidden="true"><source src="recursos/video/areas/logistica.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h11v9.5H3zM14 10h4l3 3.2V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
-          <h3>Logística</h3>
-          <p>Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.</p>
-          <div class="area7__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div>
-          </div>
+        <article class="ar9" data-area="logistica" style="--n:1">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/logistica.jpg" aria-hidden="true"><source src="recursos/video/areas/logistica.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h11v9.5H3zM14 10h4l3 3.2V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span><span class="ar9__nom">Logística</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.</p><div class="ar9__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
-        <article class="area7" style="--n:2" data-area="ventas">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/ventas.jpg" aria-hidden="true"><source src="recursos/video/areas/ventas.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/></svg></span>
-          <h3>Ventas</h3>
-          <p>Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.</p>
-          <div class="area7__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><span>Agentes</span></div>
-          </div>
+        <article class="ar9" data-area="ventas" style="--n:2">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/ventas.jpg" aria-hidden="true"><source src="recursos/video/areas/ventas.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/></svg></span><span class="ar9__nom">Ventas</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><span>Agentes</span></div></div></div>
         </article>
-        <article class="area7" style="--n:3" data-area="finanzas">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/finanzas.jpg" aria-hidden="true"><source src="recursos/video/areas/finanzas.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
-          <h3>Administración y finanzas</h3>
-          <p>Facturas, conciliaciones y reportes que se arman solos.</p>
-          <div class="area7__tags"><span>Automatización</span><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a></div>
-          </div>
+        <article class="ar9" data-area="finanzas" style="--n:3">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/finanzas.jpg" aria-hidden="true"><source src="recursos/video/areas/finanzas.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="ar9__nom">Administración y finanzas</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>Facturas, conciliaciones y reportes que se arman solos.</p><div class="ar9__tags"><span>Automatización</span><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a></div></div></div>
         </article>
-        <article class="area7" style="--n:4" data-area="riesgos">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/riesgos.jpg" aria-hidden="true"><source src="recursos/video/areas/riesgos.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg></span>
-          <h3>Prevención de riesgos</h3>
-          <p>EPP, zonas restringidas y registro de eventos con evidencia.</p>
-          <div class="area7__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div>
-          </div>
+        <article class="ar9" data-area="riesgos" style="--n:4">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/riesgos.jpg" aria-hidden="true"><source src="recursos/video/areas/riesgos.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg></span><span class="ar9__nom">Prevención de riesgos</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>EPP, zonas restringidas y registro de eventos con evidencia.</p><div class="ar9__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
-        <article class="area7" style="--n:5" data-area="gerencia">
-          <video muted loop playsinline preload="none" poster="recursos/video/areas/gerencia.jpg" aria-hidden="true"><source src="recursos/video/areas/gerencia.mp4" type="video/mp4"></video>
-          <div class="area7__vidrio">
-          <span class="area7__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4M7 12.5l3-3 2 2 4-4"/></svg></span>
-          <h3>Gerencia</h3>
-          <p>La información de toda la empresa, lista para decidir.</p>
-          <div class="area7__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div>
-          </div>
+        <article class="ar9" data-area="gerencia" style="--n:5">
+          <button class="ar9__cab" aria-expanded="false">
+            <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/gerencia.jpg" aria-hidden="true"><source src="recursos/video/areas/gerencia.mp4" type="video/mp4"></video></span>
+            <span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4M7 12.5l3-3 2 2 4-4"/></svg></span><span class="ar9__nom">Gerencia</span><span class="ar9__mas" aria-hidden="true"></span></span>
+          </button>
+          <div class="ar9__det"><div><p>La información de toda la empresa, lista para decidir.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/medula-marca.svg" alt="">Médula</a><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
-        </div>
       </div>
     </div>
   </section>
@@ -481,23 +464,19 @@
   </section>
 
   <!-- 08 · Preguntas -->
-  <section class="fq7" id="preguntas" aria-labelledby="h-faq">
-    <div class="envoltura fq7__in">
-      <div class="fq7__izq">
-        <p class="eti" data-r>Preguntas</p>
-        <h2 class="t7 arma" id="h-faq">Lo que todos nos preguntan.</h2>
-        <div class="fq7__otra" data-r><b>¿Tienes otra duda?</b><p>Cuéntanos qué necesitas mejorar.</p><a class="btn7" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a></div>
+  <section class="ch9" id="preguntas" aria-labelledby="h-faq">
+    <div class="envoltura ch9__in">
+      <p class="eti" data-r>Preguntas</p>
+      <h2 class="t7 arma" id="h-faq">¿Tienes dudas? <span class="gris">Pregúntanos.</span></h2>
+      <div class="ch" data-r>
+        <div class="ch__cab"><span class="ch__av"><img src="recursos/optimizo-isotipo.svg" alt=""></span><div><b>Asistente de Optimizo</b><small><i></i>Responde sobre Optimizo, Lumina y Médula</small></div></div>
+        <div class="ch__msjs" id="ch-msjs" aria-live="polite">
+          <div class="ch__m ch__m--bot"><p>Hola. Pregúntame lo que quieras sobre cómo trabajamos, Lumina o Médula.</p></div>
+        </div>
+        <div class="ch__sugs" id="ch-sugs"><button class="ch__sug" type="button">¿Tengo que llegar con la solución definida?</button><button class="ch__sug" type="button">¿Tengo que cambiar los sistemas que ya uso?</button><button class="ch__sug" type="button">¿Qué es Lumina?</button><button class="ch__sug" type="button">¿El video de Lumina sale de mi planta?</button><button class="ch__sug" type="button">¿Qué es Médula?</button></div>
+        <form class="ch__form" id="ch-form" autocomplete="off"><input id="ch-in" type="text" placeholder="Escribe tu pregunta…" aria-label="Tu pregunta" maxlength="300"><button type="submit" aria-label="Enviar"><svg><use href="#i-flecha"/></svg></button></form>
       </div>
-      <div class="fq7__lista">
-        <details><summary><span>01</span>¿Tengo que llegar con la solución definida?<i></i></summary><p>No. Puedes llegar solo con el problema: un proceso que demora demasiado, información que cuesta encontrar o un riesgo que quieres controlar. Partimos entendiendo tu operación y juntos definimos qué conviene hacer.</p></details>
-        <details><summary><span>02</span>¿Tengo que cambiar los sistemas que ya uso?<i></i></summary><p>No necesariamente. Trabajamos con lo que tu empresa ya tiene (ERP, planillas, correo, CRM, mensajería) y lo conectamos. Si una herramienta nueva aporta, lo evaluamos contigo.</p></details>
-        <details><summary><span>03</span>¿Qué es Lumina?<i></i></summary><p>Es nuestro servicio de cámaras con inteligencia artificial. Reconoce personas, vehículos y condiciones definidas para tu proceso, avisa a la persona correcta y puede activar balizas o señales. Cada evento queda registrado para medir y mejorar.</p></details>
-        <details><summary><span>04</span>¿El video de Lumina sale de mi planta?<i></i></summary><p>La arquitectura prioriza el procesamiento local: el análisis ocurre cerca de donde se generan las imágenes, sin enviar video continuamente a servicios externos. La configuración final depende de cada instalación.</p></details>
-        <details><summary><span>05</span>¿Qué es Médula?<i></i></summary><p>Es el sistema nervioso de tu empresa: conecta tus aplicaciones, sistemas e información para que personas y agentes de IA trabajen con el mismo contexto, respetando los permisos de cada uno. Se puede usar desde ChatGPT o Claude.</p></details>
-        <details><summary><span>06</span>¿La IA va a reemplazar a mi equipo?<i></i></summary><p>No es el objetivo. La IA aporta velocidad y capacidad de análisis; las personas aportan experiencia, contexto y criterio. Buscamos que tu equipo dedique menos tiempo a lo repetitivo y más a lo que requiere su conocimiento.</p></details>
-        <details><summary><span>07</span>¿Cuánto demora ver resultados?<i></i></summary><p>Depende del desafío. Trabajamos por etapas y priorizamos victorias rápidas cuando son viables, para entregar valor desde el principio mientras avanzamos en lo más grande.</p></details>
-        <details><summary><span>08</span>¿Cómo saben si funcionó?<i></i></summary><p>Definimos los indicadores en el diagnóstico (tiempo por tarea, errores, cumplimiento, eventos de riesgo, etc.) y comparamos contra el punto de partida. No prometemos un porcentaje universal: acordamos qué mejorar y cómo medirlo.</p></details>
-      </div>
+      <p class="ch9__nota" data-r>¿Prefieres conversarlo? <a class="enlace" href="#conversemos" data-discovery>Agenda tu Discovery</a>.</p>
     </div>
   </section>
 
@@ -532,6 +511,6 @@
 </footer>
 
 <script src="recursos/video/detecciones-trafico.js"></script>
-<script src="v6.js?v=1793297673" type="module"></script>
+<script src="v6.js?v=1793308408" type="module"></script>
 </body>
 </html>

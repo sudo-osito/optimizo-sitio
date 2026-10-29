@@ -1,4 +1,6 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
+import { montarChat } from "./chat.js?v=1793308266";
+import { montarFlujo } from "./flujo.js?v=1793308408";
 import { montar as montarPoder } from "./poderes.js?v=1793291207";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -342,6 +344,8 @@ function agua(caja, { zona = "derecha" } = {}) {
   }, 30);
 }
 agua($("#agua"));
+montarFlujo($("#flujo-med"), { alVer, QUIETO });
+montarChat();
 // el cierre: el mismo mar, con la lectura a los lados
 agua($("#agua-fin"), { zona: "lados" });
 
@@ -428,33 +432,19 @@ let pintarFrase = () => {};
   };
 }
 
-/* ── Propuesta: las áreas entran una a una ── */
+/* ── Propuesta: las áreas son tarjetas que se expanden para contar más; una abierta a la vez ── */
 {
-  const ob = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); ob.unobserve(e.target); } }), { threshold: .2, rootMargin: "0px 0px -8% 0px" });
-  $$(".area7").forEach((a) => ob.observe(a));
-  // cada video corre solo mientras se ve
-  const vid = new IntersectionObserver((es) => es.forEach((e) => { const v = $("video", e.target); if (e.isIntersecting && !QUIETO) v.play().catch(() => {}); else v.pause(); }), { threshold: .25 });
-  $$(".area7").forEach((a) => vid.observe(a));
-  // líneas desde el logo de Optimizo hacia cada área: se dibujan al llegar, un pulso viaja por cada una y la del área bajo el mouse se enciende
-  const caja = $("#areas"), red = $(".ar8__red", caja), centro = $(".ar8__centro img", caja), areas = $$(".area7", caja);
-  const trazar = () => {
-    if (MOVIL()) { red.innerHTML = ""; return; }
-    // de la orilla del logo al borde de la celda que toca cada área (nunca entra a los videos)
-    const R = caja.getBoundingClientRect(), celda = $(".ar8__centro", caja).getBoundingClientRect(), C = centro.getBoundingClientRect();
-    const x0 = celda.left - R.left, y0 = celda.top - R.top, w = celda.width, h = celda.height, cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top, rad = C.width / 2 + 16;
-    const fines = [[x0 + w * .25, y0], [x0 + w * .75, y0], [x0, y0 + h / 2], [x0 + w, y0 + h / 2], [x0 + w * .25, y0 + h], [x0 + w * .75, y0 + h]];
-    red.setAttribute("viewBox", `0 0 ${R.width} ${R.height}`);
-    red.innerHTML = fines.map(([x, y]) => {
-      const dx = x - cx, dy = y - cy, l = Math.hypot(dx, dy), sx = cx + dx / l * rad, sy = cy + dy / l * rad;
-      // una curva suave: el punto de control se corre un poco hacia un lado, en espejo a cada lado del logo
-      const lado = (dx >= 0 ? 1 : -1) * (dy > 0 ? -1 : 1), mx = (sx + x) / 2 - dy / l * l * .12 * lado, my = (sy + y) / 2 + dx / l * l * .12 * lado;
-      return `<path class="l" d="M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" pathLength="100"/>`;
-    }).join("");
+  const cartas = $$(".ar9");
+  const ob = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); ob.unobserve(e.target); } }), { threshold: .2 });
+  cartas.forEach((c) => ob.observe(c));
+  const vid = new IntersectionObserver((es) => es.forEach((e) => { const v = $("video", e.target); if (e.isIntersecting && !QUIETO) v.play().catch(() => {}); else v.pause(); }), { threshold: .3 });
+  cartas.forEach((c) => vid.observe(c));
+  const abrirArea = (c) => {
+    const cambio = () => cartas.forEach((x) => { const on = x === c && !x.classList.contains("abierta"); x.classList.toggle("abierta", on); $(".ar9__cab", x).setAttribute("aria-expanded", on); });
+    if (document.startViewTransition && !QUIETO) document.startViewTransition(cambio); else cambio();
   };
-  addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar();
-  // se dibujan una sola vez, cuando las seis áreas ya están en pantalla
-  const listas = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.dataset.lista = 1; listas.unobserve(e.target); } }); if (areas.every((a) => a.dataset.lista)) setTimeout(() => caja.classList.add("conectado"), 900); }, { threshold: .6 });
-  areas.forEach((a) => listas.observe(a));
+  cartas.forEach((c, i) => { c.style.viewTransitionName = `area-${i}`; $(".ar9__cab", c).addEventListener("click", () => abrirArea(c)); });
+  $$(".ar9 [data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); abrir(a.dataset.ir); }));
 }
 
 /* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */
