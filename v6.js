@@ -430,6 +430,21 @@ let pintarFrase = () => {};
   // cada video corre solo mientras se ve
   const vid = new IntersectionObserver((es) => es.forEach((e) => { const v = $("video", e.target); if (e.isIntersecting && !QUIETO) v.play().catch(() => {}); else v.pause(); }), { threshold: .25 });
   $$(".area7").forEach((a) => vid.observe(a));
+  // líneas desde el logo de Optimizo hacia cada área: se dibujan al llegar, un pulso viaja por cada una y la del área bajo el mouse se enciende
+  const caja = $("#areas"), red = $(".ar8__red", caja), centro = $(".ar8__centro img", caja), areas = $$(".area7", caja);
+  const trazar = () => {
+    if (MOVIL()) { red.innerHTML = ""; return; }
+    const R = caja.getBoundingClientRect(), C = centro.getBoundingClientRect(), cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top;
+    red.setAttribute("viewBox", `0 0 ${R.width} ${R.height}`);
+    red.innerHTML = areas.map((a, i) => {
+      const r = a.offsetLeft, t = a.offsetTop, x = r + a.offsetWidth / 2, y = t + a.offsetHeight * .36;
+      const d = `M${cx.toFixed(1)} ${cy.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}`;
+      return `<g data-i="${i}"><path class="l" d="${d}" pathLength="100"/><path class="p" d="${d}" pathLength="100" style="--d:${(i * .55).toFixed(2)}s"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
+    }).join("");
+  };
+  addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar();
+  alVer(caja, () => caja.classList.add("conectado"), null, .25);
+  areas.forEach((a, i) => { a.addEventListener("pointerenter", () => red.children[i]?.classList.add("on")); a.addEventListener("pointerleave", () => red.children[i]?.classList.remove("on")); });
 }
 
 /* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */

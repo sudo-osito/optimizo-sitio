@@ -746,3 +746,29 @@
 .esc8.vivo .pn { animation-play-state: running; }
 .esc8:not(.vivo) * { animation-play-state: paused !important; }
 .pn__cab--sobre b, .pn__cab--sobre span { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .9); }
+
+/* ── Áreas conectadas: líneas desde el logo hacia cada área ── */
+.pr7__areas { position: relative; }
+.ar8__red { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
+.ar8__red .l { fill: none; stroke: #387E80; stroke-opacity: .55; stroke-width: 1.4; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.4s var(--llegada), stroke-opacity .3s, stroke-width .3s; }
+.ar8__red g:nth-child(2) .l { transition-delay: .08s; } .ar8__red g:nth-child(3) .l { transition-delay: .16s; } .ar8__red g:nth-child(4) .l { transition-delay: .24s; } .ar8__red g:nth-child(5) .l { transition-delay: .32s; } .ar8__red g:nth-child(6) .l { transition-delay: .4s; }
+.conectado .ar8__red .l { stroke-dashoffset: 0; }
+.ar8__red .p { fill: none; stroke: #91CEC4; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 4 96; stroke-dashoffset: 100; opacity: 0; }
+.conectado .ar8__red .p { opacity: 1; animation: pulsoRed 3.3s linear infinite; animation-delay: calc(1.4s + var(--d)); }
+@keyframes pulsoRed { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+.ar8__red circle { fill: #fff; stroke: #387E80; stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.4); transition: opacity .5s 1.2s, transform .6s 1.2s cubic-bezier(.34, 1.4, .64, 1); }
+.conectado .ar8__red circle { opacity: 1; transform: none; }
+.ar8__red g.on .l { stroke-opacity: 1; stroke-width: 2.2; }
+.ar8__red g.on circle { fill: #91CEC4; }
+.ar8__centro { position: relative; z-index: 3; }
+.ar8__centro img { position: relative; z-index: 3; background: #fff; border-radius: 50%; box-shadow: 0 0 0 14px #fff; }
+@media (max-width: 1020px) { .ar8__red { display: none; } }
+@media (prefers-reduced-motion: reduce) { .conectado .ar8__red .p { animation: none; opacity: 0; } }
+.ar8__centro { background: transparent; z-index: 1; }
+.ar8__red { z-index: 4; }
+.ar8__red .l { stroke-opacity: .9; stroke-width: 1.8; filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, .9)); }
+.ar8__red .p { stroke: #fff; stroke-width: 3.5; filter: drop-shadow(0 0 4px #91CEC4); }
+.ar8__centro img { z-index: 5; }
+.pr7__areas .ar8__centro { z-index: 5; pointer-events: none; }
+.pr7__areas .ar8__centro img { box-shadow: 0 0 0 10px #fff; }
+.area7__vidrio { z-index: 6; }
