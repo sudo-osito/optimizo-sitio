@@ -1272,3 +1272,25 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 .v6 .btn7, .v6 .boton, .v6 .banda__ir span, .v6 .pt__ir, .v6 .cambiar__in, .v6 .cambiar button, .v6 .ch__form input, .v6 .ch__form button, .v6 .ch__sug,
 .v6 .ar9__mas, .v6 .ar9__tags > *, .v6 .area7__tags > *, .v6 .sp7c__con, .v6 .esc7__con, .v6 .isla, .v6 .fx__pild, .v6 .fx__pasos, .v6 .fx__pasos li,
 .v6 .lite, .v6 .nav7__menu, .v6 .fq7__otra, .v6 .ch__cta, .v6 .pn__vivo, .v6 .fx__baliza { border-radius: 999px !important; }
+
+/* Lumina y Médula a todo el ancho de la pantalla, sin espacios a los lados */
+@media (min-width: 1021px) {
+  .v6 .pts { width: 100vw !important; margin-left: calc(50% - 50vw) !important; margin-right: 0; gap: 0; }
+}
+/* El chat a todo el ancho de la pantalla, con los mensajes redondeados */
+.ch9__in .ch { width: 100vw; margin-left: calc(50% - 50vw); max-width: none; border-left: 0; border-right: 0; box-shadow: 0 0 0 1px var(--linea7); }
+.ch__msjs, .ch__sugs, .ch__form, .ch__cab { padding-left: max(20px, calc((100vw - var(--ancho)) / 2)) !important; padding-right: max(20px, calc((100vw - var(--ancho)) / 2)) !important; }
+.v6 .ch__m p { border-radius: 20px !important; }
+.v6 .ch__m--bot p { border-bottom-left-radius: 6px !important; }
+.v6 .ch__m--yo p { border-bottom-right-radius: 6px !important; }
+.v6 .ch__av { border-radius: 12px !important; }
+/* Superpoderes: cartas, escenas, paneles y fichas redondeados */
+.v6 .sp7c { border-radius: 34px !important; }
+.v6 .sp7c__esc { border-radius: 24px !important; }
+.v6 .pn { border-radius: 22px !important; }
+.v6 .fx { border-radius: 16px !important; }
+.v6 .tk, .v6 .lt, .v6 .ln { border-radius: 12px !important; }
+.v6 .pn--cam, .v6 .zona { border-radius: 18px !important; }
+.v6 .fx__ico, .v6 .rb__col i, .v6 .burbuja, .v6 .lt em, .v6 .ln em, .v6 .pn__cab--sobre b, .v6 .pn__cab--sobre span, .v6 .fx__barra, .v6 .fx__barra i { border-radius: 10px !important; }
+@media (max-width: 1020px) { .v6 .sp7c { border-radius: 28px !important; } .v6 .sp7c__esc { border-radius: 20px !important; } }
+.ch9__in .ch { justify-self: start; }
