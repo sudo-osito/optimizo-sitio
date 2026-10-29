@@ -239,6 +239,39 @@ function abrir(ruta, ir = true) {
 $$("[data-ruta]").forEach((b) => b.tagName === "BUTTON" && b.addEventListener("click", () => abrir(b.dataset.ruta)));
 $$("[data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
 
+/* ── La isla dinámica de Médula (la misma de su one-pager): se estira con resorte para contar qué hace, y se recoge entre tareas ── */
+$$(".isla").forEach((isla, n) => {
+  const txt = $(".isla__txt", isla), app = $(".isla__app", isla), barra = $(".isla__barra", isla);
+  const ESTADOS = [{ t: "Leyendo Bsale…", app: "bsale.png" }, { t: "Cruzando con Gmail…", app: "gmail.svg" }, { t: "Actualizando Zoho CRM…", app: "zoho.svg" }, { t: "Listo · 3 cotizaciones abiertas", ok: true }, { t: "Médula", corto: true }];
+  const medir = () => { isla.style.width = "auto"; return isla.offsetWidth; };
+  async function pasar(e) {
+    txt.classList.add("sale"); app.classList.add("sale");
+    await esperar(200);
+    txt.textContent = e.t;
+    app.className = "isla__app sale" + (e.ok ? " ok" : "");
+    app.innerHTML = e.ok ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : e.app ? `<img src="recursos/logos/${e.app}" alt="">` : "";
+    app.style.display = e.corto ? "none" : "";
+    isla.classList.toggle("listo", !!(e.ok || e.corto));
+    const antes = isla.offsetWidth, despues = medir();
+    isla.style.width = antes + "px"; isla.offsetWidth; isla.style.width = despues + "px";
+    isla.classList.add("latido"); setTimeout(() => isla.classList.remove("latido"), 260);
+    await esperar(120);
+    txt.classList.remove("sale"); app.classList.remove("sale");
+  }
+  let i = n, vivo = false;
+  async function ciclo() {
+    while (vivo) {
+      const e = ESTADOS[i % ESTADOS.length]; await pasar(e);
+      const dur = e.corto ? 900 : e.ok ? 1700 : 1350;
+      barra.style.transition = "none"; barra.style.transform = "scaleX(0)"; barra.offsetWidth;
+      if (!e.ok && !e.corto) { barra.style.transition = `transform ${dur}ms linear`; barra.style.transform = "scaleX(1)"; }
+      await esperar(dur); i++;
+    }
+  }
+  isla.style.width = medir() + "px";
+  if (QUIETO) txt.textContent = ESTADOS[0].t; else alVer(isla, () => { if (!vivo) { vivo = true; ciclo(); } }, () => (vivo = false), 0);
+});
+
 /* ── Texto que se escribe y se borra, como un teclado ── */
 function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
   const palabras = el.dataset.palabras.split("|");
@@ -359,15 +392,6 @@ let pintarFrase = () => {};
   // cada video corre solo mientras se ve
   const vid = new IntersectionObserver((es) => es.forEach((e) => { const v = $("video", e.target); if (e.isIntersecting && !QUIETO) v.play().catch(() => {}); else v.pause(); }), { threshold: .25 });
   $$(".area7").forEach((a) => vid.observe(a));
-  // líneas finas desde el logo a cada área; la del área bajo el mouse se enciende
-  const caja = $("#areas"), red = $(".ar8__red", caja), centro = $(".ar8__centro", caja), areas = $$(".area7", caja);
-  const trazar = () => {
-    if (MOVIL()) return;
-    const R = caja.getBoundingClientRect(), C = centro.getBoundingClientRect(), cx = C.left + C.width / 2 - R.left, cy = C.top + C.height / 2 - R.top;
-    red.innerHTML = areas.map((a, i) => { const r = a.getBoundingClientRect(), izq = i < 3, x = (izq ? r.right : r.left) - R.left, y = r.top + r.height / 2 - R.top, mx = (x + cx) / 2; return `<path d="M${cx} ${cy} C${mx} ${cy} ${mx} ${y} ${x} ${y}"/>`; }).join("");
-  };
-  addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar(); areas.forEach((a) => a.addEventListener("transitionend", trazar));
-  areas.forEach((a, i) => { a.addEventListener("pointerenter", () => red.children[i]?.classList.add("on")); a.addEventListener("pointerleave", () => red.children[i]?.classList.remove("on")); });
 }
 
 /* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */
