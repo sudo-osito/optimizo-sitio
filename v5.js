@@ -318,168 +318,91 @@ function isotipo(cv, op) {
   if (!QUIETO) setInterval(() => { rota.classList.add("sale"); setTimeout(() => { i = (i + 1) % PAL.length; txt.textContent = PAL[i]; rota.classList.remove("sale"); }, 450); }, 2600);
 }
 
-/* ── Desafío: el título se aparta, cinco escenas atadas al scroll y un cierre donde el punto tacha cada dolor ── */
-const d5 = {
-  sec: $("#desafio"), t: $(".d5__t"), grid: $(".d5__grid"), li: $$("#d5-lista li"), barra: $$("#d5-barra i"), esc: $$("#d5-mesa .esc"),
-  cierre: $(".d5__cierre"), filas: $$(".sincon__fila"), sincon: $("#sincon"), punto: $("#sincon-punto"), med: null, actual: -1,
-};
+/* ── Desafío: el escritorio de un día cualquiera. Cada dolor enfoca su ventana; al final todo se ordena y se conecta ── */
+const d6 = { sec: $("#desafio"), t: $(".d6__t"), esc: $("#d6"), dol: $$(".d6__dolor"), vent: $$(".vent6"), marcas: $$(".d6__marcas i"), mk: $$(".marca6"), med: null };
+d6.vent.forEach((v) => (v.dolores = new Set($$(".marca6", v).map((m) => +m.dataset.d))));
 { // la frase del remate, palabra por palabra
-  const r = $("#d5-remate");
+  const r = $("#d6-frase");
   r.innerHTML = [...r.childNodes].map((n) => n.textContent.split(/\s+/).filter(Boolean).map((w) => `<span class="pa${n.nodeType === 1 ? " acento" : ""}">${w}</span>`).join(" ")).join(" ");
-  d5.pa = $$(".pa", r);
+  d6.pa = $$(".pa", r);
 }
-const IN = .1, PASO = .132; // las escenas viven entre IN y IN + 5·PASO del avance
 function medirDesafio() {
-  if (MOVIL()) return;
-  d5.t.style.transform = "none";
-  d5.med = { L: d5.t.offsetLeft, T: d5.t.offsetTop, W: d5.t.offsetWidth, H: d5.t.offsetHeight };
-  d5.sec.style.setProperty("--alto-t", d5.med.H + "px");
+  d6.t.style.transform = "none";
+  d6.med = { L: d6.t.offsetLeft, T: d6.t.offsetTop, W: d6.t.offsetWidth, H: d6.t.offsetHeight };
+  d6.esc.style.setProperty("--alto-t", d6.med.H + "px");
 }
-const ESCENA = [
-  (e, k) => { // fragmentada: el pedido se rompe en cuatro versiones
-    const corte = eo((k - .3) / .12);
-    e.style.setProperty("--kc", 1 - .14 * corte); e.style.setProperty("--kq", eo((k - .44) / .12));
-    e.style.setProperty("--kt", eo((k - .3) / .2)); e.style.setProperty("--kh", eo((k - .55) / .15)); e.style.setProperty("--kp", eo((k - .7) / .12));
-    $$(".frag__app", e).forEach((a, i) => a.style.setProperty("--ka", eo((k - .44 - i * .035) / .12)));
-  },
-  (e, k) => { // repetitiva: el mismo dato pasa de app en app, una y otra vez
-    const v = k * 4, f = v % 1, tramo = Math.min(2.999, f * 3.4), j = Math.floor(tramo), sub = eio(tramo - j);
-    const x = (i) => 6 + 88 * (.125 + .25 * i);
-    e.style.setProperty("--dx", (MOVIL() ? [25, 75, 25, 75][Math.min(3, Math.round(tramo))] : lerp(x(j), x(j + 1), sub)) + "%");
-    $$(".rep__app", e).forEach((a, i) => a.classList.toggle("toca", i === Math.round(tramo)));
-    $("#rep-veces").textContent = Math.floor(eo(k) * 48); $("#rep-horas").textContent = Math.round(eo(k / .9) * 126) + " h";
-    e.style.setProperty("--kp", eo((k - .62) / .14));
-  },
-  (e, k) => { // poca visibilidad: la planta habla, la gerencia no se entera
-    $$(".vis__log p", e).forEach((p, i) => p.classList.toggle("on", k > .06 + i * .1));
-    e.style.setProperty("--kv", eo((k - .56) / .12)); e.style.setProperty("--kp", eo((k - .7) / .12));
-  },
-  (e, k) => { // desconectados: tres islas que se alejan
-    const s = eo(k / .5) * (MOVIL() ? 6 : 26);
-    $$(".isl", e).forEach((n, i) => n.style.setProperty("--sx", (i - 1) * s + "px"));
-    e.classList.toggle("mal", k > .38); e.style.setProperty("--kp", eo((k - .6) / .14));
-  },
-  (e, k) => { // reactiva: el cabezal corre de lunes a jueves y aparece el hueco
-    const c = lerp(4, 92, eio(clamp(k / .62)));
-    $(".rea__cabezal", e).style.left = c + "%";
-    $$(".rea__dia", e).forEach((d) => d.classList.toggle("on", c >= parseFloat(d.style.getPropertyValue("--x")) - .5));
-    e.style.setProperty("--kh", eo((k - .66) / .12)); e.style.setProperty("--kh2", eo((k - .74) / .08)); e.style.setProperty("--kp", eo((k - .8) / .1));
-  },
-];
-function mostrarEscena(i, k) {
-  if (i !== d5.actual) { d5.actual = i; d5.esc.forEach((e, j) => e.classList.toggle("on", j === i)); d5.li.forEach((l, j) => l.classList.toggle("on", j === i)); }
-  ESCENA[i](d5.esc[i], k);
-  d5.li.forEach((l, j) => l.style.setProperty("--k", j < i ? 1 : j === i ? k : 0));
-  d5.barra.forEach((b, j) => b.style.setProperty("--k", j < i ? 1 : j === i ? k : 0));
-}
-function pintarCierre(kr, ks, kp) {
-  const n = Math.ceil(kr * d5.pa.length); d5.pa.forEach((w, i) => w.classList.toggle("on", i < n));
-  d5.sincon.style.setProperty("--ks", ks);
-  d5.filas.forEach((f, i) => { const k = eo(kp * 5 - i); f.style.setProperty("--k", k); f.classList.toggle("on", k > .5); });
-  if (d5.filas.length) { // el punto baja fila por fila
-    const y = d5.filas.map((f) => f.offsetTop + f.offsetHeight / 2), x = clamp(kp * 5 - .5, 0, 4), j = Math.floor(x);
-    d5.sincon.style.setProperty("--py", lerp(y[j], y[Math.min(4, j + 1)], eio(x - j)) + "px"); d5.sincon.style.setProperty("--kpu", ks); d5.sincon.style.setProperty("--px", $("b", d5.filas[0]).offsetLeft - 20 + "px");
-  }
-}
+addEventListener("resize", () => (d6.med = null));
 function pintarDesafio() {
-  if (MOVIL()) return;
-  if (!d5.med) medirDesafio();
-  const p = avance(d5.sec), m = d5.med;
-  const kt = eio((p - .012) / .075), s0 = Math.min(2.2, innerWidth * .84 / m.W);
+  if (MOVIL()) { if (d6.t.style.transform) { d6.t.style.transform = ""; d6.t.style.opacity = ""; } return; }
+  if (!d6.med) medirDesafio();
+  const p = avance(d6.sec), m = d6.med;
+  // el título entra gigante al centro y se aparta arriba a la izquierda
+  const kt = eio((p - .01) / .09), s0 = Math.min(2.3, innerWidth * .84 / m.W);
   const x0 = innerWidth / 2 - s0 * m.W / 2 - m.L, y0 = innerHeight / 2 - s0 * m.H / 2 - m.T;
-  const kc = clamp((p - .775) / .03);
-  d5.t.style.transform = `translate(${lerp(x0, 0, kt)}px, ${lerp(y0, 0, kt)}px) scale(${lerp(s0, 1, kt)})`;
-  d5.t.style.opacity = 1 - kc;
-  d5.grid.style.setProperty("--kg", eo((p - .06) / .05) * (1 - kc));
-  const q = clamp((p - IN) / (5 * PASO), 0, .9999), i = Math.floor(q * 5);
-  mostrarEscena(i, clamp(q * 5 - i));
-  d5.cierre.style.setProperty("--kc", kc); d5.cierre.classList.toggle("on", kc > 0);
-  pintarCierre(clamp((p - .79) / .07), eo((p - .855) / .03), clamp((p - .88) / .1));
+  const kr = clamp((p - .74) / .2), orden = kr > 0;
+  d6.t.style.transform = `translate(${lerp(x0, 0, kt)}px, ${lerp(y0, 0, kt)}px) scale(${lerp(s0, 1, kt)})`;
+  d6.t.style.opacity = 1 - eo(kr / .25);
+  // las ventanas llegan al escritorio, y cada dolor enfoca la suya
+  const q = clamp((p - .13) / .6, 0, .9999), i = Math.floor(q * 5), activo = p > .13 && !orden;
+  d6.vent.forEach((v, j) => {
+    v.style.setProperty("--ve", eo((p - .06 - j * .012) / .05));
+    const foco = activo && v.dolores.has(i);
+    v.classList.toggle("foco", foco); v.classList.toggle("tenue", activo && !foco);
+  });
+  d6.mk.forEach((k) => k.classList.toggle("on", activo && +k.dataset.d === i));
+  d6.dol.forEach((d, j) => d.classList.toggle("on", activo && j === i));
+  d6.marcas.forEach((k, j) => k.classList.toggle("on", p > .13 && j <= i));
+  $(".d6__marcas").style.opacity = 1 - eo(kr / .25);
+  // el remate: todo se ordena, se conecta al punto y la frase se enciende
+  d6.esc.classList.toggle("orden", orden);
+  d6.esc.style.setProperty("--k", eio(kr / .55)); d6.esc.style.setProperty("--kl", eo((kr - .45) / .35)); d6.esc.style.setProperty("--kr", eo((kr - .05) / .3));
+  const n = Math.ceil(clamp((kr - .12) / .5) * d6.pa.length); d6.pa.forEach((w, j) => w.classList.toggle("on", j < n));
 }
-d5.li.forEach((l, i) => l.addEventListener("click", () => {
-  if (MOVIL()) { d5.manual = performance.now(); d5.fase = i; return; }
-  const top = d5.sec.offsetTop + (IN + (i + .35) * PASO) * (d5.sec.offsetHeight - innerHeight);
-  scrollTo({ top, behavior: QUIETO ? "auto" : "smooth" });
-}));
-addEventListener("resize", () => { d5.med = null; });
-/* en el celular no hay escena fija: las escenas pasan solas y se pueden tocar */
-{
-  let t0 = 0, previo = -1; d5.fase = 0;
-  bucleVisible($("#d5-mesa"), (t) => {
-    if (!MOVIL()) return;
-    const DUR = 5.2;
-    if (d5.manual) { t0 = t - d5.fase * DUR; d5.manual = 0; }
-    const v = ((t - t0) / DUR) % 5, i = Math.floor(v); d5.fase = i;
-    if (i !== previo) { previo = i; const chip = d5.li[i]; chip.parentElement.scrollTo({ left: chip.offsetLeft - 20, behavior: "smooth" }); }
-    mostrarEscena(i, clamp((v - i) * 1.15));
-  }, 30);
-  alVer(d5.cierre, () => { if (MOVIL()) pintarCierre(1, 1, 1); }, null, .2);
-}
+alVer(d6.sec, () => { if (MOVIL()) d6.pa.forEach((w) => w.classList.add("on")); }, null, 0);
 
-/* ── ¿Cuánto le cuesta? Con los números del visitante ── */
-{
-  const P = $("#c-personas"), H = $("#c-horas"), V = $("#c-valor"), mil = (n) => Math.round(n).toLocaleString("es-CL");
-  const plata = (n) => { const m = n / 1e6; return "$" + (m < 10 ? m.toFixed(1).replace(".", ",") : mil(m)) + " M"; };
-  const calcular = () => {
-    [P, H, V].forEach((r) => r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min)) * 100 + "%"));
-    const horas = P.value * H.value * 48;
-    $("#o-personas").textContent = mil(P.value); $("#o-horas").textContent = H.value + " h"; $("#o-valor").textContent = "$" + mil(V.value);
-    $("#r-horas").textContent = mil(horas) + " h"; $("#r-plata").textContent = plata(horas * V.value);
-  };
-  [P, H, V].forEach((r) => r.addEventListener("input", calcular)); calcular();
-}
-
-/* ── Propuesta: Optimizo al centro, cada área de la empresa en órbita ── */
-const AREAS = [
-  ["Comercial", ["Cotizaciones que se arman solas, con precio y stock reales.", "Seguimiento de clientes y CRM al día, sin trabajo manual.", "Agentes que responden y agendan por WhatsApp."], [["Médula", "c-med"], ["Agentes", ""]]],
-  ["Marketing", ["Campañas medidas contra ventas reales, no contra likes.", "Contenido y respuestas con el contexto de tu marca.", "Reportes que se arman solos cada semana."], [["Agentes", ""], ["Automatización", ""]]],
-  ["Finanzas", ["Facturas, conciliaciones y reportes que se arman solos.", "Cobranza con alertas antes del vencimiento.", "Flujo de caja al día, con datos de todos tus sistemas."], [["Automatización", ""], ["Médula", "c-med"]]],
-  ["Operaciones", ["Procesos que se coordinan solos entre áreas.", "Alertas cuando algo se desvía, no cuando ya pasó.", "Indicadores por línea, turno y planta."], [["Médula", "c-med"], ["Automatización", ""]]],
-  ["Logística", ["Tráfico de montacargas, cruces y puntos ciegos.", "Conteos y tiempos de espera medidos por cámara.", "Stock con una sola fuente para todas las áreas."], [["Lumina", "c-lum"], ["Médula", "c-med"]]],
-  ["Personas", ["Procedimientos y respuestas a mano, en un chat.", "Solicitudes, turnos y permisos sin papeleo.", "Inducciones que no dependen de una sola persona."], [["Agentes", ""], ["Médula", "c-med"]]],
-  ["Prevención de riesgos", ["EPP, zonas restringidas y proximidad persona–vehículo.", "Cada evento registrado con evidencia.", "Indicadores por zona para decidir dónde actuar."], [["Lumina", "c-lum"]]],
-  ["Gerencia", ["La información de toda la empresa, lista para decidir.", "Un resumen de la operación cada mañana.", "Pregúntale a tus datos como le preguntas a tu equipo."], [["Médula", "c-med"], ["Lumina", "c-lum"]]],
+/* ── Propuesta de valor: un dial plano. Las áreas giran alrededor de Optimizo y la activa llega al frente ── */
+const ICONO = {
+  operaciones: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/>',
+  logistica: '<path d="M3 6.5h11v9.5H3zM14 10h4l3 3.2V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
+  ventas: '<path d="M4 17l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/>',
+  finanzas: '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  riesgos: '<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/>',
+  gerencia: '<rect x="3.5" y="4" width="17" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4M7 12.5l3-3 2 2 4-4"/>',
+};
+const AREAS = [ // textos de «Dónde se aplica» (narrativa del sitio)
+  ["operaciones", "Operaciones", "Procesos que se coordinan solos y alertas cuando algo se desvía.", [["Médula", "medula"], ["Automatización"]]],
+  ["logistica", "Logística", "Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.", [["Lumina", "lumina"]]],
+  ["ventas", "Ventas", "Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.", [["Médula", "medula"], ["Agentes"]]],
+  ["finanzas", "Administración y finanzas", "Facturas, conciliaciones y reportes que se arman solos.", [["Automatización"], ["Médula", "medula"]]],
+  ["riesgos", "Prevención de riesgos", "EPP, zonas restringidas y registro de eventos con evidencia.", [["Lumina", "lumina"]]],
+  ["gerencia", "Gerencia", "La información de toda la empresa, lista para decidir.", [["Médula", "medula"], ["Lumina", "lumina"]]],
 ];
+const svgIco = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONO[k]}</svg>`;
 {
-  const sec = $("#propuesta"), esc = $("#orb-escena"), caja = $("#orb-areas"), panel = $("#orb-panel"), punto = $("#orb-punto"), hilo = $("#orb-hilo"), centro = $(".orb__centro");
-  caja.innerHTML = AREAS.map(([n], i) => `<button class="orb__a" role="tab" data-i="${i}">${n}</button>`).join("");
-  const chips = $$(".orb__a", caja), N = AREAS.length;
-  let g = null, ahora = 0, objetivo = 0, activa = -1, kd = 0, t0 = 0;
-  const geo = () => { const w = esc.clientWidth, h = esc.clientHeight, rx = Math.min(w * (MOVIL() ? .3 : .4), 400); g = { cx: w / 2, cy: h / 2, rx, ry: rx * (MOVIL() ? .44 : .36), lw: centro.offsetWidth }; esc.style.setProperty("--rx", g.rx + "px"); esc.style.setProperty("--ry", g.ry + "px"); };
-  addEventListener("resize", () => (g = null));
-  const abrirArea = (i) => {
+  const dial = $("#dial"), caja = $("#dial-areas"), panel = $("#prop-panel"), ticks = $("#dial-ticks"), N = AREAS.length;
+  caja.innerHTML = AREAS.map(([k, n], i) => `<button class="dial__a" role="tab" data-i="${i}" aria-label="${n}"><span class="dial__ico">${svgIco(k)}</span><span class="dial__nom">${n}</span></button>`).join("");
+  ticks.innerHTML = Array.from({ length: 72 }, (_, i) => { const a = i * 5 * Math.PI / 180, m = i % 12 === 0, r1 = m ? 80 : 83.5; return `<line class="${m ? "mayor" : ""}" x1="${(r1 * Math.cos(a)).toFixed(2)}" y1="${(r1 * Math.sin(a)).toFixed(2)}" x2="${(88 * Math.cos(a)).toFixed(2)}" y2="${(88 * Math.sin(a)).toFixed(2)}"/>`; }).join("");
+  const botones = $$(".dial__a", caja);
+  let activa = -1, giro = Math.PI, objetivo = Math.PI, t0 = 0, quieto = false;
+  const elegir = (i) => {
     if (i === activa) return; activa = i;
-    const [n, cosas, prods] = AREAS[i];
-    panel.innerHTML = `<h3>${n}</h3><ul>${cosas.map((c) => `<li>${c}</li>`).join("")}</ul><div class="orb__chips">${prods.map(([p, c]) => `<span class="${c}">${p}</span>`).join("")}</div>`;
-    chips.forEach((c, j) => { c.classList.toggle("activo", j === i); c.setAttribute("aria-selected", j === i); });
+    const [k, n, txt, prods] = AREAS[i];
+    panel.innerHTML = `<div class="prop__cab">${svgIco(k)}<h3>${n}</h3></div><p>${txt}</p><div class="prop__chips">${prods.map(([p, r]) => (r ? `<a href="#camino" data-ir="${r}" class="${r === "lumina" ? "c-lum" : "c-med"}">${p}</a>` : `<span>${p}</span>`)).join("")}</div>`;
+    $$("[data-ir]", panel).forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(a.dataset.ir); }));
+    botones.forEach((b, j) => { b.classList.toggle("activo", j === i); b.setAttribute("aria-selected", j === i); });
+    // la activa va a la izquierda del dial (mira hacia el texto); se gira por el camino corto
+    let o = Math.PI - i * 2 * Math.PI / N; while (o - giro > Math.PI) o -= 2 * Math.PI; while (giro - o > Math.PI) o += 2 * Math.PI; objetivo = o;
   };
-  const IN_O = .07, RANGO = .86;
-  chips.forEach((c, i) => c.addEventListener("click", () => {
-    if (MOVIL()) { objetivo = i; t0 = performance.now() / 1000; return; }
-    scrollTo({ top: sec.offsetTop + (IN_O + (i / (N - 1)) * RANGO) * (sec.offsetHeight - innerHeight), behavior: QUIETO ? "auto" : "smooth" });
-  }));
-  bucleVisible(esc, (t) => {
-    if (!g) geo();
-    const movil = MOVIL();
-    if (movil) { kd = 1; if (t - t0 > 3.4) { t0 = t; objetivo = (Math.round(objetivo) + 1) % N; } }
-    else { const p = avance(sec); kd = eio(p / IN_O); objetivo = clamp((p - IN_O) / RANGO) * (N - 1); }
-    let dif = objetivo - ahora; if (movil && Math.abs(dif) > N / 2) ahora += Math.sign(dif) * N, dif = objetivo - ahora;
-    ahora += dif * (QUIETO ? 1 : .12);
-    const fi = -ahora * Math.PI * 2 / N;
-    chips.forEach((c, i) => {
-      const a = Math.PI / 2 + i * Math.PI * 2 / N + fi, prof = Math.sin(a), co = Math.cos(a);
-      const x = g.cx + (g.rx + 26) * co, y = g.cy + (g.ry + 22) * prof, s = .74 + .3 * (prof + 1) / 2;
-      c.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${s})`;
-      c.style.opacity = (.32 + .68 * (prof + 1) / 2).toFixed(3); c.style.zIndex = prof > -.25 ? 70 + Math.round(prof * 10) : 20 + Math.round((prof + 1) * 10);
-    });
-    abrirArea(((Math.round(ahora) % N) + N) % N);
-    // el punto: sale de la mordida del logo y se instala al frente de la órbita
-    const sx = g.cx - .3567 * g.lw, sy = g.cy - .3543 * g.lw, ex = g.cx, ey = g.cy + g.ry, cx = g.cx - g.rx * .85, cy = g.cy + g.ry * .2;
-    const k = kd, u = 1 - k, px = u * u * sx + 2 * u * k * cx + k * k * ex, py = u * u * sy + 2 * u * k * cy + k * k * ey;
-    const esc0 = (.25 * g.lw) / 26;
-    punto.style.transform = `translate(${px}px, ${py}px) scale(${lerp(esc0, 1, eo(k))})`;
-    hilo.setAttribute("x1", g.cx); hilo.setAttribute("y1", g.cy + g.lw * .5); hilo.setAttribute("x2", ex); hilo.setAttribute("y2", ey - 14);
-    hilo.style.opacity = eo((k - .8) / .2);
+  botones.forEach((b, i) => b.addEventListener("click", () => { elegir(i); t0 = performance.now() / 1000; }));
+  dial.addEventListener("pointerenter", () => (quieto = true)); dial.addEventListener("pointerleave", () => (quieto = false));
+  elegir(0);
+  bucleVisible(dial, (t) => {
+    if (!t0) t0 = t;
+    if (!QUIETO && !quieto && t - t0 > 3.6) { t0 = t; elegir((activa + 1) % N); }
+    giro += (objetivo - giro) * (QUIETO ? 1 : .07);
+    const w = dial.clientWidth, R = w * .41;
+    botones.forEach((b, i) => { const a = giro + i * 2 * Math.PI / N; b.style.transform = `translate(${w / 2 + R * Math.cos(a)}px, ${w / 2 + R * Math.sin(a)}px) translate(-50%, -29px)`; });
+    ticks.setAttribute("transform", `rotate(${giro * 180 / Math.PI})`);
   }, 60);
 }
 

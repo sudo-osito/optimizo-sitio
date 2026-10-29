@@ -75,98 +75,49 @@
     </div>
   </section>
 
-  <!-- 02 · El desafío: un dolor = una escena = una metáfora -->
-  <section class="d5" id="desafio" aria-labelledby="h-desafio">
-    <div class="d5__fijo">
-      <h2 class="d5__t" id="h-desafio">La tecnología avanza. <span class="tenue">¿Tus procesos avanzan con ella?</span></h2>
-      <div class="envoltura d5__grid">
-        <ol class="d5__lista" id="d5-lista">
-          <li><b>Información fragmentada</b><span>Los datos existen, pero viven en planillas, correos y personas.</span></li>
-          <li><b>Tareas repetitivas</b><span>Horas copiando, buscando y actualizando lo mismo.</span></li>
-          <li><b>Poca visibilidad</b><span>Lo que pasa en la operación no llega a quien decide.</span></li>
-          <li><b>Procesos desconectados</b><span>Cada área trabaja aislada y duplica esfuerzos.</span></li>
-          <li><b>Gestión reactiva</b><span>Los problemas se ven cuando ya ocurrieron.</span></li>
-        </ol>
-        <div class="d5__escenario" aria-hidden="true">
-          <div class="d5__barra" id="d5-barra"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="d5__mesa" id="d5-mesa">
+  <!-- 02 · El desafío: el escritorio de un día cualquiera. Cada dolor enfoca su ventana; al final todo se ordena -->
+  <section class="d6" id="desafio" aria-labelledby="h-desafio">
+    <div class="d6__fijo">
+      <h2 class="d6__t" id="h-desafio">La tecnología avanza. <span class="tenue">¿Tus procesos avanzan con ella?</span></h2>
+      <div class="d6__escena" id="d6">
+        <div class="d6__marcas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
-            <!-- 1 · Fragmentada: un mismo dato, cuatro versiones -->
-            <div class="esc esc--frag">
-              <svg class="frag__hilos" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M50 44 L22 20"/><path d="M50 44 L78 20"/><path d="M50 44 L22 72"/><path d="M50 44 L78 72"/></svg>
-              <div class="frag__app" style="--x:22%;--y:20%"><span class="frag__cab"><img src="recursos/marcas/sap.svg" alt="">ERP</span><small>Fecha de entrega</small><b>12 nov</b></div>
-              <div class="frag__app" style="--x:78%;--y:20%"><span class="frag__cab"><img src="recursos/logos/microsoftexcel.svg" alt="">Planilla de despacho</span><small>Fecha de entrega</small><b>15 nov</b></div>
-              <div class="frag__app" style="--x:22%;--y:72%"><span class="frag__cab"><img src="recursos/logos/gmail.svg" alt="">Correo del cliente</span><small>Fecha de entrega</small><b>«¿La próxima semana?»</b></div>
-              <div class="frag__app" style="--x:78%;--y:72%"><span class="frag__cab"><img src="recursos/logos/whatsapp.svg" alt="">Grupo de despacho</span><small>Fecha de entrega</small><b>«Mañana sin falta»</b></div>
-              <div class="frag__pedido"><small>Pedido 4471 · 320 unidades</small><b>¿Cuándo se entrega?</b></div>
-              <i class="frag__trozo" style="--x:22%;--y:20%"></i><i class="frag__trozo" style="--x:78%;--y:20%"></i><i class="frag__trozo" style="--x:22%;--y:72%"></i><i class="frag__trozo" style="--x:78%;--y:72%"></i>
-              <p class="esc__pie">Un mismo dato. <b>Cuatro versiones.</b></p>
-            </div>
+        <article class="d6__dolor">
+          <div class="d6__txt"><h3>Información fragmentada</h3><p>Los datos existen, pero están dispersos entre aplicaciones, documentos, planillas y personas.</p></div>
+          <div class="vent6 vent6--excel" style="--x:30;--y:24;--r:-2deg;--ox:18;--oy:28" aria-hidden="true"><div class="vent6__barra"><img src="recursos/logos/microsoftexcel.svg" alt="">Inventario_FINAL_v3 (2).xlsx</div>
+            <div class="hoja6"><span>SKU</span><span>Stock</span><span>Zona</span><span>A-104</span><span class="marca6" data-d="0">#REF!</span><span>Norte</span><span>A-221</span><span>12</span><span class="marca6" data-d="0">¿?</span><span>B-017</span><span class="marca6" data-d="0">#N/A</span><span>Sur</span></div></div>
+          <div class="vent6 vent6--wa" style="--x:78;--y:20;--r:3deg;--ox:50;--oy:28" aria-hidden="true"><div class="vent6__barra vent6__barra--wa"><img src="recursos/logos/whatsapp.svg" alt="">Equipo operaciones <em>37</em></div>
+            <p class="msj6">¿Alguien sabe si llegó el pedido de Quillay?</p><p class="msj6 msj6--yo">Revisa el Excel</p><p class="msj6 marca6" data-d="0">¿Cuál Excel? 😅</p></div>
+          <div class="vent6 vent6--nota" style="--x:84;--y:82;--r:5deg;--ox:82;--oy:72" aria-hidden="true"><span class="marca6" data-d="0">¿Quién tenía la cotización de Quillay? 🤔</span></div>
+        </article>
 
-            <!-- 2 · Repetitiva: el mismo dato copiado a mano, una y otra vez -->
-            <div class="esc esc--rep">
-              <div class="rep__fila">
-                <div class="rep__app"><img src="recursos/logos/gmail.svg" alt=""><span>Correo</span></div>
-                <div class="rep__app"><img src="recursos/marcas/sap.svg" alt=""><span>ERP</span></div>
-                <div class="rep__app"><img src="recursos/logos/microsoftexcel.svg" alt=""><span>Planilla</span></div>
-                <div class="rep__app"><img src="recursos/logos/microsoftoutlook.svg" alt=""><span>Reporte</span></div>
-              </div>
-              <div class="rep__dato" id="rep-dato">OC 8812 · 48 un. · $1.240.000</div>
-              <div class="rep__cuenta"><b id="rep-veces">0</b><span>veces copiado hoy</span></div>
-              <div class="rep__horas"><b id="rep-horas">0 h</b><span>al mes en copiar y pegar · ejemplo</span></div>
-              <p class="esc__pie">Copiar. Pegar. <b>Repetir.</b></p>
-            </div>
+        <article class="d6__dolor">
+          <div class="d6__txt"><h3>Tiempo dedicado a tareas repetitivas</h3><p>Profesionales capacitados destinan parte importante de su jornada a buscar información, actualizar registros y ejecutar tareas que podrían automatizarse.</p></div>
+          <div class="vent6 vent6--mail" style="--x:40;--y:56;--r:1.5deg;--ox:82;--oy:28" aria-hidden="true"><div class="vent6__barra"><img src="recursos/logos/gmail.svg" alt="">Recibidos <em>128</em></div>
+            <p class="mail6 marca6" data-d="1"><b>RE: RE: RE: Cotización</b>Adjunto versión corregida (otra vez)</p><p class="mail6 marca6" data-d="2"><b>Urgente: stock</b>¿Me confirman disponibilidad?</p></div>
+        </article>
 
-            <!-- 3 · Poca visibilidad: la planta habla, la gerencia no escucha -->
-            <div class="esc esc--vis">
-              <div class="vis__piso vis__piso--planta"><span class="vis__rot"><i class="vivo"></i>Planta · ahora</span>
-                <div class="vis__log"><p><em>08:12</em>Línea 2 detenida 14 min</p><p><em>09:40</em>Merma sobre lo normal · lote 0412</p><p><em>10:05</em>Stock bajo el mínimo · SKU A-221</p><p><em>11:30</em>Despacho atrasado · ruta norte</p><p><em>12:15</em>Turno B con 3 ausencias</p></div>
-              </div>
-              <div class="vis__corte"><span>no llega</span></div>
-              <div class="vis__piso vis__piso--gerencia"><span class="vis__rot">Gerencia · tablero</span>
-                <div class="vis__vacio"><i></i><i></i><i></i><i></i><i></i></div>
-                <span class="vis__fecha">Actualizado hace 9 días</span>
-              </div>
-              <p class="esc__pie">Todo pasa. <b>Nadie que decide lo ve.</b></p>
-            </div>
+        <article class="d6__dolor">
+          <div class="d6__txt"><h3>Falta de visibilidad y control</h3><p>Lo que sucede en la operación no siempre se transforma en información útil para anticipar problemas y tomar decisiones.</p></div>
+        </article>
 
-            <!-- 4 · Desconectados: tres áreas, tres números para lo mismo -->
-            <div class="esc esc--isl">
-              <div class="isl" style="--x:20%;--y:34%"><span>Ventas</span><small>Stock SKU A-221</small><b>1.240</b></div>
-              <div class="isl" style="--x:50%;--y:66%"><span>Logística</span><small>Stock SKU A-221</small><b>980</b></div>
-              <div class="isl" style="--x:80%;--y:34%"><span>Finanzas</span><small>Stock SKU A-221</small><b>1.310</b></div>
-              <p class="esc__pie">Tres áreas. <b>Tres números para lo mismo.</b></p>
-            </div>
+        <article class="d6__dolor">
+          <div class="d6__txt"><h3>Procesos desconectados</h3><p>Las personas y los sistemas trabajan, pero muchas veces lo hacen de manera aislada, duplicando esfuerzos y dificultando la coordinación.</p></div>
+          <div class="vent6 vent6--cal" style="--x:76;--y:52;--r:-3deg;--ox:18;--oy:72" aria-hidden="true"><div class="vent6__barra"><img src="recursos/logos/googlecalendar.svg" alt="">Hoy</div>
+            <p class="cal6"><i></i>10:00 · Revisión de inventario</p><p class="cal6 cal6--choque marca6" data-d="3"><i></i>10:00 · Reunión con Quillay</p></div>
+        </article>
 
-            <!-- 5 · Reactiva: la señal estuvo ahí tres días -->
-            <div class="esc esc--rea">
-              <div class="rea__linea">
-                <div class="rea__hueco"><span>3 días en que se pudo actuar</span></div>
-                <div class="rea__dia" style="--x:4%"><em>Lun 08:10</em><p>El consumo de la línea 2 sube 30 %</p><small>nadie lo ve</small></div>
-                <div class="rea__dia" style="--x:34%"><em>Mar 11:00</em><p>El stock baja del mínimo</p><small>nadie lo ve</small></div>
-                <div class="rea__dia" style="--x:63%"><em>Mié 15:20</em><p>El proveedor no confirma</p><small>nadie lo ve</small></div>
-                <div class="rea__dia rea__dia--fin" style="--x:92%"><em>Jue 16:40</em><p>Quiebre de stock. Se detiene la línea.</p><small>todos lo ven</small></div>
-                <i class="rea__cabezal"></i>
-              </div>
-              <p class="esc__pie">El problema avisó. <b>Lo vimos cuando ya había ocurrido.</b></p>
-            </div>
+        <article class="d6__dolor">
+          <div class="d6__txt"><h3>Gestión reactiva</h3><p>Los problemas suelen detectarse cuando ya ocurrieron, en lugar de contar con herramientas que permitan identificar condiciones de riesgo y actuar oportunamente.</p></div>
+          <div class="vent6 vent6--alerta" style="--x:24;--y:84;--r:-1.5deg;--ox:50;--oy:72" aria-hidden="true"><b class="marca6" data-d="4">Accidente evitado por poco</b>Pasillo 2 · nadie lo vio venir</div>
+        </article>
 
-          </div>
-          <span class="d5__nota">Escenas de ejemplo</span>
-        </div>
-      </div>
+        <svg class="d6__red" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M50 50 L18 28"/><path pathLength="100" d="M50 50 L50 28"/><path pathLength="100" d="M50 50 L82 28"/><path pathLength="100" d="M50 50 L18 72"/><path pathLength="100" d="M50 50 L50 72"/><path pathLength="100" d="M50 50 L82 72"/></svg>
+        <i class="d6__punto" aria-hidden="true"></i>
 
-      <!-- Cierre: la frase se enciende y el punto tacha cada dolor -->
-      <div class="d5__cierre envoltura">
-        <p class="d5__remate" id="d5-remate">El problema no es la falta de tecnología. <span class="acento">Es que todavía no trabaja a favor de tu empresa.</span></p>
-        <div class="sincon" id="sincon">
-          <div class="sincon__cab"><span>Hoy</span><span><svg><use href="#iso"/></svg>Con Optimizo</span></div>
-          <div class="sincon__fila"><s>Información fragmentada</s><b>Una sola fuente, conectada a lo que ya usas.</b></div>
-          <div class="sincon__fila"><s>Tareas repetitivas</s><b>Lo repetitivo corre solo. Tu equipo revisa y decide.</b></div>
-          <div class="sincon__fila"><s>Poca visibilidad</s><b>Lo que pasa en la operación llega a quien decide, a tiempo.</b></div>
-          <div class="sincon__fila"><s>Procesos desconectados</s><b>Todas las áreas trabajan con el mismo dato.</b></div>
-          <div class="sincon__fila"><s>Gestión reactiva</s><b>Alertas antes de que el problema ocurra.</b></div>
-          <i class="sincon__punto" id="sincon-punto"></i>
+        <div class="d6__remate">
+          <p class="d6__frase" id="d6-frase">El problema no siempre es la falta de tecnología. <span class="acento">Muchas veces es que la tecnología disponible todavía no está trabajando a favor de la empresa.</span></p>
+          <p class="d6__oportunidad">Ahí es donde encontramos nuestra oportunidad de generar valor.</p>
         </div>
       </div>
     </div>
@@ -175,7 +126,7 @@
   <!-- 05 · Lumina y Médula: elige tu camino -->
   <section class="camino envoltura" id="camino" aria-labelledby="h-camino">
     <div class="camino__cab">
-      <h2 class="t-1 arma" id="h-camino">Dos superpoderes que ya estamos construyendo. <span class="acento">Elige tu camino.</span></h2>
+      <h2 class="t-1 arma" id="h-camino">Superpoderes que ya estamos construyendo. <span class="acento">Elige tu camino.</span></h2>
     </div>
     <div class="pts">
       <button class="pt pt--lumina" data-ruta="lumina" aria-controls="ruta-lumina">
@@ -331,24 +282,18 @@
     </section>
   </div>
 
-  <!-- 04 · Propuesta de valor: Optimizo al centro, la empresa en órbita -->
-  <section class="orb oscuro" id="propuesta" aria-labelledby="h-orb">
-    <div class="orb__fijo">
-      <div class="envoltura orb__grid">
-        <div class="orb__txt">
-          <h2 class="t-1" id="h-orb">Un mismo punto de partida. <span class="acento">Toda tu empresa en órbita.</span></h2>
-          <p class="bajada">Conectamos tus áreas a una misma base. Cada una gana su superpoder y ninguna trabaja aislada.</p>
-          <div class="orb__panel" id="orb-panel" aria-live="polite"></div>
-        </div>
-        <div class="orb__escena" id="orb-escena">
-          <svg class="orb__anillo" viewBox="-100 -100 200 200" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="0" cy="0" rx="99" ry="99"/></svg>
-          <div class="orb__centro" aria-hidden="true">
-            <svg viewBox="0 0 138.305 138.305"><defs><linearGradient id="g-orb" gradientUnits="userSpaceOnUse" x1="6.05" y1="0" x2="144.36" y2="0"><stop offset="0" stop-color="#91CEC4"/><stop offset="1" stop-color="#387E80"/></linearGradient></defs><g transform="translate(-6.054688 -2.601562)"><path fill="url(#g-orb)" fill-rule="evenodd" d="M 55.757812 5.390625 C 58.730469 10.496094 60.441406 16.425781 60.441406 22.753906 C 60.441406 41.851562 44.960938 57.332031 25.863281 57.332031 C 19.621094 57.332031 13.769531 55.667969 8.710938 52.773438 C 6.992188 58.804688 6.054688 65.167969 6.054688 71.753906 C 6.054688 109.945312 37.011719 140.90625 75.207031 140.90625 C 113.398438 140.90625 144.359375 109.945312 144.359375 71.753906 C 144.359375 33.5625 113.398438 2.601562 75.207031 2.601562 C 68.453125 2.601562 61.929688 3.585938 55.757812 5.390625 Z M 57.917969 71.753906 C 57.917969 62.207031 65.65625 54.464844 75.207031 54.464844 C 84.753906 54.464844 92.492188 62.207031 92.492188 71.753906 C 92.492188 81.300781 84.753906 89.042969 75.207031 89.042969 C 65.65625 89.042969 57.917969 81.300781 57.917969 71.753906 Z"/></g></svg>
-          </div>
-          <svg class="orb__hilo" aria-hidden="true"><line id="orb-hilo"/></svg>
-          <i class="orb__punto" id="orb-punto" aria-hidden="true"></i>
-          <div class="orb__areas" id="orb-areas" role="tablist" aria-label="Áreas de tu empresa"></div>
-        </div>
+  <!-- 04 · Propuesta de valor: el punto de partida es tu operación. Un dial plano con las áreas alrededor de Optimizo -->
+  <section class="prop oscuro" id="propuesta" aria-labelledby="h-prop">
+    <div class="envoltura prop__in">
+      <div class="prop__txt">
+        <h2 class="t-1 arma" id="h-prop">Entendemos tus procesos. <span class="acento">Diseñamos cómo optimizarlos.</span></h2>
+        <p class="bajada" data-r>Nuestro punto de partida no es un software, una herramienta o una tecnología determinada. <b>Nuestro punto de partida es tu operación.</b></p>
+        <div class="prop__panel" id="prop-panel" aria-live="polite"></div>
+      </div>
+      <div class="dial" id="dial">
+        <svg class="dial__regla" viewBox="-100 -100 200 200" aria-hidden="true"><g id="dial-ticks"></g><circle r="88" /></svg>
+        <div class="dial__centro" aria-hidden="true"><img src="recursos/optimizo-isotipo.svg" alt=""></div>
+        <div class="dial__areas" id="dial-areas" role="tablist" aria-label="Áreas de tu empresa"></div>
       </div>
     </div>
   </section>
@@ -410,27 +355,6 @@
         </article>
       </div>
       <p class="sp__remate" data-r>No se trata de sumar tecnología. <span class="acento">Se trata de multiplicar lo que tu empresa es capaz de hacer.</span></p>
-    </div>
-  </section>
-
-  <!-- 03 · ¿Cuánto le cuesta? Con los números del visitante -->
-  <section class="costo envoltura" id="costo" aria-labelledby="h-costo">
-    <div class="costo__caja">
-      <div class="costo__txt">
-        <h2 class="t-1 arma" id="h-costo">¿Cuánto le cuesta esto <span class="acento">a tu empresa?</span></h2>
-        <p class="bajada" data-r>Mueve los números de tu operación. Lo que ves es el tiempo que hoy se va en tareas que no generan valor.</p>
-      </div>
-      <div class="costo__panel" data-r>
-        <label class="perilla"><span>Personas que hacen tareas manuales <output id="o-personas">40</output></span><input type="range" id="c-personas" min="5" max="500" step="5" value="40"></label>
-        <label class="perilla"><span>Horas a la semana, por persona <output id="o-horas">6 h</output></span><input type="range" id="c-horas" min="1" max="20" step="1" value="6"></label>
-        <label class="perilla"><span>Costo hora promedio <output id="o-valor">$9.000</output></span><input type="range" id="c-valor" min="4000" max="40000" step="500" value="9000"></label>
-        <div class="costo__res">
-          <div><small>Horas al año</small><b id="r-horas">11.520 h</b></div>
-          <div class="costo__plata"><small>Costo al año</small><b id="r-plata">$104 M</b></div>
-        </div>
-        <p class="costo__nota">Cálculo referencial con tus números (48 semanas al año). En el Discovery lo medimos de verdad.</p>
-        <a class="boton boton--tinta" href="#conversemos" data-discovery>Agenda tu Discovery <svg><use href="#i-flecha"/></svg></a>
-      </div>
     </div>
   </section>
 
