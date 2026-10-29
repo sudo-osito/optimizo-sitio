@@ -355,12 +355,14 @@ function pintarNav() { nav.classList.toggle("bajo", scrollY > 8); }
 /* ── El desafío: el dolor que cruza el centro de la pantalla se enciende y escribe su síntoma ── */
 const dolores = $$(".dolor7").map((li) => ({ li, m: maquina($(".tipeo", li), { una: true }), visto: false }));
 // en el celular los dolores son tarjetas que se deslizan: cada una escribe su síntoma cuando entra en pantalla
-if (MOVIL()) {
-  const ob = new IntersectionObserver((es) => es.forEach((e) => { const d = dolores.find((x) => x.li === e.target); if (!d) return; d.li.classList.toggle("on", e.isIntersecting); if (e.isIntersecting && !d.visto) { d.visto = true; d.li.classList.add("visto"); d.m.iniciar(); } }), { root: $("#d7"), threshold: .6 });
+// en PC los cinco van en fila y escriben su síntoma uno tras otro; en el celular, cada tarjeta al deslizarse a la vista
+{
+  let n = 0;
+  const ob = new IntersectionObserver((es) => es.forEach((e) => { const d = dolores.find((x) => x.li === e.target); if (!d) return; if (MOVIL()) d.li.classList.toggle("on", e.isIntersecting); if (e.isIntersecting && !d.visto) { d.visto = true; const espera = MOVIL() ? 0 : 350 * n++; setTimeout(() => { d.li.classList.add("visto", "on"); d.m.iniciar(); }, espera); } }), { root: MOVIL() ? $("#d7") : null, threshold: .6 });
   dolores.forEach((d) => ob.observe(d.li));
 }
 function pintarDesafio() {
-  if (MOVIL()) return;
+  return;
   const y = innerHeight * .55;
   let activo = -1;
   dolores.forEach((d, i) => { if (d.li.getBoundingClientRect().top < y) activo = i; });

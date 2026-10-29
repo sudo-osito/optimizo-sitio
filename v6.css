@@ -867,3 +867,50 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
   .v6 .pt { height: 540px; }
 }
 @media (max-width: 1020px) { .mt7__in .mt7__grilla { position: relative !important; } }
+
+/* ══ Quiénes somos: la presentación antes del desafío ══ */
+.nos7 { padding: 140px 0 40px; }
+.nos7__cab { display: grid; justify-items: center; text-align: center; gap: 20px; border-top: 1px solid var(--linea7); padding-top: 28px; }
+.nos7__cab .t7 { max-width: 20ch; }
+.nos7__cab .bajada { max-width: 56ch; text-align: center; font-size: clamp(1.05rem, 1rem + .3vw, 1.25rem); }
+.nos7__caps { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--linea7); border-bottom: 1px solid var(--linea7); }
+.cap7 { padding: 34px var(--celda) 36px; display: flex; flex-direction: column; gap: 12px; }
+.cap7 + .cap7 { border-left: 1px solid var(--linea7); }
+.cap7__ico { width: 46px; height: 46px; border-radius: 13px; background: var(--nube); display: grid; place-items: center; color: var(--tealp); margin-bottom: 10px; }
+.cap7__ico svg { width: 22px; height: 22px; }
+.cap7 h3 { font-size: clamp(1.3rem, 1.1rem + .5vw, 1.6rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.15; }
+.cap7 p { color: var(--texto7-2); font-size: 15.5px; }
+.cap7 b { margin-top: auto; padding-top: 10px; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.nos7__remate { margin: 72px auto 0; text-align: center; max-width: 26ch; font-size: clamp(1.7rem, 1rem + 2vw, 2.8rem); font-weight: 650; letter-spacing: -.045em; line-height: 1.08; }
+
+/* ══ El desafío, más liviano: cabecera chica y los cinco dolores en una fila ══ */
+.d7 { padding-top: 120px; }
+.d7__in .t7 { font-size: clamp(2rem, 1.2rem + 2.2vw, 3.3rem); }
+.d7__in > .d7__izq > .bajada { grid-column: 2 / 5; grid-row: 2; position: static; padding-left: var(--celda); margin-top: 18px; max-width: 60ch; font-size: 16.5px; }
+.d7__lista { grid-column: 1 / 5; grid-row: 3; margin-top: 48px; padding-left: 0; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--linea7); border-bottom: 1px solid var(--linea7); }
+.dolor7, .dolor7:last-child { padding: 26px 18px 24px; border: 0; display: flex; flex-direction: column; }
+.dolor7 + .dolor7 { border-left: 1px solid var(--linea7); }
+.dolor7 h3 { font-size: 1.15rem; letter-spacing: -.025em; line-height: 1.2; color: var(--tinta7); }
+.dolor7 p { font-size: 14px; color: var(--texto7-2); margin-bottom: 18px; }
+.dolor7 .eco { margin-top: auto; font-size: 13px; padding: 8px 12px; min-height: 40px; max-width: 100%; display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.dolor7 .eco__de { display: none; }
+.dolor7 .eco img, .dolor7 .eco__alerta { width: 16px; height: 16px; }
+
+@media (max-width: 1020px) {
+  .nos7 { padding-top: 72px; }
+  .nos7__cab { border-top: 0; padding-top: 0; justify-items: start; text-align: left; }
+  .nos7__cab .bajada { text-align: left; }
+  .nos7__caps { grid-template-columns: 1fr; margin-top: 32px; border: 0; gap: 10px; }
+  .cap7, .cap7 + .cap7 { border: 0; padding: 22px; border-radius: 22px; background: var(--nube); }
+  .cap7__ico { background: #fff; }
+  .nos7__remate { margin-top: 48px; text-align: left; font-size: 1.6rem; }
+  .d7__in > .d7__izq > .bajada { margin-top: 14px; }
+  .d7__lista { display: flex; border: 0; }
+  .dolor7 + .dolor7 { border-left: 0; }
+  .dolor7 h3 { font-size: 1.35rem; } .dolor7 p { font-size: 15px; }
+}
+@media (max-width: 1020px) {
+  .nos7__caps { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -20px; padding: 0 20px 8px; scroll-padding-inline: 20px; scrollbar-width: none; }
+  .nos7__caps::-webkit-scrollbar { display: none; }
+  .cap7 { flex: 0 0 84%; scroll-snap-align: start; }
+}
