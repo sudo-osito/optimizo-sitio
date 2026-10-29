@@ -1,6 +1,6 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
 import { montarChat } from "./chat.js?v=1793308266";
-import { montarFlujo } from "./flujo.js?v=1793308408";
+import { montarFlujo } from "./flujo.js?v=1793310029";
 import { montar as montarPoder } from "./poderes.js?v=1793291207";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -441,9 +441,9 @@ let pintarFrase = () => {};
   cartas.forEach((c) => vid.observe(c));
   const abrirArea = (c) => {
     const cambio = () => cartas.forEach((x) => { const on = x === c && !x.classList.contains("abierta"); x.classList.toggle("abierta", on); $(".ar9__cab", x).setAttribute("aria-expanded", on); });
-    if (document.startViewTransition && !QUIETO) document.startViewTransition(cambio); else cambio();
+    cambio();
   };
-  cartas.forEach((c, i) => { c.style.viewTransitionName = `area-${i}`; $(".ar9__cab", c).addEventListener("click", () => abrirArea(c)); });
+  cartas.forEach((c) => $(".ar9__cab", c).addEventListener("click", () => abrirArea(c)));
   $$(".ar9 [data-ir]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); abrir(a.dataset.ir); }));
 }
 
