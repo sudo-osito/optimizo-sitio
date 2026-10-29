@@ -268,8 +268,8 @@ function maquina(el, { una = false, lento = false, ms = 0 } = {}) {
 /* Héroe: el agua turquesa (horizontal en PC, vertical en el celular); corre solo mientras se ve */
 {
   const caja = $("#agua"), video = $("video", caja), vertical = innerWidth / innerHeight < .9;
-  video.poster = vertical ? "recursos/video/agua-vertical.jpg" : "recursos/video/agua.jpg";
-  video.src = vertical ? "recursos/video/agua-vertical.mp4" : "recursos/video/agua.mp4";
+  video.poster = vertical ? "recursos/video/mar-turquesa-vertical.jpg" : "recursos/video/mar-turquesa.jpg";
+  video.src = vertical ? "recursos/video/mar-turquesa-vertical.mp4" : "recursos/video/mar-turquesa.mp4";
   if (QUIETO) video.removeAttribute("autoplay");
   alVer(caja, () => !QUIETO && video.play().catch(() => {}), () => video.pause(), 0);
 }
