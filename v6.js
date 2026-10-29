@@ -441,12 +441,15 @@ let pintarFrase = () => {};
     red.setAttribute("viewBox", `0 0 ${R.width} ${R.height}`);
     red.innerHTML = fines.map(([x, y]) => {
       const dx = x - cx, dy = y - cy, l = Math.hypot(dx, dy), sx = cx + dx / l * rad, sy = cy + dy / l * rad;
-      return `<g><path class="l" d="M${sx.toFixed(1)} ${sy.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}" pathLength="100"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5"/></g>`;
+      // una curva suave: el punto de control se corre un poco hacia un lado, en espejo a cada lado del logo
+      const lado = (dx >= 0 ? 1 : -1) * (dy > 0 ? -1 : 1), mx = (sx + x) / 2 - dy / l * l * .12 * lado, my = (sy + y) / 2 + dx / l * l * .12 * lado;
+      return `<path class="l" d="M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" pathLength="100"/>`;
     }).join("");
   };
   addEventListener("resize", trazar); new ResizeObserver(trazar).observe(caja); trazar();
-  alVer(caja, () => caja.classList.add("conectado"), null, .25);
-  areas.forEach((a, i) => { a.addEventListener("pointerenter", () => red.children[i]?.classList.add("on")); a.addEventListener("pointerleave", () => red.children[i]?.classList.remove("on")); });
+  // se dibujan una sola vez, cuando las seis áreas ya están en pantalla
+  const listas = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.dataset.lista = 1; listas.unobserve(e.target); } }); if (areas.every((a) => a.dataset.lista)) setTimeout(() => caja.classList.add("conectado"), 900); }, { threshold: .6 });
+  areas.forEach((a) => listas.observe(a));
 }
 
 /* ── Superpoderes: tarjetas que entran una a una y se apilan; cada una con su motion graphic y su color ── */

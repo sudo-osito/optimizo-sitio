@@ -750,8 +750,8 @@
 /* ── Áreas conectadas: líneas finas del logo al borde de cada área, solo dentro de la celda blanca ── */
 .pr7__areas { position: relative; }
 .ar8__red { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
-.ar8__red .l { fill: none; stroke: #387E80; stroke-opacity: .6; stroke-width: 1.2; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.2s var(--llegada), stroke-opacity .3s; }
-.ar8__red g:nth-child(2) .l { transition-delay: .07s; } .ar8__red g:nth-child(3) .l { transition-delay: .14s; } .ar8__red g:nth-child(4) .l { transition-delay: .21s; } .ar8__red g:nth-child(5) .l { transition-delay: .28s; } .ar8__red g:nth-child(6) .l { transition-delay: .35s; }
+.ar8__red .l { fill: none; stroke: #387E80; stroke-opacity: .55; stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.6s var(--llegada); }
+.ar8__red .l:nth-child(2) { transition-delay: .1s; } .ar8__red .l:nth-child(3) { transition-delay: .2s; } .ar8__red .l:nth-child(4) { transition-delay: .3s; } .ar8__red .l:nth-child(5) { transition-delay: .4s; } .ar8__red .l:nth-child(6) { transition-delay: .5s; }
 .conectado .ar8__red .l { stroke-dashoffset: 0; }
 .ar8__red circle { fill: #387E80; opacity: 0; transition: opacity .4s 1s; }
 .conectado .ar8__red circle { opacity: 1; }
