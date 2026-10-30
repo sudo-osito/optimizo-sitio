@@ -5,116 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Optimizo · TechAI Summit</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#F5F5F7">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="recursos/optimizo-isotipo.svg" type="image/svg+xml">
-<link rel="preload" href="recursos/feria/maria.jpg" as="image">
-<link rel="stylesheet" href="feria.css?v=1">
+<link rel="stylesheet" href="feria.css?v=3">
 </head>
 <body>
-<!-- Registro del stand en TechAI Summit: una pregunta por pantalla y al final María llama. -->
-<div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
-
+<!-- Registro del stand en TechAI Summit: una pregunta por pantalla; cada pregunta se escribe sola. -->
 <header class="cabeza">
   <img class="logo" src="recursos/optimizo-logo.svg" alt="Optimizo">
   <span class="evento">TechAI Summit 2026</span>
 </header>
 <div class="avance" aria-hidden="true"><i id="avance"></i></div>
 
-<main class="escenario" id="escenario">
+<main class="escenario">
 
-  <!-- 0 · Bienvenida -->
-  <section class="paso portada" data-paso="inicio">
-    <div class="portada-texto">
-      <h1 class="titulo">Conversa con <span class="nombre-maria">María</span>.</h1>
-      <p class="bajada">Es nuestra agente de inteligencia artificial. Responde cinco preguntas cortas y te llama en segundos.</p>
-      <div class="acciones">
-        <button class="boton" type="button" data-accion="empezar">Empezar</button>
-        <span class="tecla">o presiona <kbd>Enter</kbd></span>
-      </div>
-    </div>
-    <figure class="maria">
-      <span class="halo" aria-hidden="true"></span>
-      <img src="recursos/feria/maria.jpg" alt="María, agente de IA de Optimizo" width="400" height="400">
-      <figcaption><b>María</b><span>Agente de IA · en línea</span></figcaption>
-    </figure>
-  </section>
-
-  <!-- 1 · Nombre -->
   <section class="paso" data-paso="nombre" hidden>
     <p class="cuenta">1 de 6</p>
-    <h1 class="titulo"><label for="nombre">¿Cómo te llamas?</label></h1>
+    <h1 class="titulo"><label for="nombre"></label></h1>
     <div class="campo"><input id="nombre" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Tu nombre" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><span class="tecla"><kbd>Enter</kbd></span></div>
   </section>
 
-  <!-- 2 · Empresa -->
   <section class="paso" data-paso="empresa" hidden>
     <p class="cuenta">2 de 6</p>
-    <h1 class="titulo"><label for="empresa"><span data-saludo>Hola</span>. ¿Dónde trabajas?</label></h1>
+    <h1 class="titulo"><label for="empresa"></label></h1>
     <div class="campo"><input id="empresa" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Nombre de tu empresa" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><span class="tecla"><kbd>Enter</kbd></span></div>
   </section>
 
-  <!-- 3 · Cargo (opcional) -->
   <section class="paso" data-paso="cargo" hidden>
     <p class="cuenta">3 de 6</p>
-    <h1 class="titulo"><label for="cargo">¿Y qué haces en <span data-empresa>tu empresa</span>?</label></h1>
+    <h1 class="titulo"><label for="cargo"></label></h1>
     <div class="campo"><input id="cargo" autocomplete="off" spellcheck="false" placeholder="Tu cargo" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Omitir</button></div>
   </section>
 
-  <!-- 4 · Celular -->
   <section class="paso" data-paso="celular" hidden>
     <p class="cuenta">4 de 6</p>
-    <h1 class="titulo"><label for="celular">¿A qué número te escribimos?</label></h1>
-    <div class="campo con-prefijo"><span class="prefijo">+56</span><input id="celular" inputmode="tel" autocomplete="off" placeholder="9 1234 5678" enterkeyhint="next"></div>
+    <h1 class="titulo"><label for="celular"></label></h1>
+    <div class="campo"><span class="prefijo">+56</span><input id="celular" inputmode="tel" autocomplete="off" placeholder="9 1234 5678" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Prefiero dejar mi correo</button></div>
   </section>
 
-  <!-- 5 · Correo -->
   <section class="paso" data-paso="correo" hidden>
     <p class="cuenta">5 de 6</p>
-    <h1 class="titulo"><label for="correo" data-titulo-correo>¿Y tu correo?</label></h1>
+    <h1 class="titulo"><label for="correo"></label></h1>
     <div class="campo"><input id="correo" type="email" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="nombre@empresa.cl" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir" data-omitir-correo>Omitir</button></div>
   </section>
 
-  <!-- 6 · Interés -->
   <section class="paso paso-ancho" data-paso="interes" hidden>
     <p class="cuenta">6 de 6</p>
-    <h1 class="titulo">¿Qué te gustaría resolver?</h1>
-    <p class="bajada corta">Elige una o varias.</p>
+    <h1 class="titulo"></h1>
     <div class="opciones" role="group" aria-label="Intereses">
       <button type="button" class="opcion" data-v="Lumina" aria-pressed="false" style="--tono:#EC6D27">
-        <span class="marca-op"><img src="recursos/feria/lumina-completo.svg" alt="Lumina" class="palabra-lumina"></span>
+        <img src="recursos/feria/lumina-completo.svg" alt="Lumina">
         <b>Cámaras con IA</b>
         <span>Inteligencia que observa, entiende y actúa.</span>
         <i class="check" aria-hidden="true"></i>
       </button>
       <button type="button" class="opcion" data-v="Médula" aria-pressed="false" style="--tono:#34529D">
-        <span class="marca-op"><img src="recursos/feria/medula-completo.svg" alt="Medula" class="palabra-medula"></span>
+        <img src="recursos/feria/medula-completo.svg" alt="Medula">
         <b>Toda tu empresa conectada</b>
         <span>El sistema nervioso que conecta tu empresa.</span>
         <i class="check" aria-hidden="true"></i>
       </button>
       <button type="button" class="opcion" data-v="Agentes de IA" aria-pressed="false" style="--tono:#387E80">
-        <span class="marca-op agentes"><img src="recursos/feria/maria.jpg" alt=""><em>Agentes de IA</em></span>
-        <b>Un equipo que no duerme</b>
-        <span>Como María: conversan, responden y agendan.</span>
+        <img src="recursos/optimizo-logo.svg" alt="Optimizo">
+        <b>Agentes de IA</b>
+        <span>Conversan, responden y agendan por tu equipo.</span>
         <i class="check" aria-hidden="true"></i>
       </button>
     </div>
     <div class="acciones"><button class="boton" type="button" data-accion="seguir" data-boton-interes>Omitir</button><span class="tecla"><kbd>Enter</kbd></span></div>
   </section>
 
-  <!-- 7 · Confirmar -->
   <section class="paso" data-paso="listo" hidden>
-    <h1 class="titulo">Todo listo, <span data-nombre>ya casi</span>.</h1>
+    <h1 class="titulo"></h1>
     <dl class="resumen" id="resumen"></dl>
     <label class="permiso">
       <input type="checkbox" id="permiso" checked>
@@ -122,29 +94,18 @@
       <span>Optimizo puede usar estos datos para contactarme. No los compartimos con nadie.</span>
     </label>
     <p class="aviso" role="alert"></p>
-    <div class="acciones">
-      <button class="boton boton-llamar" type="button" data-accion="enviar"><img src="recursos/feria/maria.jpg" alt=""><span data-texto-enviar>Que María me llame</span></button>
-    </div>
+    <div class="acciones"><button class="boton" type="button" data-accion="enviar" id="enviar"><span>Enviar</span></button></div>
+  </section>
+
+  <section class="paso" data-paso="gracias" hidden>
+    <h1 class="titulo"></h1>
+    <p class="bajada" id="gracias-texto"></p>
+    <div class="acciones"><button class="boton" type="button" id="otro">Registrar a otra persona</button><span class="tecla" id="regreso"></span></div>
   </section>
 </main>
 
 <button class="atras" type="button" id="atras" aria-label="Volver" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 <button class="equipo-abrir" type="button" id="equipo-abrir">Equipo</button>
-
-<!-- Llamada -->
-<div class="llamada" id="llamada" hidden>
-  <div class="llamada-fondo" aria-hidden="true"></div>
-  <div class="llamada-centro">
-    <div class="ondas" aria-hidden="true"><i></i><i></i><i></i></div>
-    <img class="llamada-foto" src="recursos/feria/maria.jpg" alt="María">
-    <h2 id="ll-titulo">María te está llamando</h2>
-    <p id="ll-texto">Contesta el teléfono del stand.</p>
-  </div>
-  <div class="llamada-pie">
-    <button type="button" class="boton boton-claro" id="otro">Registrar a otra persona</button>
-    <span class="regreso" id="ll-seg"></span>
-  </div>
-</div>
 
 <!-- Panel del equipo (queda en este notebook) -->
 <div class="hoja" id="hoja" hidden>
@@ -159,13 +120,13 @@
     <label class="permiso fila-hoja">
       <input type="checkbox" id="llamar" checked>
       <span class="interruptor" aria-hidden="true"></span>
-      <span>María llama al terminar</span>
+      <span>Llamar al teléfono del stand al terminar</span>
     </label>
     <p class="hoja-sub" id="cola-estado"></p>
     <button type="button" class="boton" id="hoja-cerrar">Listo</button>
   </div>
 </div>
 
-<script src="feria.js?v=1"></script>
+<script src="feria.js?v=3"></script>
 </body>
 </html>
