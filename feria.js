@@ -80,6 +80,7 @@
     a.hidden = false;
     a.classList.add("entra");
     actual = destino;
+    guardarBorrador();
     escribir(destino);
     const i = ORDEN.indexOf(destino);
     $("#avance").style.transform = `scaleX(${Math.min(1, i / (ORDEN.length - 2))})`;
@@ -180,6 +181,7 @@
     const b = e.target.closest(".opcion"); if (!b) return;
     datos.interes.has(b.dataset.v) ? datos.interes.delete(b.dataset.v) : datos.interes.add(b.dataset.v);
     pintarInteres();
+    guardarBorrador();
   });
 
   // ── Resumen y permiso ──
@@ -247,6 +249,7 @@
   // ── Cierre ──
   let reloj = null;
   function final(modo) {
+    borrarBorrador();
     llamando = modo === "llama";
     $("#gracias-texto").textContent = {
       llama: "Contesta el teléfono del stand: te estamos llamando.",
@@ -266,6 +269,7 @@
 
   function reiniciar() {
     clearInterval(reloj);
+    borrarBorrador();
     Object.assign(datos, { nombre: "", empresa: "", cargo: "", celular: "", correo: "" });
     datos.interes.clear();
     $$(".paso input:not([type=checkbox])").forEach((i) => (i.value = ""));
@@ -292,10 +296,28 @@
     if (e.key === "Escape") anterior();
   });
 
-  // Si el notebook queda abandonado a mitad de camino, vuelve solo al inicio.
-  let quieto = 0;
-  ["pointerdown", "keydown", "input"].forEach((t) => document.addEventListener(t, () => (quieto = 0), { passive: true }));
-  setInterval(() => { if (actual !== "nombre" && actual !== "gracias" && ++quieto >= 180) reiniciar(); }, 1000);
+  // Borrador: lo respondido y lo que se está escribiendo queda guardado; nunca se borra solo a mitad de camino.
+  // Se limpia al enviar o con «Empezar de nuevo» (panel del equipo).
+  const BORRADOR = "borrador_feria";
+  function guardarBorrador() {
+    if (actual === "gracias") return;
+    const escrito = Object.fromEntries($$(".paso input:not([type=checkbox])").map((i) => [i.id, i.value]));
+    guardado(BORRADOR, JSON.stringify({ ...datos, interes: [...datos.interes], paso: actual, escrito }));
+  }
+  function borrarBorrador() { try { localStorage.removeItem(BORRADOR); } catch {} }
+  function retomar() {
+    let b = null;
+    try { b = JSON.parse(localStorage.getItem(BORRADOR) || "null"); } catch {}
+    if (!b || !ORDEN.includes(b.paso) || b.paso === "gracias") return false;
+    for (const k of ["nombre", "empresa", "cargo", "celular", "correo"]) datos[k] = b[k] || "";
+    datos.interes = new Set(b.interes || []);
+    for (const [id, v] of Object.entries(b.escrito || {})) { const i = document.getElementById(id); if (i) i.value = v; }
+    $$(".paso").forEach((p) => (p.hidden = true));
+    preparar(b.paso);
+    mostrar(b.paso);
+    return true;
+  }
+  document.addEventListener("input", guardarBorrador);
 
   // ── Hoja del equipo ──
   function pintarRegistrado() {
@@ -309,6 +331,7 @@
   function cerrarHoja() { $("#hoja").hidden = true; $("#equipo-abrir").focus(); }
   $("#equipo-abrir").addEventListener("click", () => { pintarRegistrado(); pintarCola(); $("#hoja").hidden = false; });
   $("#hoja-cerrar").addEventListener("click", cerrarHoja);
+  $("#hoja-reiniciar").addEventListener("click", () => { cerrarHoja(); reiniciar(); });
   $("#hoja").addEventListener("click", (e) => { if (e.target.id === "hoja") cerrarHoja(); });
   $("#registrado").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
@@ -317,5 +340,5 @@
   $("#llamar").checked = guardado("llamar") !== "0";
   $("#llamar").addEventListener("change", () => guardado("llamar", $("#llamar").checked ? "1" : "0"));
 
-  reiniciar();
+  if (!retomar()) reiniciar();
 })();

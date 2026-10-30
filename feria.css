@@ -156,3 +156,4 @@ kbd { font: inherit; font-size: 13px; padding: 3px 8px; border-radius: 7px; bord
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+.hoja-reiniciar { display: block; margin: 12px auto 0; font-size: 15px; }
