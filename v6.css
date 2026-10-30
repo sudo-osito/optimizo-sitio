@@ -1307,3 +1307,93 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 .lum__marca img.palabra, .marca-m img.palabra { height: 26px !important; }
 .marca-m, .lum__marca { align-items: center; }
 img[src*="marca/"] { object-fit: contain; }
+
+/* ══ Médula · el viaje de una pregunta ══ */
+.vj { position: absolute; inset: 0; overflow: hidden; font-family: var(--geist); color: #0F1B3D; background: radial-gradient(60% 70% at 50% 45%, #E9EEF8, #F6F8FC 60%, #fff); }
+.vj__pista { position: absolute; top: 0; bottom: 0; left: 0; width: 300%; display: flex; transition: transform 1.45s cubic-bezier(.65, 0, .25, 1); will-change: transform; }
+.vj__esc { position: relative; flex: 0 0 33.3333%; height: 100%; display: grid; place-items: center; }
+/* la vía por donde viaja la pregunta */
+.vj__via { position: absolute; left: 16.66%; right: 16.66%; top: 46%; height: 2px; background: repeating-linear-gradient(90deg, #C9D3EA 0 8px, transparent 8px 16px); }
+/* el viajero: la pregunta (ida) o la respuesta (vuelta) en tránsito, siempre al centro mientras el paisaje pasa */
+.vj__viajero { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%) scale(.6); opacity: 0; display: inline-flex; align-items: center; gap: 8px; max-width: 70%; padding: 10px 16px 10px 12px; border-radius: 999px; background: #0F1B3D; color: #fff; font-size: 13.5px; white-space: nowrap; box-shadow: 0 16px 40px -14px rgba(15, 27, 61, .6); transition: opacity .3s, transform .5s cubic-bezier(.34, 1.4, .64, 1); pointer-events: none; z-index: 3; }
+.vj__viajero span { overflow: hidden; text-overflow: ellipsis; }
+.vj__viajero::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #8A9DD3; box-shadow: 0 0 0 4px rgba(138, 157, 211, .3); flex: none; }
+.vj__viajero.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.vj__viajero.vuelta { background: #fff; color: #0F1B3D; box-shadow: 0 16px 40px -16px rgba(15, 27, 61, .45), inset 0 0 0 1px #E3E8F3; }
+.vj__viajero.vuelta::before { background: #1F9D5A; box-shadow: 0 0 0 4px rgba(31, 157, 90, .2); }
+.vj__viajero.llega { opacity: 0; transform: translate(-50%, -50%) scale(.3); }
+/* 1 · la persona */
+.vj__persona { display: flex; align-items: flex-start; gap: 16px; transform: translateY(-4%); }
+.vj__av { width: 72px; height: 72px; flex: none; border-radius: 50% !important; background: #0F1B3D; color: #fff; display: grid; place-items: center; box-shadow: 0 20px 40px -18px rgba(15, 27, 61, .6); }
+.vj__av svg { width: 32px; height: 32px; }
+.vj__globos { display: grid; gap: 10px; width: min(380px, 46vw); }
+.vj__bur { margin: 0; padding: 16px 20px; border-radius: 22px !important; font-size: clamp(16px, 1.1vw + 8px, 21px); line-height: 1.35; letter-spacing: -.01em; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .7s var(--llegada); }
+.vj__bur--q { background: #0F1B3D; color: #fff; border-top-left-radius: 6px !important; }
+.vj__bur--r { background: #fff; box-shadow: 0 24px 50px -28px rgba(15, 27, 61, .45), inset 0 0 0 1px #E3E8F3; border-top-left-radius: 6px !important; }
+.vj.pregunta .vj__bur--q { opacity: 1; transform: none; }
+.vj.enviada .vj__bur--q { opacity: .4; }
+.vj.responde .vj__bur--r { opacity: 1; transform: none; }
+.vj__cur { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -.12em; background: #8A9DD3; animation: parpadeo 1s steps(1) infinite; }
+.vj.enviada .vj__cur { display: none; }
+.vj__citas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.vj__citas span { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px !important; background: #F2F5FB; font-size: 12.5px; }
+.vj__citas img { width: 14px; height: 14px; object-fit: contain; }
+/* 2 · el agente */
+.vj__agente { display: grid; justify-items: center; gap: 14px; }
+.vj__logos { display: flex; gap: 14px; }
+.vj__logos span { width: 84px; height: 84px; border-radius: 24px !important; background: #fff; display: grid; place-items: center; box-shadow: 0 24px 50px -26px rgba(15, 27, 61, .5), inset 0 0 0 1px #E3E8F3; transition: transform .5s cubic-bezier(.34, 1.4, .64, 1); }
+.vj__logos img { width: 40px; height: 40px; }
+.vj__agente b { font-size: 19px; font-weight: 600; letter-spacing: -.02em; }
+.vj__piensa { display: inline-flex; gap: 5px; height: 10px; opacity: 0; transition: opacity .3s; }
+.vj__piensa i { width: 7px; height: 7px; border-radius: 50% !important; background: #8A9DD3; animation: punto 1s infinite; } .vj__piensa i:nth-child(2) { animation-delay: .15s; } .vj__piensa i:nth-child(3) { animation-delay: .3s; }
+.vj__agente.piensa .vj__piensa { opacity: 1; }
+.vj__agente.piensa .vj__logos span { transform: translateY(-4px); }
+/* 3 · Médula y tus sistemas */
+.vj__orbita { position: relative; width: min(92%, 74vh, 520px); aspect-ratio: 1; }
+.vj__rayos { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.vj__rayos line { stroke: #34529D; stroke-width: .5; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .5; transition: stroke-dashoffset .9s var(--llegada); }
+.vj__orbita.activa .vj__rayos line { stroke-dashoffset: 0; }
+.vj__orbita.junta .vj__rayos line { stroke-dashoffset: 100; transition-duration: .6s; }
+.vj__med { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; }
+.vj__sim { position: relative; width: 112px; height: 112px; border-radius: 30px !important; background: linear-gradient(145deg, #4A66B0, #34529D 50%, #233C7A); display: grid; place-items: center; box-shadow: 0 30px 60px -26px rgba(35, 60, 122, .8), inset 0 1px 1px rgba(255, 255, 255, .4); z-index: 1; transition: transform .6s cubic-bezier(.34, 1.4, .64, 1); }
+.vj__sim img { width: 56px; height: 56px; }
+.vj__onda { position: absolute; width: 112px; height: 112px; border-radius: 34px !important; border: 2px solid rgba(52, 82, 157, .35); opacity: 0; }
+.vj__orbita.activa .vj__onda { animation: onda 2.2s ease-out infinite; } .vj__orbita.activa .vj__onda--2 { animation-delay: 1.1s; }
+@keyframes onda { from { transform: scale(1); opacity: .9; } to { transform: scale(2.2); opacity: 0; } }
+.vj__orbita.junta .vj__sim { transform: scale(1.12); }
+.vj__app { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%) scale(.4); opacity: 0; display: grid; justify-items: center; gap: 6px; transition: opacity .4s, transform .6s cubic-bezier(.34, 1.5, .64, 1), left .6s var(--llegada), top .6s var(--llegada); }
+.vj__app.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.vj__orbita.junta .vj__app { left: 50%; top: 50%; opacity: 0; transform: translate(-50%, -50%) scale(.3); }
+.vj__ic { position: relative; width: 62px; height: 62px; border-radius: 18px !important; background: #fff; display: grid; place-items: center; box-shadow: 0 18px 36px -20px rgba(15, 27, 61, .5), inset 0 0 0 1px #E3E8F3; }
+.vj__ic img { width: 30px; height: 30px; object-fit: contain; }
+.vj__ok { position: absolute; right: -6px; top: -6px; width: 22px; height: 22px; border-radius: 50% !important; background: #1F9D5A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center / 14px no-repeat; box-shadow: 0 0 0 3px #fff; transform: scale(0); transition: transform .5s cubic-bezier(.34, 1.6, .64, 1); }
+.vj__app.ok .vj__ok { transform: scale(1); }
+.vj__app small { font-size: 12.5px; font-weight: 600; }
+.vj__app em { font-style: normal; font-size: 12px; white-space: nowrap; padding: 5px 10px; border-radius: 999px !important; background: #0F1B3D; color: #fff; opacity: 0; transform: translateY(-4px); transition: opacity .4s .15s, transform .5s .15s var(--llegada); }
+.vj__app.ok em { opacity: 1; transform: none; }
+/* los pasos, abajo */
+.vj__pasos { position: absolute; left: 24px; right: 24px; bottom: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; list-style: none; margin: 0; padding: 0; }
+.vj__pasos li { display: grid; gap: 8px; font-size: 12px; color: #8A93A5; }
+.vj__pasos li i { height: 3px; border-radius: 3px !important; background: #DDE3F0; position: relative; overflow: hidden; }
+.vj__pasos li i::after { content: ""; position: absolute; inset: 0; background: #34529D; transform: scaleX(0); transform-origin: left; transition: transform .6s var(--llegada); }
+.vj__pasos li.on i::after, .vj__pasos li.hecho i::after { transform: scaleX(1); }
+.vj__pasos li.on { color: #0F1B3D; font-weight: 600; } .vj__pasos li.hecho { color: #5B6475; }
+@media (max-width: 1020px) {
+  .vj__persona { flex-direction: column; align-items: center; }
+  .vj__globos { width: min(300px, 80vw); }
+  .vj__orbita { width: min(94%, 360px); }
+  .vj__sim { width: 84px; height: 84px; } .vj__sim img { width: 42px; height: 42px; } .vj__onda { width: 84px; height: 84px; }
+  .vj__ic { width: 48px; height: 48px; } .vj__ic img { width: 24px; height: 24px; }
+  .vj__app em { font-size: 10.5px; padding: 4px 8px; } .vj__app small { font-size: 11px; }
+  .vj__pasos li span { display: none; } .vj__pasos li.on span { display: block; grid-column: 1 / -1; }
+  .vj__pasos { grid-template-columns: repeat(4, 1fr); }
+  .vj__logos span { width: 68px; height: 68px; } .vj__logos img { width: 32px; height: 32px; }
+}
+.vj__esc { padding-bottom: 64px; box-sizing: border-box; }
+.vj__orbita { width: auto; height: min(100% - 40px, 520px); max-width: 92%; }
+.vj__viajero { border-radius: 999px !important; top: calc(50% - 32px); }
+.vj__via { top: calc(50% - 32px); }
+.vj__persona { transform: translateY(-34%); }
+.vj__agente { transform: translateY(-18%); }
+@media (max-width: 1020px) { .vj__orbita { height: min(100% - 30px, 380px); } .vj__persona { transform: translateY(-30%); } }
+@media (max-width: 1020px) { .vj__pasos li.on span { position: absolute; left: 0; right: 0; top: 14px; text-align: left; } }
