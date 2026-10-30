@@ -19,7 +19,7 @@
     cargo: () => [["¿Y qué haces en "], [datos.empresa.trim(), 1], ["?"]],
     celular: () => [["¿A qué número te escribimos?"]],
     correo: () => [[datos.celular ? "¿Y tu correo?" : "¿Cuál es tu correo?"]],
-    interes: () => [["¿Qué te gustaría resolver?"]],
+    interes: () => [["¿Qué quieres conocer?"]],
     listo: () => [["Todo listo, "], [primerNombre(), 1], ["."]],
     gracias: () => [["Gracias, "], [primerNombre(), 1], ["."]],
   };
@@ -183,7 +183,7 @@
   });
 
   // ── Resumen y permiso ──
-  const NOMBRES_INTERES = { "Lumina": "Lumina", "Médula": "Medula", "Agentes de IA": "Agentes de IA" };
+  const NOMBRES_INTERES = { "Discovery Optimizo": "Discovery con Optimizo", "Lumina": "Lumina", "Médula": "Medula" };
   function pintarResumen() {
     const filas = [
       ["Nombre", datos.nombre, "nombre"],
