@@ -1,7 +1,7 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
 import { montarChat } from "./chat.js?v=1793308266";
-import { montarFlujo } from "./flujo.js?v=1793310029";
-import { montar as montarPoder } from "./poderes.js?v=1793291207";
+import { montarFlujo } from "./flujo.js?v=1793368608";
+import { montar as montarPoder } from "./poderes.js?v=1793368608";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -46,8 +46,8 @@ function mapa(w, h) { const s = Math.max(w / 16, h / 9), vw = 16 * s, vh = 9 * s
 function cajas(t) {
   const f = DET.length ? DET[Math.min(DET.length - 1, Math.round(t * 25))] : null, out = [];
   if (!f) return out;
-  if (f.m) out.push({ x: f.m[0], y: f.m[1], w: f.m[2], h: f.m[3], col: "#FF8A00", txt: "Montacargas", m: 1 });
-  f.p.slice(0, 3).forEach((p) => out.push({ x: p[0], y: p[1], w: p[2], h: p[3], col: "#FFD37A", txt: "Persona" }));
+  if (f.m) out.push({ x: f.m[0], y: f.m[1], w: f.m[2], h: f.m[3], col: "#EC6D27", txt: "Montacargas", m: 1 });
+  f.p.slice(0, 3).forEach((p) => out.push({ x: p[0], y: p[1], w: p[2], h: p[3], col: "#F4A574", txt: "Persona" }));
   return out;
 }
 const rr = (c, x, y, w, h) => { c.beginPath(); c.rect(x, y, w, h); }; // Optimizo es cuadrado: también las cajas de detección
@@ -74,9 +74,9 @@ function dibujarRiesgo(c, M, lista, k, t, e) {
   const m = lista.find((b) => b.m), p = lista.find((b) => !b.m);
   if (m && p) {
     const ax = M.X(m.x + m.w), ay = M.Y(m.y + m.h * .45), bx = M.X(p.x), by = M.Y(p.y + p.h * .5), kk = eo(clamp(k * 1.5 - .3));
-    c.globalAlpha = kk; c.strokeStyle = "#FFAE1A"; c.lineWidth = 2.5 * e; c.setLineDash([6 * e, 6 * e]); c.lineDashOffset = -t * 30;
+    c.globalAlpha = kk; c.strokeStyle = "#EC6D27"; c.lineWidth = 2.5 * e; c.setLineDash([6 * e, 6 * e]); c.lineDashOffset = -t * 30;
     c.beginPath(); c.moveTo(ax, ay); c.lineTo(lerp(ax, bx, kk), lerp(ay, by, kk)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
-    pildora(c, (ax + bx) / 2 - 44 * e, (ay + by) / 2 + 6 * e, "Proximidad", "#FFAE1A", kk, e);
+    pildora(c, (ax + bx) / 2 - 44 * e, (ay + by) / 2 + 6 * e, "Proximidad", "#EC6D27", kk, e);
   }
 }
 function videoConCapa(cont, alCuadro) {
@@ -147,12 +147,12 @@ void main(){
   float umbral = hash(floor(coord)) - 0.5; float amplitud = uPuntillismo * (0.1 + 0.16 * smoothstep(0.0, 0.25, d));
   gl_FragColor = vec4(degradado(clamp(d + umbral * amplitud, 0.0, 1.0)), 1.0);
 }`;
-const AZULES = { uNucleo: "#013ecc", uMedula: "#0853e0", uImpulso: "#1b75fd", uAire: "#63a7fc", uBruma: "#c6dffd", uHielo: "#f2f7fe" };
+const AZULES = { uNucleo: "#233C7A", uMedula: "#2C4789", uImpulso: "#34529D", uAire: "#8A9DD3", uBruma: "#CBD4EC", uHielo: "#F2F5FB" };
 const hexA = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16) / 255);
 function aura(cv, op) {
   const gl = cv.getContext("webgl2", { antialias: false, alpha: false, powerPreference: "high-performance" });
   // respaldo: el degradado azul de Médula, para que el logo blanco nunca quede sobre blanco
-  cv.parentElement.style.background = "radial-gradient(70% 80% at 50% 45%, #0853e0, #1b75fd 40%, #63a7fc 70%, #c6dffd)";
+  cv.parentElement.style.background = "radial-gradient(70% 80% at 50% 45%, #2C4789, #34529D 40%, #8A9DD3 70%, #CBD4EC)";
   if (!gl) return;
   const flotante = !!(gl.getExtension("EXT_color_buffer_float") || gl.getExtension("EXT_color_buffer_half_float"));
   const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; };

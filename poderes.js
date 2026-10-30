@@ -42,12 +42,12 @@ const ESCENAS = {
     },
   },
   inteligencia: {
-    html: `<div class="pn pn--chat"><div class="pn__cab"><b><img src="recursos/medula-marca.svg" alt="">Médula</b><span>Contexto compartido</span></div>
+    html: `<div class="pn pn--chat"><div class="pn__cab"><b><img src="recursos/marca/medula-simbolo.png" alt="">Médula</b><span>Contexto compartido</span></div>
       <p class="burbuja burbuja--yo">¿Cómo van las ventas de la zona norte?</p>
       <div class="burbuja burbuja--med"><p class="esc"></p>
-        <svg viewBox="0 0 300 70" class="graf"><defs><linearGradient id="gi" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1B75FD" stop-opacity=".28"/><stop offset="1" stop-color="#1B75FD" stop-opacity="0"/></linearGradient></defs>
+        <svg viewBox="0 0 300 70" class="graf"><defs><linearGradient id="gi" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#34529D" stop-opacity=".28"/><stop offset="1" stop-color="#34529D" stop-opacity="0"/></linearGradient></defs>
           <path class="graf__area" d="M0 14 L40 18 L80 10 L120 24 L160 22 L200 38 L240 42 L300 56 L300 70 L0 70Z" fill="url(#gi)"/>
-          <path class="graf__linea" d="M0 14 L40 18 L80 10 L120 24 L160 22 L200 38 L240 42 L300 56" fill="none" stroke="#1B75FD" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" pathLength="100"/></svg></div></div>
+          <path class="graf__linea" d="M0 14 L40 18 L80 10 L120 24 L160 22 L200 38 L240 42 L300 56" fill="none" stroke="#34529D" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" pathLength="100"/></svg></div></div>
       <div class="fx fx--a">${LOGO("bsale.png")}Bsale · ventas</div>
       <div class="fx fx--b">${LOGO("zoho.svg")}Zoho CRM · clientes</div>
       <div class="fx fx--c">${LOGO("gmail.svg")}Gmail · pedidos</div>`,
