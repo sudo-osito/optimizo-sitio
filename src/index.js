@@ -1,0 +1,8 @@
+// Optimizo · la portada es la v6. El resto de los archivos se sirven tal cual desde los assets estáticos.
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname === "/" || url.pathname === "/index.html") { url.pathname = "/v6.html"; return env.ASSETS.fetch(new Request(url, request)); }
+    return env.ASSETS.fetch(request);
+  },
+};
