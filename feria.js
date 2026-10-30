@@ -3,7 +3,7 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const ORDEN = ["nombre", "empresa", "cargo", "celular", "correo", "interes", "listo", "gracias"];
+  const ORDEN = ["bienvenida", "nombre", "empresa", "cargo", "celular", "correo", "interes", "listo", "gracias"];
   const pasos = Object.fromEntries($$(".paso").map((p) => [p.dataset.paso, p]));
   const datos = { nombre: "", empresa: "", cargo: "", celular: "", correo: "", interes: new Set() };
   const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -14,6 +14,7 @@
 
   // ── Preguntas: tramos de texto; el segundo valor marca el tramo resaltado ──
   const PREGUNTAS = {
+    bienvenida: () => [["Qué bueno conocerte."]],
     nombre: () => [["¿Cómo te llamas?"]],
     empresa: () => [["Hola, "], [primerNombre(), 1], [". ¿Dónde trabajas?"]],
     cargo: () => [["¿Y qué haces en "], [datos.empresa.trim(), 1], ["?"]],
@@ -87,7 +88,6 @@
     $("#atras").hidden = i === 0 || destino === "gracias";
     const campo = $("input:not([type=checkbox])", a);
     if (campo) setTimeout(() => campo.focus({ preventScroll: true }), 120);
-    else $(".boton", a)?.focus({ preventScroll: true });
   }
 
   function ir(destino) {
@@ -139,6 +139,7 @@
   const correoValido = (c) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c);
 
   function continuar() {
+    if (actual === "bienvenida") return ir("nombre");
     if (actual === "listo") return enviar();
     if (actual === "gracias") return reiniciar();
     const v = $("input", pasos[actual])?.value.trim() ?? "";
@@ -277,7 +278,7 @@
     volverAListo = false; ocupado = false;
     $("#regreso").textContent = "";
     $$(".paso").forEach((p) => { p.hidden = true; p.classList.remove("entra", "sale"); });
-    mostrar("nombre");
+    mostrar("bienvenida");
   }
   $("#otro").addEventListener("click", reiniciar);
 
