@@ -12,7 +12,7 @@
 <link rel="preload" href="recursos/fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilos.css">
 <link rel="stylesheet" href="v4.css">
-<link rel="stylesheet" href="v6.css?v=1793369926">
+<link rel="stylesheet" href="v6.css?v=1793379247">
 </head>
 <body class="v6">
 
@@ -49,8 +49,8 @@
     <a class="nav7__logo" href="#inicio" aria-label="Optimizo, inicio"><img src="recursos/optimizo-logo.svg" alt="optimizo" width="96" height="30"></a>
     <nav class="nav7__links" aria-label="Secciones">
       <a href="#nosotros">Nosotros</a>
-      <a href="#camino" data-ir="lumina">Lumina</a>
-      <a href="#camino" data-ir="medula">Médula</a>
+      <a href="https://lumina.optimizo.ai/">Lumina</a>
+      <a href="https://getmedula.ai/">Médula</a>
       <a href="#propuesta">Propuesta</a>
       <a href="#superpoderes">Superpoderes</a>
       <a href="#metodo">Cómo trabajamos</a>
@@ -61,8 +61,8 @@
   </div>
   <nav class="menu7" id="menu-movil" aria-label="Menú">
     <a href="#nosotros">Quiénes somos</a>
-    <a href="#camino" data-ir="lumina">Lumina</a>
-    <a href="#camino" data-ir="medula">Médula</a>
+    <a href="https://lumina.optimizo.ai/">Lumina</a>
+    <a href="https://getmedula.ai/">Médula</a>
     <a href="#propuesta">Propuesta de valor</a>
     <a href="#superpoderes">Superpoderes</a>
     <a href="#metodo">Cómo trabajamos</a>
@@ -158,7 +158,7 @@
       <h2 class="t7 arma" id="h-camino">Superpoderes que ya estamos construyendo. <span class="gris">Elige tu camino.</span></h2>
     </div>
     <div class="pts">
-      <button class="pt pt--lumina" data-ruta="lumina" aria-controls="ruta-lumina">
+      <a class="pt pt--lumina" href="https://lumina.optimizo.ai/">
         <div class="pt__vista">
           <video muted loop playsinline preload="metadata" poster="recursos/video/lumina-trafico.jpg" aria-hidden="true"><source src="recursos/video/lumina-trafico.mp4" type="video/mp4"></video>
           <canvas aria-hidden="true"></canvas>
@@ -173,8 +173,8 @@
           <span class="banda__c"><i class="banda__vivo"></i> <em>CAM 01 · En vivo</em></span>
           <span class="banda__c banda__c--ancho"><h3>Cámaras que entienden lo que ven.</h3><p>Detecta riesgos, avisa a tiempo y activa respuestas en tu operación.</p></span>
         </div>
-      </button>
-      <button class="pt pt--medula" data-ruta="medula" aria-controls="ruta-medula">
+      </a>
+      <a class="pt pt--medula" href="https://getmedula.ai/">
         <div class="pt__vista">
           <div class="flujo" id="flujo-med" aria-hidden="true"></div>
         </div>
@@ -188,136 +188,9 @@
           <span class="banda__c banda__c--isla"><span class="isla" aria-live="polite"><span class="isla__sim"><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368873" alt=""><i></i></span><span class="isla__txt">Médula</span><span class="isla__app"></span><i class="isla__barra"></i></span></span>
           <span class="banda__c banda__c--ancho"><h3>El sistema nervioso de tu empresa.</h3><p>Conecta tus sistemas para que personas y agentes trabajen con el mismo contexto.</p></span>
         </div>
-      </button>
+      </a>
     </div>
   </section>
-
-  <div class="rutas" id="rutas">
-    <div class="cambiar"><div class="cambiar__in" role="group" aria-label="Cambiar de solución">
-      <button data-ruta="lumina" aria-pressed="false"><i style="background:var(--lumina)"></i>Lumina</button>
-      <button data-ruta="medula" aria-pressed="false"><i style="background:var(--m-impulso)"></i>Médula</button>
-    </div></div>
-    <p class="sin-ruta">Elige un camino para ver la solución por dentro.</p>
-
-    <!-- Ruta · Lumina -->
-    <section class="ruta lumina" id="ruta-lumina" data-ruta="lumina" aria-labelledby="h-lumina">
-      <div class="lum7 envoltura">
-        <div class="lum7__fondo" id="lum7"><video muted loop playsinline preload="none" poster="recursos/video/lumina-trafico.jpg" aria-hidden="true"><source src="recursos/video/lumina-trafico.mp4" type="video/mp4"></video><canvas aria-hidden="true"></canvas></div>
-        <div class="lum7__vidrio">
-          <span class="lum__marca" data-r><svg><use href="#lumina"/></svg><img class="palabra palabra--lumina" src="recursos/marca/lumina-palabra.png" alt="Lumina"><small>de Optimizo</small></span>
-          <h2 class="t7 arma" id="h-lumina">Convertimos cámaras en <span class="acento">decisiones.</span></h2>
-          <p class="bajada" data-r>Registrar lo que pasa no es lo mismo que entenderlo. Lumina reconoce lo que importa en tu operación, avisa a tiempo y activa respuestas.</p>
-        </div>
-      </div>
-      <div class="lum__escena" id="lum-escena">
-        <div class="lum__fijo envoltura">
-          <div class="lum__pasos">
-            <div class="lum__paso activo"><span class="num">01 · DETECTA</span><h3>Ve a cada persona y vehículo.</h3><p>Desde el primer cuadro, el modelo reconoce personas, montacargas y objetos. Cuadro a cuadro, en tiempo real.</p></div>
-            <div class="lum__paso"><span class="num">02 · ENTIENDE</span><h3>Sabe cuándo algo es un riesgo.</h3><p>Zonas restringidas, distancias mínimas, condiciones definidas para tu proceso.</p></div>
-            <div class="lum__paso"><span class="num">03 · ACTÚA</span><h3>Avisa y responde en segundos.</h3><p>Notifica a la persona correcta, enciende balizas y registra el evento.</p></div>
-            <div class="lum__paso"><span class="num">04 · MIDE</span><h3>Cada evento te enseña algo.</h3><p>Indicadores por zona y por semana para decidir dónde mejorar.</p></div>
-            <div class="lum__marcas" id="lum-marcas"><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div>
-            <div class="monitor" id="monitor" data-paso="0">
-              <video muted loop playsinline preload="auto" poster="recursos/video/lumina-trafico.jpg" aria-label="Centro de distribución visto por Lumina"><source src="recursos/video/lumina-trafico.mp4" type="video/mp4"></video>
-              <canvas aria-hidden="true"></canvas>
-              <div class="hud"><span><i></i>CAM 01 · CENTRO DE DISTRIBUCIÓN</span><span class="conteo" id="conteo-cam"><b>2</b> PERSONAS · <b>1</b> MONTACARGAS</span></div>
-              <div class="registro">
-                <div style="--d:.1s"><span class="baliza"></span><b>BALIZA</b> pasillo 2 encendida</div>
-                <div style="--d:.25s"><b>AVISO</b> → Diego · Operaciones</div>
-                <div style="--d:.4s"><b>REGISTRO</b> evento #0147 guardado</div>
-              </div>
-              <div class="aviso" role="status">
-                <div class="aviso__ico"><svg><use href="#i-alerta"/></svg></div>
-                <div><small>LUMINA · AHORA</small><b>Montacargas cerca de una persona</b><span>Zona 2 · Cámara 01</span></div>
-              </div>
-              <div class="tablero" aria-hidden="true">
-                <div><h5>Eventos esta semana</h5><div class="tablero__num" id="num-eventos">0<small>en 4 zonas</small></div>
-                  <div class="semana"><i data-h="30%"></i><i data-h="18%" style="--d:.05s"></i><i data-h="45%" style="--d:.1s"></i><i class="pico" data-h="100%" style="--d:.15s"></i><i data-h="36%" style="--d:.2s"></i><i data-h="20%" style="--d:.25s"></i><i data-h="8%" style="--d:.3s"></i></div></div>
-                <div><h5>Por zona</h5><div class="zonas">
-                  <div class="zona"><span>Zona 1</span><div class="zona__barra"><i data-w="14%"></i></div><b>1</b></div>
-                  <div class="zona zona--alta"><span>Zona 2</span><div class="zona__barra"><i data-w="100%" style="--d:.1s"></i></div><b>7</b></div>
-                  <div class="zona"><span>Zona 3</span><div class="zona__barra"><i data-w="29%" style="--d:.2s"></i></div><b>2</b></div>
-                  <div class="zona"><span>Zona 4</span><div class="zona__barra"><i data-w="3%" style="--d:.3s"></i></div><b>0</b></div></div></div>
-              </div>
-            </div>
-            <p class="lum__nota">Video de referencia con detecciones reales del modelo · indicadores de demostración</p>
-          </div>
-        </div>
-      </div>
-      <div class="lum__usos envoltura">
-        <h3 class="t-1 arma">Una cámara. <span class="acento">Muchos superpoderes.</span></h3>
-        <div class="usos">
-          <div class="uso" data-r><svg><use href="#i-escudo"/></svg><b>Seguridad industrial</b><p>Zonas restringidas, EPP y proximidad persona–vehículo.</p></div>
-          <div class="uso" data-r style="--d:.05s"><svg><use href="#i-trafico"/></svg><b>Tráfico interno</b><p>Cruces, puntos ciegos y balizas que se encienden solas.</p></div>
-          <div class="uso" data-r style="--d:.1s"><svg><use href="#i-reloj"/></svg><b>Productividad</b><p>Tiempos de espera, conteos y cuellos de botella.</p></div>
-          <div class="uso" data-r style="--d:.15s"><svg><use href="#i-lupa"/></svg><b>Control de calidad</b><p>Defectos visibles y piezas fuera de parámetro.</p></div>
-          <div class="uso" data-r style="--d:.2s"><svg><use href="#i-cuerpo"/></svg><b>Ergonomía</b><p>Posturas y movimientos que conviene evaluar.</p></div>
-        </div>
-        <div class="lum__planta">
-          <div data-r><b>Hacemos visible lo que pasa inadvertido.</b><p>Partimos definiendo qué observar, qué reconocer y qué respuesta necesita cada evento.</p></div>
-          <div data-r style="--d:.06s"><b>Inteligencia en tu planta.</b><p>El análisis ocurre donde se generan las imágenes, sin enviar video continuamente afuera.</p></div>
-          <div data-r style="--d:.12s"><b>Validado en tu operación real.</b><p>Probamos detección, alertas y respuestas en terreno, junto a tus medidas de seguridad.</p></div>
-        </div>
-      </div>
-      <div class="otro"><button class="boton boton--vidrio" data-ruta="medula">Ahora mira Médula <svg><use href="#i-flecha"/></svg></button></div>
-    </section>
-
-    <!-- Ruta · Médula -->
-    <section class="ruta medula" id="ruta-medula" data-ruta="medula" aria-labelledby="h-medula">
-      <div class="med__escenario">
-        <canvas data-aura="escenario" aria-hidden="true"></canvas>
-        <div class="med__in">
-          <div class="med__simbolo" data-r><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368873" alt=""></div>
-          <div class="med__texto">
-            <span class="marca-m" data-r><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt=""><img class="palabra palabra--medula" src="recursos/marca/medula-palabra.png" alt="Médula"><span>de Optimizo</span></span>
-            <h2 class="t-heroe arma" id="h-medula">El sistema nervioso de tu empresa.</h2>
-            <p class="bajada" data-r>Médula conecta lo que hoy trabaja separado: tus aplicaciones, sistemas e información, en un solo ecosistema donde personas y agentes de IA trabajan con el mismo contexto.</p>
-            <div class="med__acc" data-r>
-              <span class="isla" aria-live="polite"><span class="isla__sim"><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368873" alt=""><i></i></span><span class="isla__txt">Médula</span><span class="isla__app"></span><i class="isla__barra"></i></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="med__bloque">
-        <div class="med__cab envoltura">
-          <span class="rotulo" data-r>Conecta</span>
-          <h3 class="t-1 arma">Todo lo que ya usas, <span style="color:var(--m-acento)">en una sola memoria.</span></h3>
-        </div>
-        <div class="cinta-apps" aria-label="Integraciones">
-          <div class="cinta-apps__fila" id="fila-a"></div>
-          <div class="cinta-apps__fila cinta-apps__fila--b" id="fila-b"></div>
-        </div>
-        <div class="desde envoltura">Úsalo desde <span><img src="recursos/logos/claude.svg" alt="">Claude</span><span><img src="recursos/logos/openai.svg" alt="">ChatGPT</span> el que tu equipo ya tiene.</div>
-      </div>
-      <div class="envoltura">
-        <div class="med__demo" id="med-demo">
-          <canvas data-aura="demo" aria-hidden="true"></canvas>
-          <div class="med__demo__txt">
-            <span class="rotulo" data-r>Pregunta. Médula actúa.</span>
-            <h3 class="t-1 arma">Información confiable. Acciones coordinadas.</h3>
-            <p data-r>Médula busca en cada sistema, cita sus fuentes y, cuando lo apruebas, ejecuta.</p>
-          </div>
-          <div class="chat" id="chat" aria-live="polite">
-            <div class="chat__cab"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula<span>Quillay · contexto compartido</span></div>
-            <div class="msj chat__yo">¿Qué cotizaciones de Quillay siguen abiertas?</div>
-            <div class="msj chat__lite"><span class="lite__sim"><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368873" alt=""></span><span class="lite__txt">Revisando Bsale, Gmail y Zoho…</span></div>
-            <div class="msj chat__resp">Tres, por <b>$18,4 M</b>. La más antigua lleva <b>12 días</b> sin respuesta. ¿Le escribo a Camila para hacer seguimiento?
-              <div class="cita"><span><img src="recursos/logos/bsale.png" alt="">Bsale</span><span><img src="recursos/logos/gmail.svg" alt="">Gmail</span><span><img src="recursos/logos/zoho.svg" alt="">Zoho CRM</span></div>
-              <div class="chat__botones"><span class="si">Sí, escríbele</span><span>Ahora no</span></div></div>
-            <div class="msj chat__hecho">✓ Correo enviado a Camila · seguimiento creado en Zoho</div>
-          </div>
-        </div>
-        <div class="pilares">
-          <div class="pilar" data-r><em>CONECTA</em><b>Integra lo que ya usas.</b><p>ERP, correo, planillas, CRM y mensajería conversan entre sí.</p></div>
-          <div class="pilar" data-r style="--d:.06s"><em>ENTIENDE</em><b>Un mismo contexto para todos.</b><p>La información correcta para quien la necesita, con permisos y reglas.</p></div>
-          <div class="pilar" data-r style="--d:.12s"><em>ACTÚA</em><b>Agentes que ejecutan.</b><p>Automatizan procesos y coordinan acciones, con tu aprobación.</p></div>
-        </div>
-      </div>
-      <div class="otro"><button class="boton boton--m" data-ruta="lumina">Ahora mira Lumina <svg><use href="#i-flecha"/></svg></button></div>
-    </section>
-  </div>
 
   <!-- 05 · Propuesta de valor: columna fija y las áreas de la empresa como filas -->
   <section class="pr7" id="propuesta" aria-labelledby="h-prop">
@@ -333,37 +206,37 @@
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/operaciones.jpg" aria-hidden="true"><source src="recursos/video/areas/operaciones.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span><span class="ar9__nom">Operaciones</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>Procesos que se coordinan solos y alertas cuando algo se desvía.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><span>Automatización</span></div></div></div>
+          <div class="ar9__det"><div><p>Procesos que se coordinan solos y alertas cuando algo se desvía.</p><div class="ar9__tags"><a href="https://getmedula.ai/" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><span>Automatización</span></div></div></div>
         </article>
         <article class="ar9" data-area="logistica" style="--n:1">
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/logistica.jpg" aria-hidden="true"><source src="recursos/video/areas/logistica.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h11v9.5H3zM14 10h4l3 3.2V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span><span class="ar9__nom">Logística</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.</p><div class="ar9__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
+          <div class="ar9__det"><div><p>Tráfico de montacargas, zonas de riesgo, conteos y tiempos de espera.</p><div class="ar9__tags"><a href="https://lumina.optimizo.ai/" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
         <article class="ar9" data-area="ventas" style="--n:2">
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/ventas.jpg" aria-hidden="true"><source src="recursos/video/areas/ventas.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/></svg></span><span class="ar9__nom">Ventas</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><span>Agentes</span></div></div></div>
+          <div class="ar9__det"><div><p>Cotizaciones, seguimiento de clientes y CRM al día sin trabajo manual.</p><div class="ar9__tags"><a href="https://getmedula.ai/" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><span>Agentes</span></div></div></div>
         </article>
         <article class="ar9" data-area="finanzas" style="--n:3">
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/finanzas.jpg" aria-hidden="true"><source src="recursos/video/areas/finanzas.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="ar9__nom">Administración y finanzas</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>Facturas, conciliaciones y reportes que se arman solos.</p><div class="ar9__tags"><span>Automatización</span><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a></div></div></div>
+          <div class="ar9__det"><div><p>Facturas, conciliaciones y reportes que se arman solos.</p><div class="ar9__tags"><span>Automatización</span><a href="https://getmedula.ai/" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a></div></div></div>
         </article>
         <article class="ar9" data-area="riesgos" style="--n:4">
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/riesgos.jpg" aria-hidden="true"><source src="recursos/video/areas/riesgos.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg></span><span class="ar9__nom">Prevención de riesgos</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>EPP, zonas restringidas y registro de eventos con evidencia.</p><div class="ar9__tags"><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
+          <div class="ar9__det"><div><p>EPP, zonas restringidas y registro de eventos con evidencia.</p><div class="ar9__tags"><a href="https://lumina.optimizo.ai/" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
         <article class="ar9" data-area="gerencia" style="--n:5">
           <button class="ar9__cab" aria-expanded="false">
             <span class="ar9__media"><video muted loop playsinline preload="none" poster="recursos/video/areas/gerencia.jpg" aria-hidden="true"><source src="recursos/video/areas/gerencia.mp4" type="video/mp4"></video><span class="ar9__velo"></span><span class="ar9__mas" aria-hidden="true"></span><span class="ar9__fila"><span class="ar9__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4M7 12.5l3-3 2 2 4-4"/></svg></span><span class="ar9__nom">Gerencia</span></span></span>
           </button>
-          <div class="ar9__det"><div><p>La información de toda la empresa, lista para decidir.</p><div class="ar9__tags"><a href="#camino" data-ir="medula" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><a href="#camino" data-ir="lumina" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
+          <div class="ar9__det"><div><p>La información de toda la empresa, lista para decidir.</p><div class="ar9__tags"><a href="https://getmedula.ai/" class="tag-marca"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Médula</a><a href="https://lumina.optimizo.ai/" class="tag-marca"><svg><use href="#lumina"/></svg>Lumina</a></div></div></div>
         </article>
       </div>
     </div>
@@ -393,7 +266,7 @@
           <h3>Seguridad</h3>
           <p class="sp7c__frase">Anticipa riesgos y protege tu operación.</p>
           <p class="sp7c__det">Desarrollamos herramientas inteligentes para identificar condiciones de riesgo, generar alertas oportunas y fortalecer la prevención, complementando los controles y protocolos de seguridad existentes.</p>
-          <a class="sp7c__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+          <a class="sp7c__con" href="https://lumina.optimizo.ai/"><svg><use href="#lumina"/></svg>Con Lumina</a>
         </div>
         <div class="sp7c__esc" data-mg="seguridad"><canvas aria-hidden="true"></canvas></div>
       </article>
@@ -403,7 +276,7 @@
           <h3>Inteligencia</h3>
           <p class="sp7c__frase">Convierte información en decisiones ágiles.</p>
           <p class="sp7c__det">Conectamos información, identificamos patrones y desarrollamos herramientas que permiten comprender mejor lo que ocurre, anticipar situaciones y tomar decisiones con mayor respaldo.</p>
-          <a class="sp7c__con" href="#camino" data-ir="medula"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Con Médula</a>
+          <a class="sp7c__con" href="https://getmedula.ai/"><img src="recursos/marca/medula-simbolo.png?v=1793368873" alt="">Con Médula</a>
         </div>
         <div class="sp7c__esc" data-mg="inteligencia"><canvas aria-hidden="true"></canvas></div>
       </article>
@@ -413,7 +286,7 @@
           <h3>Calidad</h3>
           <p class="sp7c__frase">Mejora la precisión y consistencia.</p>
           <p class="sp7c__det">Incorporamos herramientas que ayudan a estandarizar procesos, detectar desviaciones, fortalecer la trazabilidad y reducir errores que afectan la calidad del trabajo.</p>
-          <a class="sp7c__con" href="#camino" data-ir="lumina"><svg><use href="#lumina"/></svg>Con Lumina</a>
+          <a class="sp7c__con" href="https://lumina.optimizo.ai/"><svg><use href="#lumina"/></svg>Con Lumina</a>
         </div>
         <div class="sp7c__esc" data-mg="calidad"><canvas aria-hidden="true"></canvas></div>
       </article>
@@ -495,7 +368,7 @@
         <p>Diseñamos superpoderes para tu empresa.</p>
       </div>
       <nav class="pie7__cols" aria-label="Mapa del sitio">
-        <div><h4>Soluciones</h4><a href="#camino" data-ir="lumina">Lumina</a><a href="#camino" data-ir="medula">Médula</a></div>
+        <div><h4>Soluciones</h4><a href="https://lumina.optimizo.ai/">Lumina</a><a href="https://getmedula.ai/">Médula</a></div>
         <div><h4>Optimizo</h4><a href="#propuesta">Propuesta de valor</a><a href="#superpoderes">Superpoderes</a><a href="#metodo">Cómo trabajamos</a><a href="#preguntas">Preguntas</a></div>
         <div><h4>Contacto</h4><a href="#conversemos" data-discovery>Agenda tu Discovery</a></div>
       </nav>
@@ -505,6 +378,6 @@
 </footer>
 
 <script src="recursos/video/detecciones-trafico.js"></script>
-<script src="v6.js?v=1793370069" type="module"></script>
+<script src="v6.js?v=1793379247" type="module"></script>
 </body>
 </html>
