@@ -15,7 +15,7 @@ export function montarFlujo(caja, { alVer, QUIETO }) {
     <div class="fx__n fx__persona" style="left:${P.persona[0]}%;top:${P.persona[1]}%"><span class="fx__av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg></span>
       <span class="fx__bur fx__bur--q">¿Qué cotizaciones de Quillay siguen abiertas?</span><span class="fx__bur fx__bur--r">Tres, por $18,4 M. La más antigua lleva 12 días sin respuesta.</span></div>
     <div class="fx__n fx__agente" style="left:${P.agente[0]}%;top:${P.agente[1]}%"><span class="fx__pild"><img src="recursos/logos/claude.svg" alt=""><img src="recursos/logos/openai.svg" alt=""><b>Tu agente de IA</b></span></div>
-    <div class="fx__n fx__medula" style="left:${P.medula[0]}%;top:${P.medula[1]}%"><span class="fx__sim"><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368802" alt=""></span><b>Médula</b></div>
+    <div class="fx__n fx__medula" style="left:${P.medula[0]}%;top:${P.medula[1]}%"><span class="fx__sim"><img src="recursos/marca/medula-simbolo-blanco.png?v=1793368873" alt=""></span><b>Médula</b></div>
     ${APPS.map(([img, n], i) => `<div class="fx__n fx__app" style="left:${P.apps[i][0]}%;top:${P.apps[i][1]}%"><span class="fx__ic"><img src="recursos/logos/${img}" alt=""><i class="fx__ok"></i></span><small>${n}</small></div>`).join("")}
     <ol class="fx__pasos">${PASOS.map((t, i) => `<li><span>${i + 1}</span>${t}</li>`).join("")}</ol>`;
   const svg = caja.querySelector(".fx__haces"), NS = "http://www.w3.org/2000/svg";

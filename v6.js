@@ -1,7 +1,7 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
 import { montarChat } from "./chat.js?v=1793308266";
-import { montarFlujo } from "./flujo.js?v=1793368608";
-import { montar as montarPoder } from "./poderes.js?v=1793368608";
+import { montarFlujo } from "./flujo.js?v=1793368873";
+import { montar as montarPoder } from "./poderes.js?v=1793368873";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const QUIETO = matchMedia("(prefers-reduced-motion: reduce)").matches;
