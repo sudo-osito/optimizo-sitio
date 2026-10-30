@@ -42,7 +42,7 @@ const ESCENAS = {
     },
   },
   inteligencia: {
-    html: `<div class="pn pn--chat"><div class="pn__cab"><b><img src="recursos/marca/medula-simbolo.png" alt="">Médula</b><span>Contexto compartido</span></div>
+    html: `<div class="pn pn--chat"><div class="pn__cab"><b><img src="recursos/marca/medula-simbolo.png?v=1793368802" alt="">Médula</b><span>Contexto compartido</span></div>
       <p class="burbuja burbuja--yo">¿Cómo van las ventas de la zona norte?</p>
       <div class="burbuja burbuja--med"><p class="esc"></p>
         <svg viewBox="0 0 300 70" class="graf"><defs><linearGradient id="gi" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#34529D" stop-opacity=".28"/><stop offset="1" stop-color="#34529D" stop-opacity="0"/></linearGradient></defs>

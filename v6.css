@@ -1306,3 +1306,4 @@ body:not(.cierre-aurora) .fin7 .btn7 { background: #fff; color: var(--tinta7); }
 .banda__c > img.palabra, .marca-m img.palabra, .lum__marca img.palabra { width: auto !important; height: 17px !important; max-width: none; }
 .lum__marca img.palabra, .marca-m img.palabra { height: 26px !important; }
 .marca-m, .lum__marca { align-items: center; }
+img[src*="marca/"] { object-fit: contain; }
