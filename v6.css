@@ -1397,3 +1397,12 @@ img[src*="marca/"] { object-fit: contain; }
 .vj__agente { transform: translateY(-18%); }
 @media (max-width: 1020px) { .vj__orbita { height: min(100% - 30px, 380px); } .vj__persona { transform: translateY(-30%); } }
 @media (max-width: 1020px) { .vj__pasos li.on span { position: absolute; left: 0; right: 0; top: 14px; text-align: left; } }
+/* el ecosistema en 3D */
+.vj__eco { position: absolute; inset: 0 0 56px; }
+.vj__eco canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vj__chip { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px 7px 8px; border-radius: 999px !important; background: #0F1B3D; color: #fff; font-size: 12.5px; white-space: nowrap; box-shadow: 0 12px 28px -14px rgba(15, 27, 61, .7); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.vj__chip.on { opacity: 1; }
+.vj__chip img { display: none; }
+.vj__chip b { font-weight: 600; } .vj__chip em { font-style: normal; color: #CBD4EC; }
+.vj__chipok { width: 16px; height: 16px; border-radius: 50% !important; background: #1F9D5A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center / 11px no-repeat; flex: none; }
+@media (max-width: 1020px) { .vj__chip { font-size: 10.5px; padding: 5px 9px 5px 6px; } .vj__chip b { display: none; } }
