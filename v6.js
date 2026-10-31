@@ -1,4 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
+import { montarTrama } from "./trama.js?v=1793457057";
 import { montarChat } from "./chat.js?v=1793308266";
 import { montarFlujo } from "./flujo.js?v=1793370069";
 import { montar as montarPoder } from "./poderes.js?v=1793368873";
@@ -180,6 +181,19 @@ $$("[data-lite]").forEach((el, j) => {
 const ONEPAGE = { lumina: "https://lumina.optimizo.ai/", medula: "https://getmedula.ai/" };
 function abrir(ruta) { location.href = ONEPAGE[ruta]; }
 
+/* ── Parallax: cada foto avanza a su propia velocidad mientras la sección cruza la pantalla ── */
+let pintarParallax = () => {};
+{
+  const sec = $("#parallax"), figs = $$(".px9__f", sec);
+  pintarParallax = () => {
+    if (QUIETO) return;
+    const r = sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+    const p = clamp(-r.top / Math.max(1, r.height - innerHeight)), q = p - .5;
+    figs.forEach((f) => f.style.transform = `translate3d(0, ${(q * +f.style.getPropertyValue("--v") * innerHeight * .9).toFixed(1)}px, 0) scale(${(1 + Math.abs(+f.style.getPropertyValue("--v")) * .06 * (1 - Math.abs(q) * 2)).toFixed(3)})`);
+    sec.style.setProperty("--p", p.toFixed(3));
+  };
+}
+
 /* ── La isla dinámica de Médula (la misma de su one-pager): se estira con resorte para contar qué hace, y se recoge entre tareas ── */
 $$(".isla").forEach((isla, n) => {
   const txt = $(".isla__txt", isla), app = $(".isla__app", isla), barra = $(".isla__barra", isla);
@@ -282,7 +296,7 @@ function agua(caja, { zona = "derecha" } = {}) {
     c.fillStyle = "rgba(255,255,255,.5)"; c.fillRect(x0 + bx * celdaX, y0, 1, y1 - y0);
   }, 30);
 }
-agua($("#agua"));
+montarTrama($("#trama"), { QUIETO, alVer });
 montarFlujo($("#flujo-med"), { alVer, QUIETO });
 montarChat();
 // el cierre: el mismo mar, con la lectura a los lados
@@ -440,6 +454,6 @@ function pintarProgreso() { progreso.style.setProperty("--p", clamp(scrollY / (d
 
 /* ── Un solo bucle de scroll ── */
 let pendiente = false;
-function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarFrase(); pintarPoderes(); }); }
+function alScroll() { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; pintarNav(); pintarProgreso(); pintarDesafio(); pintarFrase(); pintarPoderes(); pintarParallax(); }); }
 addEventListener("scroll", alScroll, { passive: true }); addEventListener("resize", alScroll); addEventListener("ruta", alScroll);
 alScroll();

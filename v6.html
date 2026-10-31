@@ -12,7 +12,7 @@
 <link rel="preload" href="recursos/fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilos.css">
 <link rel="stylesheet" href="v4.css">
-<link rel="stylesheet" href="v6.css?v=1793379247">
+<link rel="stylesheet" href="v6.css?v=1793457057">
 </head>
 <body class="v6">
 
@@ -75,8 +75,8 @@
 <main id="inicio">
 
   <!-- 01 · Héroe: aurora clara con los colores de Optimizo. Cuando llegue el video del banner, va dentro de .h7__video -->
-  <section class="h7" id="heroe" aria-labelledby="h-heroe">
-    <div class="h7__video" id="agua" aria-hidden="true"><video muted loop playsinline autoplay preload="auto" poster="recursos/video/mar-turquesa-hd.jpg"></video><canvas class="h7__datos"></canvas></div>
+  <section class="h7 h7--trama" id="heroe" aria-labelledby="h-heroe">
+    <div class="tr" id="trama" aria-hidden="true"><canvas></canvas><span class="tr__rotulo"></span></div>
     <div class="envoltura h7__in">
       <p class="eti" data-r>Inteligencia artificial · Software · Automatización</p>
       <h1 class="h7__t" id="h-heroe"><span class="arma">Diseñamos superpoderes</span><span class="h7__linea">para <span class="tipeo" id="tipeo" data-palabras="tu operación|tus ventas|tu planta|tu gerencia|tus finanzas|tu empresa">tu operación</span><i class="cursor" aria-hidden="true"></i></span></h1>
@@ -100,7 +100,20 @@
         <article class="cap7" data-r style="--d:.08s"><div class="vz vz--app" aria-hidden="true"><div class="ap"><div class="ap__lado"><i></i><i></i><i></i><i></i></div><div class="ap__main"><div class="ap__kpis"><i></i><i></i><i></i></div><div class="ap__barras"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:50%"></i><i style="--h:80%"></i><i style="--h:60%"></i><i style="--h:90%"></i></div></div></div></div><h3>Desarrollo de software inteligente</h3><p>Aplicaciones, plataformas y herramientas digitales adaptadas a las necesidades de cada organización.</p><b>Software diseñado alrededor de tus procesos, no procesos obligados a adaptarse al software.</b></article>
         <article class="cap7" data-r style="--d:.16s"><div class="vz vz--flujo" aria-hidden="true"><div class="fl"><span class="fl__n"><img src="recursos/logos/gmail.svg" alt=""></span><i class="fl__l"></i><span class="fl__n"><img src="recursos/logos/microsoftexcel.svg" alt=""></span><i class="fl__l"></i><span class="fl__n"><img src="recursos/logos/whatsapp.svg" alt=""></span></div><div class="fl__ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sin intervención manual</div></div><h3>Automatización de procesos</h3><p>Conectamos aplicaciones, coordinamos información y desarrollamos agentes que apoyan o ejecutan actividades según las reglas de cada empresa.</p><b>Automatizamos lo repetitivo para potenciar lo importante.</b></article>
       </div>
-      <p class="nos7__remate arma">No desarrollamos tecnología por desarrollar. <span class="gris">Diseñamos capacidades que ayudan a las empresas a trabajar mejor.</span></p>
+
+    </div>
+  </section>
+
+  <!-- Parallax: fotos de la industria a distintas profundidades y la idea central al medio -->
+  <section class="px9" id="parallax" aria-label="Lo que hacemos">
+    <div class="px9__fijo">
+      <figure class="px9__f" style="--x:8%;--y:6%;--w:22vw;--v:-0.9"><img src="recursos/fotos/gruas.jpg" alt="Grúas en una obra" loading="lazy"></figure>
+      <figure class="px9__f" style="--x:64%;--y:4%;--w:20vw;--v:-0.5"><img src="recursos/fotos/datos.jpg" alt="Data center" loading="lazy"></figure>
+      <figure class="px9__f" style="--x:78%;--y:38%;--w:19vw;--v:-1.25"><img src="recursos/fotos/brazo.jpg" alt="Brazo robótico" loading="lazy"></figure>
+      <figure class="px9__f" style="--x:4%;--y:46%;--w:17vw;--v:-0.35"><img src="recursos/fotos/circuito.jpg" alt="Circuito" loading="lazy"></figure>
+      <figure class="px9__f" style="--x:20%;--y:74%;--w:24vw;--v:-0.7"><img src="recursos/fotos/puerto.jpg" alt="Puerto de contenedores" loading="lazy"></figure>
+      <figure class="px9__f" style="--x:60%;--y:72%;--w:18vw;--v:-1.05"><img src="recursos/fotos/maquina.jpg" alt="Máquina industrial" loading="lazy"></figure>
+      <p class="px9__t arma">No desarrollamos tecnología por desarrollar. <span class="gris">Diseñamos capacidades que ayudan a las empresas a trabajar mejor.</span></p>
     </div>
   </section>
 
@@ -378,6 +391,6 @@
 </footer>
 
 <script src="recursos/video/detecciones-trafico.js"></script>
-<script src="v6.js?v=1793379247" type="module"></script>
+<script src="v6.js?v=1793457057" type="module"></script>
 </body>
 </html>

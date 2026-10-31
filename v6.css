@@ -1406,3 +1406,44 @@ img[src*="marca/"] { object-fit: contain; }
 .vj__chip b { font-weight: 600; } .vj__chip em { font-style: normal; color: #CBD4EC; }
 .vj__chipok { width: 16px; height: 16px; border-radius: 50% !important; background: #1F9D5A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center / 11px no-repeat; flex: none; }
 @media (max-width: 1020px) { .vj__chip { font-size: 10.5px; padding: 5px 9px 5px 6px; } .vj__chip b { display: none; } }
+
+/* ══ Espaciado estándar: todas las secciones con el mismo aire, todas las cabeceras con la misma distancia a su contenido ══ */
+.v6 { --sec: clamp(120px, 12vw, 200px); --cab: clamp(48px, 6vw, 88px); }
+.nos7, .d7, .v6 .camino, .pr7, .sp7, .mt7, .ch9 { padding-top: var(--sec) !important; padding-bottom: 0 !important; }
+.fin7 { margin-top: var(--sec); }
+.nos7__caps, .d7__lista, .ar9__grilla, .mt7__grilla, .ch, .marq + .sp7__cab + .sp7__pila { margin-top: var(--cab) !important; }
+.v6 .camino__cab, .sp7__cab { margin-bottom: var(--cab) !important; }
+.marq { margin-bottom: var(--cab) !important; }
+.fr7 { padding: var(--sec) 0 0 !important; min-height: 0 !important; }
+.sp7__remate { margin-top: var(--sec) !important; }
+
+/* ══ Banner: la trama de píxeles ══ */
+.h7--trama { background: #fff; min-height: 0; height: min(92svh, 900px); padding: 0 0 56px; }
+.h7--trama .h7__t, .h7--trama .bajada, .h7--trama .eti { color: var(--tinta7); text-shadow: none; }
+.h7--trama .bajada { color: var(--texto7-2); }
+.h7--trama .eti::before { background: linear-gradient(90deg, var(--menta), var(--tealp)); }
+.h7--trama .cursor { background: var(--tealp); }
+.h7--trama .btn7 { background: var(--tinta7); color: #fff; }
+.h7--trama .h7__pie { border-top-color: var(--linea7); }
+.h7--trama .h7__in { position: relative; z-index: 1; }
+.h7--trama .h7__t { max-width: 7.6em; }
+.tr { position: absolute; inset: 0; }
+.tr canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tr__rotulo { position: absolute; right: max(20px, calc((100% - var(--ancho)) / 2)); top: 96px; font: 500 12px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--tealp); padding: 8px 12px; background: rgba(255, 255, 255, .85); opacity: 0; transform: translateY(6px); }
+.tr__rotulo.on { animation: rotulo .7s var(--llegada) forwards; }
+@keyframes rotulo { to { opacity: 1; transform: none; } }
+@media (max-width: 1020px) { .h7--trama { height: auto; min-height: 92svh; padding-top: 52svh; } .tr__rotulo { top: 72px; } }
+
+/* ══ Parallax: las fotos a distintas profundidades ══ */
+.px9 { position: relative; height: 230vh; margin-top: var(--sec); }
+.px9__fijo { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; }
+.px9__f { position: absolute; left: var(--x); top: var(--y); width: var(--w); aspect-ratio: 4 / 3; margin: 0; overflow: hidden; will-change: transform; box-shadow: 0 40px 80px -50px rgba(11, 19, 27, .5); }
+.px9__f img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); }
+.px9__t { position: relative; z-index: 2; max-width: 19ch; text-align: center; font-size: clamp(2.2rem, 1.2rem + 3vw, 4.6rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.02; padding: 28px 36px; background: rgba(255, 255, 255, .86); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+@media (max-width: 1020px) {
+  .px9 { height: 190vh; }
+  .px9__f { width: calc(var(--w) * 2.1); }
+  .px9__t { font-size: 1.8rem; padding: 20px; max-width: 90%; }
+}
+@media (prefers-reduced-motion: reduce) { .px9 { height: auto; } .px9__fijo { position: relative; height: 100vh; } }
+@media (max-width: 1020px) { .h7--trama { padding-top: 50svh; } }
