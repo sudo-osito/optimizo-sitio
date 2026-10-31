@@ -30,13 +30,14 @@ export function montarManos(sec, { QUIETO }) {
     const W = fijo.clientWidth, H = fijo.clientHeight, dpr = Math.min(2, devicePixelRatio || 1), mov = W < 760;
     // acercamiento: de 0 a .7 se acercan; en .7 se tocan; de .8 en adelante, la chispa y el texto
     const k = eio(p / .7), hueco = (1 - k) * W * (mov ? .5 : .32);
-    const ancho = W * (mov ? .62 : .42), alto = ancho * (img.naturalHeight / img.naturalWidth || .48), cy = H * .46;
+    // cada brazo mide más de media pantalla: al tocarse, sale desde el borde
+    const ancho = W * (mov ? .62 : .52), alto = ancho * (img.naturalHeight / img.naturalWidth || .48), cy = H * .46;
     humana.style.width = ancho + "px";
-    humana.style.transform = `translate(${W / 2 + hueco / 2 - ancho * .02}px, ${cy - alto / 2}px)`;
+    humana.style.transform = `translate(${W / 2 + hueco / 2 - ancho * .03}px, ${cy - alto / 2}px)`;
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
     if (puntos) {
-      const esc = ancho / puntos.w, x0 = W / 2 - hueco / 2 - ancho * .98, y0 = cy - alto / 2, arma = clamp(p / .55);
+      const esc = ancho / puntos.w, x0 = W / 2 - hueco / 2 - ancho * .97, y0 = cy - alto / 2, arma = clamp(p / .55);
       for (const q of puntos) {
         // cada píxel llega a su lugar con su propio ritmo; los de la punta de los dedos son los últimos
         const kk = eio(clamp((arma - q.r * .45 * (q.u)) / .55)); if (kk <= 0) continue;

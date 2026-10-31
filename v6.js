@@ -1,6 +1,6 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montarManos } from "./manos.js?v=1793457559";
-import { montarTrama } from "./trama.js?v=1793457513";
+import { montarManos } from "./manos.js?v=1793457957";
+import { montarTrama } from "./trama.js?v=1793457957";
 import { montarChat } from "./chat.js?v=1793308266";
 import { montarFlujo } from "./flujo.js?v=1793370069";
 import { montar as montarPoder } from "./poderes.js?v=1793368873";
@@ -187,11 +187,20 @@ let pintarParallax = () => {};
 {
   const sec = $("#parallax"), escena = $(".px9__escena", sec), figs = $$(".px9__f", sec), t1 = $(".px9__t--1", sec), t2 = $(".px9__t--2", sec), fin = $(".px9__fin", sec);
   const fase = (p, a, b, c, d) => clamp(Math.min((p - a) / (b - a), (d - p) / (d - c)));
+  // cada frase se escribe rápido, como teclado, cuando le toca; y se borra al salir
+  const partes = (el) => [...el.childNodes].map((n) => [n.textContent, n.nodeType === 1 ? n.className : ""]);
+  [t1, t2].forEach((el) => { el._partes = partes(el); el._total = el._partes.reduce((a, [x]) => a + x.length, 0); el._n = 0; el.innerHTML = ""; });
+  const dibujar = (el, n) => { let r = n; el.innerHTML = el._partes.map(([x, cls]) => { const s = x.slice(0, Math.max(0, r)); r -= x.length; return cls ? `<span class="${cls}">${s}</span>` : s; }).join("") + (n < el._total ? '<i class="cursor"></i>' : ""); };
+  const escribe = (el, vis) => {
+    el.style.opacity = vis > 0 ? 1 : 0;
+    const meta = vis > 0 ? el._total : 0; if (el._n === meta || el._anim) return;
+    el._anim = true; const paso = () => { el._n += el._n < meta ? 2 : -4; el._n = clamp(el._n, 0, el._total); if ((el._n - meta) * (el._n < meta ? -1 : 1) < 0) el._n = meta; dibujar(el, el._n); if (el._n !== (vis > 0 ? el._total : 0)) setTimeout(paso, 18); else el._anim = false; }; paso();
+  };
   pintarParallax = () => {
     const r = sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
     const p = QUIETO ? 1 : clamp(-r.top / Math.max(1, r.height - innerHeight)), avance = p * 4200;
     figs.forEach((f) => { const z = +f.style.getPropertyValue("--z") + avance; f.style.transform = `translate(-50%, -50%) translate3d(${f.style.getPropertyValue("--x")}, ${f.style.getPropertyValue("--y")}, ${z}px)`; f.style.opacity = z > 650 ? 0 : clamp((z + 3600) / 900); });
-    t1.style.opacity = fase(p, .04, .12, .3, .38); t2.style.opacity = fase(p, .38, .46, .62, .7);
+    escribe(t1, fase(p, .04, .1, .3, .38)); escribe(t2, fase(p, .38, .44, .62, .7));
     const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`; escena.style.opacity = 1 - clamp((p - .78) / .14) * .85;
   };
 }
