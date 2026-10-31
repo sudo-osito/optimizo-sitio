@@ -25,9 +25,12 @@ export function montarChat() {
   const msjs = document.getElementById("ch-msjs"), form = document.getElementById("ch-form"), input = document.getElementById("ch-in"), sugs = document.getElementById("ch-sugs");
   if (!msjs) return;
   const historial = []; let ocupado = false;
+  // el chat parte como una burbuja chica y se abre al escribir o elegir una pregunta
+  const ch = form.closest(".ch"), abrirChat = () => ch.classList.add("abierto");
+  input.addEventListener("focus", abrirChat); input.addEventListener("input", abrirChat);
   const burbuja = (quien, html) => { const d = document.createElement("div"); d.className = `ch__m ch__m--${quien}`; d.innerHTML = html; msjs.append(d); msjs.scrollTo({ top: msjs.scrollHeight, behavior: "smooth" }); return d; };
   async function enviar(texto) {
-    texto = texto.trim(); if (!texto || ocupado) return; ocupado = true; input.value = "";
+    texto = texto.trim(); if (!texto || ocupado) return; ocupado = true; input.value = ""; abrirChat();
     burbuja("yo", `<p></p>`).firstChild.textContent = texto;
     const b = burbuja("bot", `<p class="ch__pensando"><i></i><i></i><i></i></p>`);
     let resp = null;

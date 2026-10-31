@@ -1,7 +1,7 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montarManos } from "./manos.js?v=1793458189";
-import { montarTrama } from "./trama.js?v=1793458386";
-import { montarChat } from "./chat.js?v=1793308266";
+import { montarManos } from "./manos.js?v=1793458818";
+// import { montarTrama } from "./trama.js?v=1793458386";
+import { montarChat } from "./chat.js?v=1793458818";
 import { montarFlujo } from "./flujo.js?v=1793370069";
 import { montar as montarPoder } from "./poderes.js?v=1793368873";
 const $ = (s, r = document) => r.querySelector(s);
@@ -307,7 +307,16 @@ function agua(caja, { zona = "derecha" } = {}) {
     c.fillStyle = "rgba(255,255,255,.5)"; c.fillRect(x0 + bx * celdaX, y0, 1, y1 - y0);
   }, 30);
 }
-montarTrama($("#trama"), { QUIETO, alVer });
+/* Héroe: videos reales dentro de fábricas, uno tras otro con un fundido suave */
+{
+  const caja = $("#fabrica"), [a, b] = $$("video", caja), CLIPS = ["ensamblaje", "cinta", "control", "soldadura", "botellas", "planta"];
+  let i = 0, frente = a, atras = b, vivo = false;
+  const cargar = (v, n) => { v.src = `recursos/video/fabrica/${CLIPS[n % CLIPS.length]}.mp4`; v.load(); };
+  cargar(frente, 0); cargar(atras, 1); frente.classList.add("on");
+  const siguiente = () => { if (!vivo) return; i++; atras.currentTime = 0; atras.play().catch(() => {}); atras.classList.add("on"); frente.classList.remove("on"); [frente, atras] = [atras, frente]; setTimeout(() => cargar(atras, i + 1), 1300); };
+  [a, b].forEach((v) => v.addEventListener("timeupdate", () => { if (v === frente && v.duration && v.currentTime > v.duration - 1.1 && !v._pasado) { v._pasado = true; siguiente(); setTimeout(() => (v._pasado = false), 2000); } }));
+  if (!QUIETO) alVer(caja, () => { vivo = true; frente.play().catch(() => {}); }, () => { vivo = false; a.pause(); b.pause(); }, 0);
+}
 montarManos($("#manos"), { QUIETO });
 montarFlujo($("#flujo-med"), { alVer, QUIETO });
 montarChat();

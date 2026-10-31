@@ -1483,3 +1483,31 @@ img[src*="marca/"] { object-fit: contain; }
 .px9__escena { z-index: 1; } .px9__t, .px9__fin { z-index: 5; }
 .mn__robot { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
 .mn__chispa { width: 160px; height: 160px; }
+
+/* ══ Preguntas: el chat parte como burbuja chica y se abre al usarlo ══ */
+.ch9__in .ch { width: min(680px, 100%); margin-left: auto; margin-right: auto; justify-self: center; border-radius: 30px !important; box-shadow: 0 0 0 1px var(--linea7), 0 30px 70px -40px rgba(11, 19, 27, .45); transition: width .7s var(--llegada); }
+.ch9__in .ch .ch__msjs, .ch9__in .ch .ch__sugs, .ch9__in .ch .ch__form, .ch9__in .ch .ch__cab { padding-left: 18px !important; padding-right: 18px !important; }
+.ch__msjs { display: grid; grid-template-rows: 0fr; height: auto !important; padding-top: 0 !important; padding-bottom: 0 !important; overflow: hidden; transition: grid-template-rows .7s var(--llegada), padding .7s var(--llegada); }
+.ch__msjs > * { min-height: 0; }
+.ch:not(.abierto) .ch__msjs { visibility: hidden; }
+.ch:not(.abierto) .ch__cab { border-bottom: 0; }
+.ch.abierto { width: min(900px, 100%) !important; }
+.ch.abierto .ch__msjs { visibility: visible; display: flex; height: 380px !important; padding-top: 22px !important; padding-bottom: 22px !important; overflow-y: auto; }
+.ch:not(.abierto) .ch__sugs { padding-top: 4px; }
+
+/* ══ Banner: videos reales dentro de fábricas, a todo el ancho, sin efectos ══ */
+.h7--fab { height: min(88svh, 880px); min-height: 0; padding: 0 0 64px; background: #0B131B; }
+.fab { position: absolute; inset: 0; background: #0B131B; }
+.fab video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+.fab video.on { opacity: 1; }
+.fab::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 14, 20, .62) 0%, rgba(8, 14, 20, .28) 45%, rgba(8, 14, 20, 0) 75%), linear-gradient(0deg, rgba(8, 14, 20, .35), rgba(8, 14, 20, 0) 40%); }
+.h7--fab .h7__in { position: relative; z-index: 1; }
+.h7--fab .h7__t, .h7--fab .bajada, .h7--fab .eti { color: #fff; }
+.h7--fab .bajada { color: rgba(255, 255, 255, .85); }
+.h7--fab .eti::before, .h7--fab .cursor { background: #91CEC4; }
+.h7--fab .h7__pie { border-top-color: rgba(255, 255, 255, .25); }
+.h7--fab .btn7 { background: #fff; color: var(--tinta7); }
+@media (max-width: 1020px) { .h7--fab { height: auto; min-height: 86svh; padding-top: 40svh; } .fab::after { background: linear-gradient(0deg, rgba(8, 14, 20, .75), rgba(8, 14, 20, .2) 70%); } }
+
+/* la segunda frase del desafío, en el color de Optimizo */
+.fr7__l--b, .fr7__l--b .tipeo { background: linear-gradient(100deg, #91CEC4, #387E80 70%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
