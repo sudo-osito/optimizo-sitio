@@ -3,7 +3,7 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const ORDEN = ["bienvenida", "nombre", "empresa", "cargo", "celular", "correo", "interes", "listo", "gracias"];
+  const ORDEN = ["bienvenida", "nombre", "empresa", "cargo", "celular", "correo", "listo", "gracias"];   // 31-oct (Joaquín): sin «¿Qué quieres conocer?»; los productos los ofrece María en la llamada
   const pasos = Object.fromEntries($$(".paso").map((p) => [p.dataset.paso, p]));
   const datos = { nombre: "", empresa: "", cargo: "", celular: "", correo: "", interes: new Set() };
   const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -193,7 +193,6 @@
       ["Nombre", datos.nombre, "nombre"],
       ["Empresa", [datos.empresa || "Sin empresa", datos.cargo].filter(Boolean).join(" · "), "empresa"],
       ["Contacto", [datos.celular, datos.correo].filter(Boolean).join(" · "), "celular"],
-      ["Interés", [...datos.interes].map((x) => NOMBRES_INTERES[x]).join(", ") || "Por conversar", "interes"],
     ];
     const dl = $("#resumen"); dl.textContent = "";
     for (const [et, val, paso] of filas) {
