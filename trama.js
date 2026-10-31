@@ -1,8 +1,8 @@
 // Optimizo · el banner en trama de píxeles. Cuatro escenas dibujadas con código (nada de video) que se entienden de un vistazo:
 // un brazo robótico que mueve cajas, una grúa de puerto que carga un contenedor, una red neuronal procesando y engranajes que
-// optimizan una curva. Cada cuadro se dibuja en gris y se convierte en trama ordenada (Bayer 4×4) con los colores de Optimizo.
+// optimizan una curva. Cada cuadro se dibuja en gris y se escribe con caracteres estilo Matrix en los colores de Optimizo.
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + .5) / 16);
-const DUR = 6500, FUNDIDO = 1100;
+const DUR = 6500;
 const azar = (i) => { const x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const eio = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
@@ -85,7 +85,6 @@ export function montarTrama(caja, { QUIETO, alVer }) {
   const cv = caja.querySelector("canvas"), c = cv.getContext("2d"), rotulo = caja.querySelector(".tr__rotulo");
   const lienzo = document.createElement("canvas"), lc = lienzo.getContext("2d");
   const baja = document.createElement("canvas"), bc = baja.getContext("2d", { willReadFrequently: true });
-  const salida = document.createElement("canvas"), sc = salida.getContext("2d");
   const puntero = { x: -1e4, y: -1e4 };
   caja.addEventListener("pointermove", (e) => { const r = cv.getBoundingClientRect(); puntero.x = e.clientX - r.left; puntero.y = e.clientY - r.top; });
   caja.addEventListener("pointerleave", () => { puntero.x = puntero.y = -1e4; });
@@ -102,32 +101,52 @@ export function montarTrama(caja, { QUIETO, alVer }) {
     for (let p = 0, o = 0; p < out.length; p++, o += 4) out[p] = 1 - d[o] / 255;
     return out;
   }
+  // ── Efecto Matrix: la escena se escribe con caracteres que cambian, columnas de lluvia caen por encima
+  // y el cambio de escena lo hace la misma lluvia, barriendo de arriba hacia abajo.
+  const GLIFOS = "01アイウエオカキクケコサシスセソタチツテトナニヌネノ<>/*+=#".split(""), NIV = 7;
+  const COLORES = [[205, 236, 230], [145, 206, 196], [104, 176, 167], [70, 145, 141], [56, 126, 128], [33, 84, 90], [15, 27, 38]];
+  let atlas = null, atlasCel = 0;
+  function armarAtlas(cel, dpr) {
+    atlas = document.createElement("canvas"); atlas.width = GLIFOS.length * cel * dpr; atlas.height = (NIV + 1) * cel * dpr;
+    const a = atlas.getContext("2d"); a.scale(dpr, dpr); a.font = `600 ${cel * .92}px ui-monospace, "SF Mono", Menlo, monospace`; a.textAlign = "center"; a.textBaseline = "middle";
+    for (let n = 0; n <= NIV; n++) { const col = n < NIV ? COLORES[n] : [255, 255, 255]; a.fillStyle = `rgb(${col})`; if (n === NIV) { a.shadowColor = "#91CEC4"; a.shadowBlur = 6; }
+      GLIFOS.forEach((g, i) => a.fillText(g, i * cel + cel / 2, n * cel + cel / 2 + .5)); }
+    atlasCel = cel;
+  }
+  const columnas = Array.from({ length: 400 }, (_, i) => ({ v: 7 + azar(i) * 16, o: azar(i + 99) * 60, r: 3 + azar(i + 7) * 9, l: 6 + Math.floor(azar(i + 3) * 14) }));
   function cuadro(ahora) {
     raf = requestAnimationFrame(cuadro);
-    if (ahora - ultimo < 40) return; ultimo = ahora;
+    if (ahora - ultimo < 33) return; ultimo = ahora;
     const dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
-    const vertical = W < 700, celda = vertical ? 4 : 5;
-    const zx = vertical ? 0 : W * .42, zy = vertical ? 64 : 70, zw = W - zx - (vertical ? 0 : W * .02), zh = vertical ? H * .42 : H - 140;
-    const cols = Math.floor(zw / celda), rows = Math.floor(zh / celda), t = QUIETO ? 1.6 : (ahora - t0) / 1000;
+    const vertical = W < 700, cel = vertical ? 7 : 9;
+    if (atlasCel !== cel || !atlas) armarAtlas(cel, dpr);
+    const zx = vertical ? 0 : W * .42, zy = vertical ? 64 : 60, zw = W - zx - (vertical ? 0 : W * .02), zh = vertical ? H * .42 : H - 120;
+    const cols = Math.floor(zw / cel), rows = Math.floor(zh / cel), t = QUIETO ? 1.6 : (ahora - t0) / 1000;
     if (!QUIETO && ahora - tCambio > DUR) { previa = actual; actual = (actual + 1) % ESCENAS.length; tCambio = ahora; rotulo.textContent = ESCENAS[actual][1]; rotulo.classList.remove("on"); void rotulo.offsetWidth; rotulo.classList.add("on"); }
-    const k = Math.min(1, (ahora - tCambio) / FUNDIDO);
-    const A = tintaDe(actual, cols, rows, t), B = previa >= 0 && k < 1 ? tintaDe(previa, cols, rows, t) : null;
-    salida.width = cols; salida.height = rows;
-    const img = sc.createImageData(cols, rows), px = img.data, mx = (puntero.x - zx) / celda, my = (puntero.y - zy) / celda;
-    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-      const p = j * cols + i; let v = B && azar(p) > k ? B[p] : A[p];
-      const dm = Math.hypot(i - mx, j - my); if (dm < 18) v = Math.min(1, v + (1 - dm / 18) * .28);
-      if (v <= BAYER[(j & 3) * 4 + (i & 3)]) continue;
-      const u = clamp(v), o = p * 4;   // menta (suave) → teal → tinta (lo más denso)
-      px[o] = u < .6 ? 145 - 89 * u / .6 : 56 - 41 * (u - .6) / .4; px[o + 1] = u < .6 ? 206 - 80 * u / .6 : 126 - 99 * (u - .6) / .4; px[o + 2] = u < .6 ? 196 - 68 * u / .6 : 128 - 90 * (u - .6) / .4; px[o + 3] = 255;
+    const dc = (ahora - tCambio) / 1000;   // segundos desde el cambio
+    const A = tintaDe(actual, cols, rows, t), B = previa >= 0 && dc < 2.2 ? tintaDe(previa, cols, rows, t) : null;
+    c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cv.width, cv.height);
+    const mx = (puntero.x - zx) / cel, my = (puntero.y - zy) / cel, cd = cel * dpr;
+    for (let i = 0; i < cols; i++) {
+      const co = columnas[i % 400], cabeza = ((t * co.v + co.o) % (rows + 40)) - 10;   // la gota que cae en esta columna
+      const barrido = B ? (dc - azar(i) * .6) * rows * 1.1 : 1e9;              // hasta dónde llegó el barrido del cambio
+      for (let j = 0; j < rows; j++) {
+        const p = j * cols + i;
+        let v = j < barrido ? A[p] : B[p];
+        const d = cabeza - j, enGota = d >= 0 && d < co.l, frente = B && Math.abs(j - barrido) < 1.2;
+        if (Math.hypot(i - mx, j - my) < 7) v = Math.max(v, .55);
+        let n = -1;
+        if (v > .12) n = Math.min(NIV - 1, Math.floor(v * NIV));            // la escena
+        if (enGota) n = d < 1 ? NIV : Math.max(n, d < 3 ? 1 : 0);            // la lluvia: cabeza blanca, cola menta
+        if (frente) n = NIV;
+        if (n < 0) continue;
+        const g = Math.floor(azar(p * 3 + Math.floor(t * co.r + azar(p) * 10)) * GLIFOS.length), X = (zx + i * cel) * dpr, Y = (zy + j * cel) * dpr;
+        // la figura: un bloque sólido de su tono, con el carácter claro encima (se lee como forma y se ve como código)
+        if (v > .12 && n < NIV) { const col = COLORES[Math.min(NIV - 1, Math.floor(v * NIV))]; c.fillStyle = `rgb(${col})`; c.fillRect(X, Y, cd - dpr, cd - dpr); c.globalAlpha = .8; c.drawImage(atlas, g * cd, (v > .5 ? 0 : NIV - 1) * cd, cd, cd, X, Y, cd, cd); c.globalAlpha = 1; continue; }
+        c.drawImage(atlas, g * cd, n * cd, cd, cd, X, Y, cd, cd);
+      }
     }
-    sc.putImageData(img, 0, 0);
-    c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H); c.imageSmoothingEnabled = false;
-    c.drawImage(salida, zx, zy, cols * celda, rows * celda);
-    c.fillStyle = "#fff";   // la rejilla entre píxeles
-    for (let x = zx; x <= zx + cols * celda; x += celda) c.fillRect(x, zy, 1, rows * celda);
-    for (let y = zy; y <= zy + rows * celda; y += celda) c.fillRect(zx, y, cols * celda, 1);
   }
   rotulo.textContent = ESCENAS[0][1]; rotulo.classList.add("on");
   alVer(caja, () => { if (vivo) return; vivo = true; tCambio = performance.now(); raf = requestAnimationFrame(cuadro); }, () => { vivo = false; cancelAnimationFrame(raf); }, 0);
