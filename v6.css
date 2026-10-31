@@ -1500,7 +1500,7 @@ img[src*="marca/"] { object-fit: contain; }
 .fab { position: absolute; inset: 0; background: #0B131B; }
 .fab video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
 .fab video.on { opacity: 1; }
-.fab::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 14, 20, .62) 0%, rgba(8, 14, 20, .28) 45%, rgba(8, 14, 20, 0) 75%), linear-gradient(0deg, rgba(8, 14, 20, .35), rgba(8, 14, 20, 0) 40%); }
+.h7__video.fab::after { display: block !important; content: ""; border: 0; transform: none; left: 0; width: auto; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 14, 20, .62) 0%, rgba(8, 14, 20, .28) 45%, rgba(8, 14, 20, 0) 75%), linear-gradient(0deg, rgba(8, 14, 20, .35), rgba(8, 14, 20, 0) 40%); }
 .h7--fab .h7__in { position: relative; z-index: 1; }
 .h7--fab .h7__t, .h7--fab .bajada, .h7--fab .eti { color: #fff; }
 .h7--fab .bajada { color: rgba(255, 255, 255, .85); }
@@ -1515,3 +1515,36 @@ img[src*="marca/"] { object-fit: contain; }
 .px9__f { transition: opacity .35s ease; }
 /* la sección siguiente sube encima de las manos y se ve solo dentro del destello (el JS mueve el círculo) */
 .d7--destello { position: relative; z-index: 2; margin-top: -100vh; background: #fff; box-shadow: 0 -100vh 0 #fff; clip-path: circle(0 at 50% 0); }
+
+/* ── Celular (31-oct): más aire, menú a pantalla completa y cada sección sin choques ── */
+@media (max-width: 1020px) {
+  /* menú: una hoja blanca bajo la barra, con los ítems grandes y el botón al fondo, al alcance del pulgar */
+  .nav7.abierto { background: #fff; }
+  .menu7 { position: fixed; top: 64px; left: 0; right: 0; height: calc(100svh - 64px); max-height: none !important; display: flex; flex-direction: column; padding: 20px 24px calc(28px + env(safe-area-inset-bottom)) !important; background: #fff; overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity .3s, transform .45s var(--llegada), visibility 0s .45s; }
+  .nav7.abierto .menu7 { opacity: 1; visibility: visible; transform: none; transition: opacity .3s, transform .45s var(--llegada); }
+  .menu7 a:not(.btn7) { padding: 18px 0; font-size: 26px; font-weight: 650; letter-spacing: -.035em; }
+  .menu7 .btn7 { margin-top: auto; height: 58px; justify-content: center; font-size: 16px; }
+  html.menu-abierto, html.menu-abierto body { overflow: hidden; }
+  .nav7__in { height: 64px; }
+
+  /* banner: el texto va sobre un degradado que sube desde abajo, para que se lea sobre cualquier clip */
+  .h7--fab { height: 100svh; min-height: 600px; }
+  .h7__video.fab::after { background: linear-gradient(0deg, rgba(11, 19, 27, .92) 0%, rgba(11, 19, 27, .7) 42%, rgba(11, 19, 27, .2) 75%, rgba(11, 19, 27, .35) 100%) !important; }
+
+  /* carruseles: una tarjeta casi completa y un asomo de la siguiente */
+  .nos7__caps > *, .dolor7 { flex: 0 0 86% !important; }
+  .nos7__caps, .d7__lista { gap: 14px !important; }
+
+  /* puertas de Lumina y Médula: el logo y el botón no chocan */
+  .v6 .banda--arriba { display: flex !important; justify-content: space-between; height: 76px; padding: 0 20px; }
+  .v6 .banda--arriba .banda__c { padding: 0; box-shadow: none !important; }
+  .v6 .banda--arriba .banda__c:has(em):not(.banda__ir) { display: none; }
+  .v6 .banda__ir span { height: 42px; padding: 0 16px; font-size: 13.5px; }
+  .v6 .banda--abajo { display: flex !important; flex-direction: column; align-items: flex-start; gap: 14px; padding: 24px 20px 28px; }
+  .v6 .banda--abajo .banda__c { padding: 0; box-shadow: none !important; }
+  .v6 .banda h3 { font-size: 30px; }
+  .v6 .banda p { font-size: 15.5px; }
+
+  /* superpoderes: tarjetas más bajas y menos recorrido entre una y otra */
+  .sp7c { height: min(600px, calc(100svh - 150px)) !important; margin-bottom: 7vh !important; }
+}

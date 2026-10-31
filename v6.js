@@ -470,8 +470,9 @@ let pintarPoderes = () => {};
 /* ── Menú del celular y progreso de lectura ── */
 {
   const boton = $("#nav-menu"), menu = $("#menu-movil");
-  const cerrar = () => { nav.classList.remove("abierto"); boton.setAttribute("aria-expanded", false); boton.setAttribute("aria-label", "Abrir el menú"); };
-  boton.addEventListener("click", () => { const ab = nav.classList.toggle("abierto"); boton.setAttribute("aria-expanded", ab); boton.setAttribute("aria-label", ab ? "Cerrar el menú" : "Abrir el menú"); });
+  // el menú del celular ocupa toda la pantalla: mientras está abierto, la página de atrás no se mueve
+  const cerrar = () => { nav.classList.remove("abierto"); document.documentElement.classList.remove("menu-abierto"); boton.setAttribute("aria-expanded", false); boton.setAttribute("aria-label", "Abrir el menú"); };
+  boton.addEventListener("click", () => { const ab = nav.classList.toggle("abierto"); document.documentElement.classList.toggle("menu-abierto", ab); boton.setAttribute("aria-expanded", ab); boton.setAttribute("aria-label", ab ? "Cerrar el menú" : "Abrir el menú"); });
   $$("a", menu).forEach((a) => a.addEventListener("click", cerrar));
   addEventListener("keydown", (e) => e.key === "Escape" && cerrar());
 }
