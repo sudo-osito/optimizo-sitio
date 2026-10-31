@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="recursos/optimizo-isotipo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="feria.css?v=6">
+<link rel="stylesheet" href="feria.css?v=7">
 </head>
 <body>
 <!-- Registro del stand en TechAI Summit: una pregunta por pantalla; cada pregunta se escribe sola. -->
@@ -30,7 +30,7 @@
     <h1 class="titulo"><label for="nombre"></label></h1>
     <div class="campo"><input id="nombre" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Tu nombre" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><span class="tecla"><kbd>Enter</kbd></span></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir">Continuar</button><span class="tecla"><kbd>Enter</kbd></span></div>
   </section>
 
   <section class="paso" data-paso="empresa" hidden>
@@ -38,7 +38,7 @@
     <h1 class="titulo"><label for="empresa"></label></h1>
     <div class="campo"><input id="empresa" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Nombre de tu empresa" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">No tengo empresa</button></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">No tengo empresa</button></div>
   </section>
 
   <section class="paso" data-paso="cargo" hidden>
@@ -46,7 +46,7 @@
     <h1 class="titulo"><label for="cargo"></label></h1>
     <div class="campo"><input id="cargo" autocomplete="off" spellcheck="false" placeholder="Tu cargo" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Omitir</button></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Omitir</button></div>
   </section>
 
   <section class="paso" data-paso="celular" hidden>
@@ -54,7 +54,7 @@
     <h1 class="titulo"><label for="celular"></label></h1>
     <div class="campo"><span class="prefijo">+56</span><input id="celular" inputmode="tel" autocomplete="off" placeholder="9 1234 5678" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Prefiero dejar mi correo</button></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir">Prefiero dejar mi correo</button></div>
   </section>
 
   <section class="paso" data-paso="correo" hidden>
@@ -62,7 +62,7 @@
     <h1 class="titulo"><label for="correo"></label></h1>
     <div class="campo"><input id="correo" type="email" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="nombre@empresa.cl" enterkeyhint="next"></div>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir" data-omitir-correo>Omitir</button></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir">Continuar</button><button class="enlace" type="button" data-accion="omitir" data-omitir-correo>Omitir</button></div>
   </section>
 
   <section class="paso paso-ancho" data-paso="interes" hidden>
@@ -85,7 +85,7 @@
         <i class="check" aria-hidden="true"></i>
       </button>
     </div>
-    <div class="acciones"><button class="boton" type="button" data-accion="seguir" data-boton-interes>Omitir</button><span class="tecla"><kbd>Enter</kbd></span></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="seguir" data-boton-interes>Omitir</button><span class="tecla"><kbd>Enter</kbd></span></div>
   </section>
 
   <section class="paso" data-paso="listo" hidden>
@@ -97,7 +97,7 @@
       <span>Optimizo puede usar estos datos para contactarme. No los compartimos con nadie.</span>
     </label>
     <p class="aviso" role="alert"></p>
-    <div class="acciones"><button class="boton" type="button" data-accion="enviar" id="enviar"><span>Enviar</span></button></div>
+    <div class="acciones"><button class="enlace volver" type="button" data-accion="atras">← Atrás</button><button class="boton" type="button" data-accion="enviar" id="enviar"><span>Enviar</span></button></div>
   </section>
 
   <section class="paso" data-paso="gracias" hidden>
@@ -131,6 +131,6 @@
   </div>
 </div>
 
-<script src="feria.js?v=8"></script>
+<script src="feria.js?v=9"></script>
 </body>
 </html>

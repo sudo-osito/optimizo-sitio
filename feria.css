@@ -159,3 +159,6 @@ kbd { font: inherit; font-size: 13px; padding: 3px 8px; border-radius: 7px; bord
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 .hoja-reiniciar { display: block; margin: 12px auto 0; font-size: 15px; }
+
+/* 31-oct: «Atrás» visible junto a Continuar (la flecha de abajo quedaba lejos) */
+.acciones .volver { order: -1; margin-right: 8px; }

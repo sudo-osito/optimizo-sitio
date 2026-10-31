@@ -286,7 +286,7 @@
   // ── Botones y teclado ──
   document.addEventListener("click", (e) => {
     const a = e.target.closest("[data-accion]"); if (!a) return;
-    ({ seguir: continuar, omitir, enviar })[a.dataset.accion]?.();
+    ({ seguir: continuar, omitir, enviar, atras: anterior })[a.dataset.accion]?.();
   });
   $("#atras").addEventListener("click", anterior);
   document.addEventListener("keydown", (e) => {
