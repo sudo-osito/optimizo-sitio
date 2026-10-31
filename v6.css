@@ -1513,3 +1513,7 @@ img[src*="marca/"] { object-fit: contain; }
 .fr7__l--b, .fr7__l--b .tipeo { background: linear-gradient(100deg, #91CEC4, #387E80 70%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
 .px9__f { transition: none; } .px9__t { pointer-events: none; }
 .px9__f { transition: opacity .35s ease; }
+/* el impacto de los dedos: un temblor corto de la pantalla */
+.mn__fijo.golpe { animation: golpe .42s cubic-bezier(.36, .07, .19, .97); }
+@keyframes golpe { 10% { transform: translate(-5px, 2px); } 22% { transform: translate(6px, -3px); } 36% { transform: translate(-4px, -2px); } 52% { transform: translate(3px, 2px); } 70% { transform: translate(-2px, 1px); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .mn__fijo.golpe { animation: none; } }

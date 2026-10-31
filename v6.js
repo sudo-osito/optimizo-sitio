@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montarManos } from "./manos.js?v=1793458818";
+import { montarManos } from "./manos.js?v=1793459270";
 // import { montarTrama } from "./trama.js?v=1793458386";
 import { montarChat } from "./chat.js?v=1793458818";
 import { montarFlujo } from "./flujo.js?v=1793370069";
@@ -204,7 +204,7 @@ let pintarParallax = () => {};
     // la foto que pasa por detrás de la frase se apaga, para que el texto se lea siempre limpio
     const activa = t1.style.opacity === "1" ? t1 : t2.style.opacity === "1" ? t2 : null;
     if (activa) { const T = activa.getBoundingClientRect(); figs.forEach((f) => { const R = f.getBoundingClientRect(); const cruza = R.right > T.left - 30 && R.left < T.right + 30 && R.bottom > T.top - 30 && R.top < T.bottom + 30; if (cruza) f.style.opacity = Math.min(+f.style.opacity, .12); }); }
-    const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`; escena.style.opacity = 1 - clamp((p - .74) / .1);
+    const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`;    // la escena no se apaga entera: con opacidad, el navegador la aplana y las fotos saltan; cada foto se va por su cuenta
   };
 }
 

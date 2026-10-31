@@ -12,7 +12,7 @@ export function montarManos(sec, { QUIETO }) {
   const txt = sec.querySelector(".mn__txt");
   const img = new Image(); img.src = "recursos/fotos/mano-robot.png";
   let puntos = null;   // los píxeles de la mano de IA: posición final, color y desorden inicial
-  const CEL = 5;
+  const CEL = 5; let antes = 0;
   img.onload = () => {
     const w = Math.round(img.naturalWidth / CEL * 1.1), h = Math.round(img.naturalHeight / CEL * 1.1);
     const t = document.createElement("canvas"); t.width = w; t.height = h; const tc = t.getContext("2d", { willReadFrequently: true });
@@ -52,12 +52,23 @@ export function montarManos(sec, { QUIETO }) {
       c.globalAlpha = 1;
     }
     const alto = altoH;
-    // el toque: unos pocos píxeles saltan desde la punta de los dedos y se apagan (sin destello)
-    const toque = clamp((p - .66) / .2);
-    if (toque > 0 && toque < 1) for (let n = 0; n < 26; n++) {
-      const ang = azar(n) * Math.PI * 2, dist = (8 + azar(n + 5) * 70) * eio(toque), lado = 3 + Math.round(azar(n + 9) * 3);
-      c.globalAlpha = 1 - toque; c.fillStyle = n % 3 ? "#91CEC4" : "#387E80";
-      c.fillRect(Math.round(mx + Math.cos(ang) * dist), Math.round(cy + Math.sin(ang) * dist * .7), lado, lado);
+    // el toque: la pantalla tiembla, sale una onda expansiva nítida, un destello breve y unos píxeles
+    const toque = clamp((p - .66) / .22);
+    if (p > .66 && antes <= .66 && !QUIETO) { fijo.classList.remove("golpe"); void fijo.offsetWidth; fijo.classList.add("golpe"); if (navigator.vibrate) navigator.vibrate(35); }
+    antes = p;
+    if (toque > 0 && toque < 1) {
+      for (const [ret, ancho] of [[0, 2.5], [.12, 1.5]]) {   // dos anillos que se abren
+        const k2 = clamp((toque - ret) / (1 - ret)); if (k2 <= 0) continue;
+        c.globalAlpha = (1 - k2) * .9; c.strokeStyle = "#387E80"; c.lineWidth = ancho * (1 - k2) + .5;
+        c.beginPath(); c.ellipse(mx, cy, eio(k2) * W * .38, eio(k2) * W * .38 * .62, 0, 0, 7); c.stroke();
+      }
+      const fl = clamp(1 - toque / .18);   // destello: un núcleo blanco y menta pequeño y nítido que se apaga rápido
+      if (fl > 0) { const g = c.createRadialGradient(mx, cy, 0, mx, cy, 70); g.addColorStop(0, `rgba(255,255,255,${fl})`); g.addColorStop(.35, `rgba(145,206,196,${.7 * fl})`); g.addColorStop(1, "rgba(145,206,196,0)"); c.globalAlpha = 1; c.fillStyle = g; c.fillRect(mx - 70, cy - 70, 140, 140); }
+      for (let n = 0; n < 34; n++) {
+        const ang = azar(n) * Math.PI * 2, dist = (10 + azar(n + 5) * 120) * eio(toque), lado = 3 + Math.round(azar(n + 9) * 3);
+        c.globalAlpha = 1 - toque; c.fillStyle = n % 3 ? "#91CEC4" : "#387E80";
+        c.fillRect(Math.round(mx + Math.cos(ang) * dist), Math.round(cy + Math.sin(ang) * dist * .7), lado, lado);
+      }
     }
     c.globalAlpha = 1;
     txt.style.opacity = clamp((p - .76) / .12); txt.style.transform = `translateY(${(1 - clamp((p - .76) / .12)) * 20}px)`;
