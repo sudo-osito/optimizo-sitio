@@ -199,11 +199,16 @@ let pintarParallax = () => {};
   pintarParallax = () => {
     const r = sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
     const p = QUIETO ? 1 : clamp(-r.top / Math.max(1, r.height - innerHeight)), avance = p * 4200;
-    figs.forEach((f) => { const z = +f.style.getPropertyValue("--z") + avance; f.style.transform = `translate(-50%, -50%) translate3d(${f.style.getPropertyValue("--x")}, ${f.style.getPropertyValue("--y")}, ${z}px)`; f.style.opacity = z > 650 ? 0 : clamp((z + 3600) / 900); });
+    figs.forEach((f) => { const z = +f.style.getPropertyValue("--z") + avance; f.style.transform = `translate(-50%, -50%) translate3d(${f.style.getPropertyValue("--x")}, ${f.style.getPropertyValue("--y")}, ${z}px)`; f.style.opacity = (z > 650 ? 0 : clamp((z + 1500) / 500)) * (1 - clamp((p - .74) / .08)); });   // solo cuando ya están cerca y abiertas a los costados; al final se van todas
     escribe(t1, fase(p, .04, .1, .3, .38)); escribe(t2, fase(p, .38, .44, .62, .7));
-    const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`; escena.style.opacity = 1 - clamp((p - .78) / .14) * .85;
+    // la foto que pasa por detrás de la frase se apaga, para que el texto se lea siempre limpio
+    const activa = t1.style.opacity === "1" ? t1 : t2.style.opacity === "1" ? t2 : null;
+    if (activa) { const T = activa.getBoundingClientRect(); figs.forEach((f) => { const R = f.getBoundingClientRect(); const cruza = R.right > T.left - 30 && R.left < T.right + 30 && R.bottom > T.top - 30 && R.top < T.bottom + 30; if (cruza) f.style.opacity = Math.min(+f.style.opacity, .12); }); }
+    const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`; escena.style.opacity = 1 - clamp((p - .74) / .1);
   };
 }
+
+if (!QUIETO) bucleVisible($("#parallax"), () => pintarParallax(), 30);
 
 /* ── La isla dinámica de Médula (la misma de su one-pager): se estira con resorte para contar qué hace, y se recoge entre tareas ── */
 $$(".isla").forEach((isla, n) => {
