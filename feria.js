@@ -54,8 +54,7 @@
     const paso1 = () => {
       if (yo !== turno) return;
       if (t >= tramos.length) {
-        cursor.classList.remove("escribiendo");
-        setTimeout(() => yo === turno && cursor.classList.add("fuera"), 1400);
+        cursor.classList.remove("escribiendo");   // 31-oct (Joaquín): la rayita queda parpadeando en loop, no se apaga
         return;
       }
       const texto = tramos[t][0], c = texto[i];
