@@ -1,5 +1,6 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montarTrama } from "./trama.js?v=1793457057";
+import { montarManos } from "./manos.js?v=1793457559";
+import { montarTrama } from "./trama.js?v=1793457513";
 import { montarChat } from "./chat.js?v=1793308266";
 import { montarFlujo } from "./flujo.js?v=1793370069";
 import { montar as montarPoder } from "./poderes.js?v=1793368873";
@@ -181,16 +182,17 @@ $$("[data-lite]").forEach((el, j) => {
 const ONEPAGE = { lumina: "https://lumina.optimizo.ai/", medula: "https://getmedula.ai/" };
 function abrir(ruta) { location.href = ONEPAGE[ruta]; }
 
-/* ── Parallax: cada foto avanza a su propia velocidad mientras la sección cruza la pantalla ── */
+/* ── Parallax: la cámara viaja hacia adentro entre las fotos; dos ideas y el cierre «Eso es Optimizo.» ── */
 let pintarParallax = () => {};
 {
-  const sec = $("#parallax"), figs = $$(".px9__f", sec);
+  const sec = $("#parallax"), escena = $(".px9__escena", sec), figs = $$(".px9__f", sec), t1 = $(".px9__t--1", sec), t2 = $(".px9__t--2", sec), fin = $(".px9__fin", sec);
+  const fase = (p, a, b, c, d) => clamp(Math.min((p - a) / (b - a), (d - p) / (d - c)));
   pintarParallax = () => {
-    if (QUIETO) return;
     const r = sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
-    const p = clamp(-r.top / Math.max(1, r.height - innerHeight)), q = p - .5;
-    figs.forEach((f) => f.style.transform = `translate3d(0, ${(q * +f.style.getPropertyValue("--v") * innerHeight * .9).toFixed(1)}px, 0) scale(${(1 + Math.abs(+f.style.getPropertyValue("--v")) * .06 * (1 - Math.abs(q) * 2)).toFixed(3)})`);
-    sec.style.setProperty("--p", p.toFixed(3));
+    const p = QUIETO ? 1 : clamp(-r.top / Math.max(1, r.height - innerHeight)), avance = p * 4200;
+    figs.forEach((f) => { const z = +f.style.getPropertyValue("--z") + avance; f.style.transform = `translate(-50%, -50%) translate3d(${f.style.getPropertyValue("--x")}, ${f.style.getPropertyValue("--y")}, ${z}px)`; f.style.opacity = z > 650 ? 0 : clamp((z + 3600) / 900); });
+    t1.style.opacity = fase(p, .04, .12, .3, .38); t2.style.opacity = fase(p, .38, .46, .62, .7);
+    const kf = clamp((p - .76) / .12); fin.style.opacity = kf; fin.style.transform = `scale(${.9 + .1 * kf})`; escena.style.opacity = 1 - clamp((p - .78) / .14) * .85;
   };
 }
 
@@ -297,6 +299,7 @@ function agua(caja, { zona = "derecha" } = {}) {
   }, 30);
 }
 montarTrama($("#trama"), { QUIETO, alVer });
+montarManos($("#manos"), { QUIETO });
 montarFlujo($("#flujo-med"), { alVer, QUIETO });
 montarChat();
 // el cierre: el mismo mar, con la lectura a los lados

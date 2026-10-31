@@ -8,7 +8,7 @@ const ESCENAS = [
   { capas: [{ src: "datos", modo: "claro", x: 0, y: 0, w: 1 }], txt: "Datos" },
   { capas: [{ src: "circuito", modo: "claro", x: 0, y: 0, w: 1 }], txt: "Inteligencia" },
 ];
-const DUR = 7000, FUNDIDO = 1400;
+const DUR = 6000;
 const azar = (i) => { const x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
 
 export function montarTrama(caja, { QUIETO, alVer }) {
@@ -53,40 +53,42 @@ export function montarTrama(caja, { QUIETO, alVer }) {
     return out;
   }
 
+  // el video se ve nítido; aparece pixelado y se enfoca, y su borde izquierdo se disuelve en trama hacia el titular
+  const baja = document.createElement("canvas"), bc = baja.getContext("2d");
   function cuadro(ahora) {
     raf = requestAnimationFrame(cuadro);
-    if (ahora - ultimo < 40) return; ultimo = ahora;
+    if (ahora - ultimo < 33) return; ultimo = ahora;
     const dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
-    const vertical = W < 700, celda = vertical ? 4 : 5;
-    // la escena vive a la derecha (PC) o arriba (celular); el texto queda libre
-    const zx = vertical ? 0 : W * .42, zy = vertical ? 64 : 0, zw = W - zx, zh = vertical ? H * .42 : H;
-    const cols = Math.floor(zw / celda), rows = Math.floor(zh / celda);
+    const vertical = W < 700, cel = vertical ? 5 : 7;
+    const zx = vertical ? 0 : W * .4, zy = vertical ? 60 : 0, zw = W - zx, zh = vertical ? H * .44 : H;
     if (!QUIETO && ahora - tCambio > DUR) { previa = actual; actual = (actual + 1) % ESCENAS.length; tCambio = ahora; reproducir(actual); pausarOtras(); rotulo.textContent = ESCENAS[actual].txt; rotulo.classList.remove("on"); void rotulo.offsetWidth; rotulo.classList.add("on"); }
-    const k = Math.min(1, (ahora - tCambio) / FUNDIDO);
-    const A = tinta(ESCENAS[actual], cols, rows), B = previa >= 0 && k < 1 ? tinta(ESCENAS[previa], cols, rows) : null;
-    salida.width = cols; salida.height = rows;
-    const img = sc.createImageData(cols, rows), px = img.data;
-    const mx = (puntero.x - zx) / celda, my = (puntero.y - zy) / celda;
-    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-      const p = j * cols + i;
-      let t = B && azar(p) > k ? B[p] : A[p];
-      // bordes que se desvanecen para que la trama no corte en seco
-      const bx = Math.min(i / (cols * .22), (cols - i) / (cols * .05), 1), by = Math.min(j / (rows * .06), (rows - j) / (rows * .08), 1);
-      t *= Math.max(0, Math.min(bx, by));
-      const dm = Math.hypot(i - mx, j - my); if (dm < 22) t = Math.min(1, t + (1 - dm / 22) * .35);
-      if (t <= BAYER[(j & 3) * 4 + (i & 3)]) continue;
-      // color: menta → teal → tinta según la densidad y la posición
-      const u = Math.min(1, t * .9 + (i / cols) * .25), o = p * 4;
-      px[o] = 145 + (56 - 145) * u - 40 * Math.max(0, u - .75) * 4; px[o + 1] = 206 + (126 - 206) * u - 70 * Math.max(0, u - .75) * 4; px[o + 2] = 196 + (128 - 196) * u - 70 * Math.max(0, u - .75) * 4; px[o + 3] = 255;
+    const t = ahora - tCambio, entra = Math.min(1, t / 900), sale = QUIETO ? 0 : Math.max(0, (t - (DUR - 500)) / 500);
+    const v = videos[ESCENAS[actual].capas[0].src];
+    c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+    if (v.readyState >= 2) {
+      // pixelado de entrada y salida: el bloque baja de 48 px a 1
+      const bloque = Math.max(1, Math.round(48 * Math.pow(1 - entra, 2.2) + 48 * Math.pow(sale, 2)));
+      const esc = Math.max(zw / v.videoWidth, zh / v.videoHeight), vw = v.videoWidth * esc, vh = v.videoHeight * esc;
+      c.save(); c.beginPath(); c.rect(zx, zy, zw, zh); c.clip();
+      if (bloque > 1) { baja.width = Math.ceil(zw / bloque); baja.height = Math.ceil(zh / bloque); bc.drawImage(v, (zw - vw) / 2 / bloque, (zh - vh) / 2 / bloque, vw / bloque, vh / bloque); c.imageSmoothingEnabled = false; c.drawImage(baja, zx, zy, baja.width * bloque, baja.height * bloque); }
+      else { c.imageSmoothingEnabled = true; c.drawImage(v, zx + (zw - vw) / 2, zy + (zh - vh) / 2, vw, vh); }
+      // un toque de color Optimizo
+      c.globalCompositeOperation = "soft-light"; c.fillStyle = "rgba(56,126,128,.35)"; c.fillRect(zx, zy, zw, zh); c.globalCompositeOperation = "source-over";
+      c.restore();
     }
-    sc.putImageData(img, 0, 0);
-    c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H); c.imageSmoothingEnabled = false;
-    c.drawImage(salida, zx, zy, cols * celda, rows * celda);
-    // la separación entre píxeles: una rejilla blanca de 1 px
+    // la disolución en trama: celdas blancas cada vez más densas hacia el borde izquierdo (y hacia abajo en el celular)
+    const cols = Math.ceil(zw / cel), rows = Math.ceil(zh / cel), banda = vertical ? .0 : .38;
     c.fillStyle = "#fff";
-    for (let x = zx; x <= zx + cols * celda; x += celda) c.fillRect(x, zy, 1, rows * celda);
-    for (let y = zy; y <= zy + rows * celda; y += celda) c.fillRect(zx, y, cols * celda, 1);
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      let d = vertical ? 1 - (j / rows - .6) / .4 : (i / cols) / banda;
+      if (vertical && j / rows < .6) d = 1;
+      if (j / rows > .9 && !vertical) d = Math.min(d, (1 - j / rows) / .1);
+      if (d >= 1) continue;
+      const k = Math.max(0, d), umbral = BAYER[(j & 3) * 4 + (i & 3)];
+      if (k < umbral) c.fillRect(zx + i * cel, zy + j * cel, cel, cel);
+      else c.fillRect(zx + i * cel, zy + j * cel, cel, 1.2), c.fillRect(zx + i * cel, zy + j * cel, 1.2, cel);
+    }
   }
   rotulo.textContent = ESCENAS[0].txt; rotulo.classList.add("on");
   alVer(caja, () => { if (vivo) return; vivo = true; tCambio = performance.now(); reproducir(actual); raf = requestAnimationFrame(cuadro); }, () => { vivo = false; cancelAnimationFrame(raf); Object.values(videos).forEach((v) => v.pause()); }, 0);

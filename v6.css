@@ -1447,3 +1447,32 @@ img[src*="marca/"] { object-fit: contain; }
 }
 @media (prefers-reduced-motion: reduce) { .px9 { height: auto; } .px9__fijo { position: relative; height: 100vh; } }
 @media (max-width: 1020px) { .h7--trama { padding-top: 50svh; } }
+
+/* ══ El gris de los títulos pasa al color de Optimizo ══ */
+.v6 .gris, .v6 .gris .pal > span, .v6 .acento { background: linear-gradient(100deg, #91CEC4, #387E80 70%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+
+/* ══ Parallax: viaje hacia adentro ══ */
+.px9 { height: 420vh; }
+.px9__fijo { perspective: 900px; perspective-origin: 50% 50%; background: #fff; }
+.px9__escena { position: absolute; inset: 0; transform-style: preserve-3d; transition: opacity .2s; }
+.px9__f { left: 50%; top: 50%; width: min(34vw, 520px); aspect-ratio: 4 / 3; transform-origin: center; box-shadow: 0 50px 90px -50px rgba(11, 19, 27, .55); }
+.px9__f img { filter: none; }
+.px9__t { position: absolute; z-index: 3; max-width: 16ch; padding: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-size: clamp(2.4rem, 1.2rem + 3.6vw, 5.4rem); line-height: 1; text-shadow: 0 2px 30px rgba(255, 255, 255, .9), 0 0 60px #fff; opacity: 0; transition: opacity .15s; }
+.px9__fin { position: absolute; z-index: 4; display: grid; justify-items: center; gap: 28px; margin: 0; opacity: 0; }
+.px9__fin img { width: clamp(80px, 9vw, 130px); }
+.px9__fin span { font-size: clamp(3rem, 1.4rem + 6vw, 8.5rem); font-weight: 650; letter-spacing: -.06em; line-height: .95; }
+.px9__fin b { font-weight: 650; background: linear-gradient(100deg, #91CEC4, #387E80 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ══ Las manos ══ */
+.mn { position: relative; height: 260vh; }
+.mn__fijo { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #fff; }
+.mn__ia { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mn__humana { position: absolute; left: 0; top: 0; filter: grayscale(1) contrast(1.08) brightness(1.04); will-change: transform; }
+.mn__chispa { position: absolute; left: 0; top: 0; width: 220px; height: 220px; border-radius: 50% !important; background: radial-gradient(circle, #fff 0 8%, rgba(145, 206, 196, .95) 14%, rgba(56, 126, 128, .35) 40%, rgba(56, 126, 128, 0) 70%); opacity: 0; pointer-events: none; mix-blend-mode: multiply; }
+.mn__txt { position: absolute; left: 0; right: 0; bottom: 14vh; margin: 0; text-align: center; font-size: clamp(2rem, 1.2rem + 2.8vw, 4.4rem); font-weight: 650; letter-spacing: -.05em; opacity: 0; }
+@media (max-width: 1020px) { .px9 { height: 360vh; } .px9__f { width: 62vw; } .mn { height: 220vh; } .mn__txt { bottom: 18vh; padding: 0 20px; } }
+@media (prefers-reduced-motion: reduce) { .px9, .mn { height: auto; } .px9__fijo, .mn__fijo { position: relative; } }
+.px9__f { width: min(24vw, 400px); }
+.px9__fijo::after { content: ""; position: absolute; left: 50%; top: 50%; width: min(64vw, 900px); height: 46vh; transform: translate(-50%, -50%); background: radial-gradient(closest-side, #fff 55%, rgba(255, 255, 255, 0)); z-index: 2; pointer-events: none; }
+@media (max-width: 1020px) { .px9__f { width: 40vw; } .px9__fijo::after { width: 100vw; } }
+@media (max-width: 1020px) { .h7--trama { padding-top: 56svh; } }

@@ -12,7 +12,7 @@
 <link rel="preload" href="recursos/fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilos.css">
 <link rel="stylesheet" href="v4.css">
-<link rel="stylesheet" href="v6.css?v=1793457057">
+<link rel="stylesheet" href="v6.css?v=1793457613">
 </head>
 <body class="v6">
 
@@ -104,16 +104,32 @@
     </div>
   </section>
 
-  <!-- Parallax: fotos de la industria a distintas profundidades y la idea central al medio -->
+  <!-- Parallax: un viaje hacia adentro entre la industria; las ideas aparecen al centro y termina en «Eso es Optimizo.» -->
   <section class="px9" id="parallax" aria-label="Lo que hacemos">
     <div class="px9__fijo">
-      <figure class="px9__f" style="--x:8%;--y:6%;--w:22vw;--v:-0.9"><img src="recursos/fotos/gruas.jpg" alt="Grúas en una obra" loading="lazy"></figure>
-      <figure class="px9__f" style="--x:64%;--y:4%;--w:20vw;--v:-0.5"><img src="recursos/fotos/datos.jpg" alt="Data center" loading="lazy"></figure>
-      <figure class="px9__f" style="--x:78%;--y:38%;--w:19vw;--v:-1.25"><img src="recursos/fotos/brazo.jpg" alt="Brazo robótico" loading="lazy"></figure>
-      <figure class="px9__f" style="--x:4%;--y:46%;--w:17vw;--v:-0.35"><img src="recursos/fotos/circuito.jpg" alt="Circuito" loading="lazy"></figure>
-      <figure class="px9__f" style="--x:20%;--y:74%;--w:24vw;--v:-0.7"><img src="recursos/fotos/puerto.jpg" alt="Puerto de contenedores" loading="lazy"></figure>
-      <figure class="px9__f" style="--x:60%;--y:72%;--w:18vw;--v:-1.05"><img src="recursos/fotos/maquina.jpg" alt="Máquina industrial" loading="lazy"></figure>
-      <p class="px9__t arma">No desarrollamos tecnología por desarrollar. <span class="gris">Diseñamos capacidades que ayudan a las empresas a trabajar mejor.</span></p>
+      <div class="px9__escena">
+        <figure class="px9__f" style="--x:-36vw;--y:-20vh;--z:-200"><img src="recursos/fotos/gruas.jpg" alt="Grúas en una obra" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:36vw;--y:-24vh;--z:-700"><img src="recursos/fotos/datos.jpg" alt="Data center" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:-38vw;--y:22vh;--z:-1200"><img src="recursos/fotos/brazo.jpg" alt="Brazo robótico" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:37vw;--y:20vh;--z:-1700"><img src="recursos/fotos/circuito.jpg" alt="Circuito" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:-34vw;--y:-26vh;--z:-2200"><img src="recursos/fotos/puerto.jpg" alt="Puerto de contenedores" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:36vw;--y:24vh;--z:-2700"><img src="recursos/fotos/maquina.jpg" alt="Máquina industrial" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:-37vw;--y:18vh;--z:-3200"><img src="recursos/fotos/invernadero.jpg" alt="Robot agrícola" loading="lazy"></figure>
+        <figure class="px9__f" style="--x:35vw;--y:-18vh;--z:-3700"><img src="recursos/fotos/datos.jpg" alt="Servidores" loading="lazy"></figure>
+      </div>
+      <p class="px9__t px9__t--1">No desarrollamos tecnología <span class="gris">por desarrollar.</span></p>
+      <p class="px9__t px9__t--2">Diseñamos capacidades que ayudan a las empresas <span class="gris">a trabajar mejor.</span></p>
+      <p class="px9__fin"><img src="recursos/optimizo-isotipo.svg" alt=""><span>Eso es <b>Optimizo.</b></span></p>
+    </div>
+  </section>
+
+  <!-- Transición: la mano humana y su gemela de inteligencia artificial se encuentran con el scroll -->
+  <section class="mn" id="manos" aria-label="Personas e inteligencia artificial">
+    <div class="mn__fijo">
+      <canvas class="mn__ia" aria-hidden="true"></canvas>
+      <img class="mn__humana" src="recursos/fotos/mano.png" alt="">
+      <i class="mn__chispa" aria-hidden="true"></i>
+      <p class="mn__txt">Personas <span class="gris">+ inteligencia artificial.</span></p>
     </div>
   </section>
 
@@ -391,6 +407,6 @@
 </footer>
 
 <script src="recursos/video/detecciones-trafico.js"></script>
-<script src="v6.js?v=1793457057" type="module"></script>
+<script src="v6.js?v=1793457559" type="module"></script>
 </body>
 </html>
