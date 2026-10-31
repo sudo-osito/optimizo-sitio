@@ -17,7 +17,7 @@
     bienvenida: () => [["Qué bueno conocerte."]],
     nombre: () => [["¿Cómo te llamas?"]],
     empresa: () => [["Hola, "], [primerNombre(), 1], [". ¿Dónde trabajas?"]],
-    cargo: () => [["¿Y qué haces en "], [datos.empresa.trim(), 1], ["?"]],
+    cargo: () => (datos.empresa ? [["¿Y qué haces en "], [datos.empresa.trim(), 1], ["?"]] : [["¿Y a qué te dedicas?"]]),
     celular: () => [["¿A qué número te escribimos?"]],
     correo: () => [[datos.celular ? "¿Y tu correo?" : "¿Cuál es tu correo?"]],
     interes: () => [["¿Qué quieres conocer?"]],
@@ -145,7 +145,7 @@
     const v = $("input", pasos[actual])?.value.trim() ?? "";
     switch (actual) {
       case "nombre": if (v.length < 2) return avisar("nombre", "Escribe tu nombre para seguir."); datos.nombre = v; break;
-      case "empresa": if (v.length < 2) return avisar("empresa", "Escribe el nombre de tu empresa."); datos.empresa = v; break;
+      case "empresa": if (v.length < 2) return avisar("empresa", "Escribe el nombre de tu empresa."); datos.empresa = v; $("#cargo").placeholder = "Tu cargo"; break;
       case "cargo": datos.cargo = v; break;
       case "celular":
         if (!v) { datos.celular = ""; break; }
@@ -161,6 +161,7 @@
   }
 
   function omitir() {
+    if (actual === "empresa") { datos.empresa = ""; $("#empresa").value = ""; $("#cargo").placeholder = "Estudiante, independiente, emprendedor…"; }
     if (actual === "cargo") { datos.cargo = ""; $("#cargo").value = ""; }
     if (actual === "celular") { datos.celular = ""; $("#celular").value = ""; return ir("correo"); }
     if (actual === "correo") { datos.correo = ""; $("#correo").value = ""; }
@@ -190,7 +191,7 @@
   function pintarResumen() {
     const filas = [
       ["Nombre", datos.nombre, "nombre"],
-      ["Empresa", datos.cargo ? `${datos.empresa} · ${datos.cargo}` : datos.empresa, "empresa"],
+      ["Empresa", [datos.empresa || "Sin empresa", datos.cargo].filter(Boolean).join(" · "), "empresa"],
       ["Contacto", [datos.celular, datos.correo].filter(Boolean).join(" · "), "celular"],
       ["Interés", [...datos.interes].map((x) => NOMBRES_INTERES[x]).join(", ") || "Por conversar", "interes"],
     ];
