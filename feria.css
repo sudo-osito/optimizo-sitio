@@ -83,13 +83,15 @@ kbd { font: inherit; font-size: 13px; padding: 3px 8px; border-radius: 7px; bord
 /* ── Intereses: lista de marcas (Optimizo → Lumina → Medula), una fila por marca ── */
 .opciones { display: grid; max-width: 900px; margin-top: clamp(26px, 4.5vh, 46px); border-top: 1px solid var(--linea); }
 .opcion {
-  position: relative; display: grid; grid-template-columns: 220px 1fr 28px; align-items: center; gap: 28px; padding: 26px 8px; text-align: left; cursor: pointer;
+  position: relative; display: grid; grid-template-columns: 1fr 28px; align-items: center; gap: 12px 28px; padding: 26px 8px; text-align: left; cursor: pointer;
   border: 0; border-bottom: 1px solid var(--linea); background: none; isolation: isolate;
 }
 .opcion::before { content: ""; position: absolute; inset: 6px -16px; z-index: -1; border-radius: 20px; background: var(--nube); opacity: 0; transform: scale(.98); transition: opacity .3s, transform .5s var(--llegada); }
 .opcion:hover::before { opacity: 1; transform: none; }
 .opcion:active { transform: scale(.99); transition: transform .15s; }
 .opcion-marca img { height: 38px; width: auto; display: block; }
+.opcion-marca, .opcion-texto { grid-column: 1; }
+.check { grid-column: 2; grid-row: 1 / span 2; }
 .opcion-texto { display: grid; gap: 4px; }
 .opcion-texto b { font-size: 22px; font-weight: 650; letter-spacing: -.03em; line-height: 1.15; }
 .opcion-texto span { font-size: 17px; line-height: 1.4; color: var(--gris); letter-spacing: -.01em; }

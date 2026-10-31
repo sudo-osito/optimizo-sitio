@@ -187,7 +187,7 @@
   });
 
   // ── Resumen y permiso ──
-  const NOMBRES_INTERES = { "Discovery Optimizo": "Discovery con Optimizo", "Lumina": "Lumina", "Médula": "Medula" };
+  const NOMBRES_INTERES = { "Discovery Optimizo": "Optimizo", "Lumina": "Lumina", "Médula": "Medula" };
   function pintarResumen() {
     const filas = [
       ["Nombre", datos.nombre, "nombre"],
