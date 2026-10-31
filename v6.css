@@ -1466,10 +1466,10 @@ img[src*="marca/"] { object-fit: contain; }
 /* ══ Las manos ══ */
 .mn { position: relative; height: 260vh; }
 .mn__fijo { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #fff; }
-.mn__ia { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mn__ia { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 .mn__humana { position: absolute; left: 0; top: 0; filter: grayscale(1) contrast(1.08) brightness(1.04); will-change: transform; }
 .mn__chispa { position: absolute; left: 0; top: 0; width: 220px; height: 220px; border-radius: 50% !important; background: radial-gradient(circle, #fff 0 8%, rgba(145, 206, 196, .95) 14%, rgba(56, 126, 128, .35) 40%, rgba(56, 126, 128, 0) 70%); opacity: 0; pointer-events: none; mix-blend-mode: multiply; }
-.mn__txt { position: absolute; left: 0; right: 0; bottom: 14vh; margin: 0; text-align: center; font-size: clamp(2rem, 1.2rem + 2.8vw, 4.4rem); font-weight: 650; letter-spacing: -.05em; opacity: 0; }
+.mn__txt { z-index: 2; position: absolute; left: 0; right: 0; bottom: 14vh; margin: 0; text-align: center; font-size: clamp(2rem, 1.2rem + 2.8vw, 4.4rem); font-weight: 650; letter-spacing: -.05em; opacity: 0; }
 @media (max-width: 1020px) { .px9 { height: 360vh; } .px9__f { width: 62vw; } .mn { height: 220vh; } .mn__txt { bottom: 18vh; padding: 0 20px; } }
 @media (prefers-reduced-motion: reduce) { .px9, .mn { height: auto; } .px9__fijo, .mn__fijo { position: relative; } }
 .px9__f { width: min(24vw, 400px); }
@@ -1514,6 +1514,10 @@ img[src*="marca/"] { object-fit: contain; }
 .px9__f { transition: none; } .px9__t { pointer-events: none; }
 .px9__f { transition: opacity .35s ease; }
 /* el impacto de los dedos: un temblor corto de la pantalla */
-.mn__fijo.golpe { animation: golpe .42s cubic-bezier(.36, .07, .19, .97); }
-@keyframes golpe { 10% { transform: translate(-5px, 2px); } 22% { transform: translate(6px, -3px); } 36% { transform: translate(-4px, -2px); } 52% { transform: translate(3px, 2px); } 70% { transform: translate(-2px, 1px); } 100% { transform: none; } }
+.mn__fijo.golpe { animation: golpe .7s cubic-bezier(.2, .8, .3, 1); }
+@keyframes golpe { 0% { transform: scale(1); } 6% { transform: scale(1.06) translate(-12px, 6px); } 14% { transform: scale(1.045) translate(11px, -8px); } 24% { transform: scale(1.03) translate(-8px, -4px); } 36% { transform: scale(1.02) translate(6px, 4px); } 52% { transform: scale(1.01) translate(-3px, 2px); } 70% { transform: translate(1px, -1px); } 100% { transform: none; } }
+.mn__fijo.impacto { background: #387E80; }
+.mn__fijo.impacto .mn__humana { filter: brightness(0) invert(1); }
+.mn__fijo.negativo .mn__humana { filter: brightness(0) invert(.12) sepia(1) hue-rotate(130deg) saturate(3); }
+.mn__fijo.impacto .mn__txt, .mn__fijo.negativo .mn__txt { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .mn__fijo.golpe { animation: none; } }

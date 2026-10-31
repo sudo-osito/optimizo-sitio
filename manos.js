@@ -1,6 +1,6 @@
 // Optimizo · la transición de las manos. Al bajar, la mano humana (La creación de Adán, Miguel Ángel, dominio público) llega
 // desde la derecha y la mano robótica (generada con Codex) se arma en píxeles de Optimizo desde la izquierda.
-// Cuando los dedos se tocan, saltan unos píxeles y la página sigue a la siguiente sección.
+// Cuando los dedos se tocan hay un cuadro de impacto, una onda de píxeles y la energía cruza los dos brazos.
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + .5) / 16);
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const eio = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
@@ -12,7 +12,16 @@ export function montarManos(sec, { QUIETO }) {
   const txt = sec.querySelector(".mn__txt");
   const img = new Image(); img.src = "recursos/fotos/mano-robot.png";
   let puntos = null;   // los píxeles de la mano de IA: posición final, color y desorden inicial
-  const CEL = 5; let antes = 0;
+  const CEL = 5; let antes = 0, t0 = 0, mascara = null;
+  const reloj = () => { pintar(); if (t0 && performance.now() - t0 < 1700) requestAnimationFrame(reloj); };
+  const armarMascara = () => {   // la silueta de la mano humana en celdas, para pixelarla durante el toque
+    const w = 150, h = Math.round(w * humana.naturalHeight / humana.naturalWidth), t = document.createElement("canvas"); t.width = w; t.height = h;
+    const tc = t.getContext("2d", { willReadFrequently: true }); tc.drawImage(humana, 0, 0, w, h);
+    const d = tc.getImageData(0, 0, w, h).data; mascara = [];
+    for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (d[(j * w + i) * 4 + 3] > 120) mascara.push({ i, j, u: i / w });
+    mascara.w = w;
+  };
+  if (humana.complete && humana.naturalWidth) armarMascara(); else humana.addEventListener("load", armarMascara);
   img.onload = () => {
     const w = Math.round(img.naturalWidth / CEL * 1.1), h = Math.round(img.naturalHeight / CEL * 1.1);
     const t = document.createElement("canvas"); t.width = w; t.height = h; const tc = t.getContext("2d", { willReadFrequently: true });
@@ -40,34 +49,49 @@ export function montarManos(sec, { QUIETO }) {
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
     if (puntos && metal < 1) {
-      const esc = anchoR / puntos.w, arma = clamp(p / .5);
+      const esc = anchoR / puntos.w, arma = clamp(p / .5), ePix = t0 ? (performance.now() - t0) / 1000 : 9, cuadroPix = ePix < .07 ? 1 : ePix < .13 ? 2 : 0;
       for (const q of puntos) {
         // cada píxel llega a su lugar con su propio ritmo; los de la punta de los dedos son los últimos
         const kk = eio(clamp((arma - q.r * .45 * q.u) / .55)); if (kk <= 0) continue;
         const dx = (1 - kk) * (-160 - q.s * 260), dy = (1 - kk) * (q.r - .5) * 220;
         const u = clamp(q.u * .9 + .1); c.globalAlpha = (.35 + .65 * kk) * (1 - metal);
-        c.fillStyle = `rgb(${Math.round(145 - 89 * u)},${Math.round(206 - 80 * u)},${Math.round(196 - 68 * u)})`;
-        c.fillRect(rx + q.i * esc + dx, ry + q.j * esc + dy, esc * .82, esc * .82);
+        const ola = t0 ? (1 - q.u) - (ePix - .06) * 1.4 : 9;   // la energía viaja de la punta del dedo al hombro
+        let empuje = 0;
+        if (cuadroPix) c.fillStyle = cuadroPix === 1 ? "#fff" : "#10393A";
+        else if (ola < 0 && ola > -.16) { c.fillStyle = ola > -.03 ? "#10393A" : "#2E9C93"; empuje = (1 + ola / .16) * 6; }
+        else c.fillStyle = `rgb(${Math.round(145 - 89 * u)},${Math.round(206 - 80 * u)},${Math.round(196 - 68 * u)})`;
+        c.fillRect(rx + q.i * esc + dx, ry + q.j * esc + dy - empuje * (q.r - .5), esc * .82, esc * .82);
       }
       c.globalAlpha = 1;
     }
-    const alto = altoH;
-    // el toque: la pantalla tiembla, sale una onda expansiva nítida, un destello breve y unos píxeles
-    const toque = clamp((p - .66) / .22);
-    if (p > .66 && antes <= .66 && !QUIETO) { fijo.classList.remove("golpe"); void fijo.offsetWidth; fijo.classList.add("golpe"); if (navigator.vibrate) navigator.vibrate(35); }
+    // el toque es un evento con su propio reloj (no depende de qué tan rápido bajes):
+    // 1) cuadro de impacto: la pantalla entera en el teal de Optimizo con las dos manos en blanco, y su negativo
+    // 2) onda de choque hecha de los mismos píxeles de la IA, que barre toda la pantalla
+    // 3) la energía cruza: recorre el brazo robot hasta el hombro y pixela el brazo humano hasta salir de cuadro
+    if (p > .66 && antes <= .66 && !QUIETO && !t0) { t0 = performance.now(); fijo.classList.remove("golpe"); void fijo.offsetWidth; fijo.classList.add("golpe"); if (navigator.vibrate) navigator.vibrate([20, 30, 45]); requestAnimationFrame(reloj); }
+    if (p < .6) t0 = 0;
     antes = p;
-    if (toque > 0 && toque < 1) {
-      for (const [ret, ancho] of [[0, 2.5], [.12, 1.5]]) {   // dos anillos que se abren
-        const k2 = clamp((toque - ret) / (1 - ret)); if (k2 <= 0) continue;
-        c.globalAlpha = (1 - k2) * .9; c.strokeStyle = "#387E80"; c.lineWidth = ancho * (1 - k2) + .5;
-        c.beginPath(); c.ellipse(mx, cy, eio(k2) * W * .38, eio(k2) * W * .38 * .62, 0, 0, 7); c.stroke();
+    const e = t0 ? (performance.now() - t0) / 1000 : 9;
+    const cuadro = e < .07 ? 1 : e < .13 ? 2 : 0;
+    fijo.classList.toggle("impacto", cuadro === 1); fijo.classList.toggle("negativo", cuadro === 2);
+    if (e < 1.6) {
+      const G = mov ? 7 : 9, maxR = Math.hypot(W, H) * .62, R = (1 - Math.pow(1 - clamp(e / 1.05), 3)) * maxR, banda = 40 + R * .5;
+      if (e > .05 && e < 1.05) {
+        c.fillStyle = cuadro === 1 ? "#fff" : "#387E80";
+        for (let y = 0, j = 0; y < H; y += G, j++) for (let x = 0, i = 0; x < W; x += G, i++) {
+          const d = Math.hypot(x - mx, (y - cy) * 1.25), f = R - d; if (f < 0 || f > banda) continue;
+          const dens = Math.pow(1 - f / banda, 2.2) * (1 - clamp((e - .55) / .5)); if (dens <= BAYER[(j & 3) * 4 + (i & 3)]) continue;
+          c.globalAlpha = .85; c.fillRect(x, y, G - 2, G - 2);
+        }
       }
-      const fl = clamp(1 - toque / .18);   // destello: un núcleo blanco y menta pequeño y nítido que se apaga rápido
-      if (fl > 0) { const g = c.createRadialGradient(mx, cy, 0, mx, cy, 70); g.addColorStop(0, `rgba(255,255,255,${fl})`); g.addColorStop(.35, `rgba(145,206,196,${.7 * fl})`); g.addColorStop(1, "rgba(145,206,196,0)"); c.globalAlpha = 1; c.fillStyle = g; c.fillRect(mx - 70, cy - 70, 140, 140); }
-      for (let n = 0; n < 34; n++) {
-        const ang = azar(n) * Math.PI * 2, dist = (10 + azar(n + 5) * 120) * eio(toque), lado = 3 + Math.round(azar(n + 9) * 3);
-        c.globalAlpha = 1 - toque; c.fillStyle = n % 3 ? "#91CEC4" : "#387E80";
-        c.fillRect(Math.round(mx + Math.cos(ang) * dist), Math.round(cy + Math.sin(ang) * dist * .7), lado, lado);
+      if (mascara && e < 1.6) {   // el brazo humano se vuelve píxeles por donde pasa la energía, del dedo hacia el borde
+        const frente = clamp((e - .08) / 1.1) * 1.25, cel = anchoH / mascara.w, hx = mx + hueco / 2 - PH[0] * anchoH, hy = cy - PH[1] * altoH;
+        for (const q of mascara) {
+          const f = frente - q.u; if (f < 0 || f > .28) continue;
+          const dens = 1 - f / .28; if (dens * 1.1 <= BAYER[(q.j & 3) * 4 + (q.i & 3)]) continue;
+          c.globalAlpha = .9; c.fillStyle = f < .04 ? "#91CEC4" : "#387E80";
+          c.fillRect(hx + q.i * cel, hy + q.j * cel, cel * .82, cel * .82);
+        }
       }
     }
     c.globalAlpha = 1;

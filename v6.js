@@ -1,5 +1,5 @@
 // Optimizo · sitio v6. Sin dependencias. Siempre claro; el texto se escribe y se borra, las columnas fijas guían y una sola frase se lee al ritmo del scroll.
-import { montarManos } from "./manos.js?v=1793459270";
+import { montarManos } from "./manos.js?v=1793459657";
 // import { montarTrama } from "./trama.js?v=1793458386";
 import { montarChat } from "./chat.js?v=1793458818";
 import { montarFlujo } from "./flujo.js?v=1793370069";
