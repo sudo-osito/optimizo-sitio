@@ -1513,11 +1513,5 @@ img[src*="marca/"] { object-fit: contain; }
 .fr7__l--b, .fr7__l--b .tipeo { background: linear-gradient(100deg, #91CEC4, #387E80 70%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
 .px9__f { transition: none; } .px9__t { pointer-events: none; }
 .px9__f { transition: opacity .35s ease; }
-/* el impacto de los dedos: un temblor corto de la pantalla */
-.mn__fijo.golpe { animation: golpe .7s cubic-bezier(.2, .8, .3, 1); }
-@keyframes golpe { 0% { transform: scale(1); } 6% { transform: scale(1.06) translate(-12px, 6px); } 14% { transform: scale(1.045) translate(11px, -8px); } 24% { transform: scale(1.03) translate(-8px, -4px); } 36% { transform: scale(1.02) translate(6px, 4px); } 52% { transform: scale(1.01) translate(-3px, 2px); } 70% { transform: translate(1px, -1px); } 100% { transform: none; } }
-.mn__fijo.impacto { background: #387E80; }
-.mn__fijo.impacto .mn__humana { filter: brightness(0) invert(1); }
-.mn__fijo.negativo .mn__humana { filter: brightness(0) invert(.12) sepia(1) hue-rotate(130deg) saturate(3); }
-.mn__fijo.impacto .mn__txt, .mn__fijo.negativo .mn__txt { visibility: hidden; }
-@media (prefers-reduced-motion: reduce) { .mn__fijo.golpe { animation: none; } }
+/* la sección siguiente sube encima de las manos y se ve solo dentro del destello (el JS mueve el círculo) */
+.d7--destello { position: relative; z-index: 2; margin-top: -100vh; background: #fff; box-shadow: 0 -100vh 0 #fff; clip-path: circle(0 at 50% 0); }
