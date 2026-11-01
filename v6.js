@@ -312,15 +312,13 @@ function agua(caja, { zona = "derecha" } = {}) {
     c.fillStyle = "rgba(255,255,255,.5)"; c.fillRect(x0 + bx * celdaX, y0, 1, y1 - y0);
   }, 30);
 }
-/* Héroe: videos reales dentro de fábricas, uno tras otro con un fundido suave */
+/* Héroe: videos reales dentro de fábricas, ya unidos en un solo bucle con sus fundidos (el iPhone reproduce mejor un video
+   que se repite que seis que se cambian por código). En el celular va una versión vertical más liviana */
 {
-  const caja = $("#fabrica"), [a, b] = $$("video", caja), CLIPS = ["ensamblaje", "cinta", "control", "soldadura", "botellas", "planta"];
-  let i = 0, frente = a, atras = b, vivo = false;
-  const cargar = (v, n) => { v.src = `recursos/video/fabrica/${CLIPS[n % CLIPS.length]}.mp4`; v.load(); };
-  cargar(frente, 0); cargar(atras, 1); frente.classList.add("on");
-  const siguiente = () => { if (!vivo) return; i++; atras.currentTime = 0; atras.play().catch(() => {}); atras.classList.add("on"); frente.classList.remove("on"); [frente, atras] = [atras, frente]; setTimeout(() => cargar(atras, i + 1), 1300); };
-  [a, b].forEach((v) => v.addEventListener("timeupdate", () => { if (v === frente && v.duration && v.currentTime > v.duration - 1.1 && !v._pasado) { v._pasado = true; siguiente(); setTimeout(() => (v._pasado = false), 2000); } }));
-  if (!QUIETO) alVer(caja, () => { vivo = true; frente.play().catch(() => {}); }, () => { vivo = false; a.pause(); b.pause(); }, 0);
+  const caja = $("#fabrica"), video = $("video", caja), base = `recursos/video/fabrica/${innerWidth / innerHeight < .9 ? "bucle-vertical" : "bucle"}`;
+  video.poster = `${base}.jpg`; video.src = `${base}.mp4`;
+  if (QUIETO) video.removeAttribute("autoplay");
+  else alVer(caja, () => video.play().catch(() => {}), () => video.pause(), 0);
 }
 montarManos($("#manos"), { QUIETO });
 montarFlujo($("#flujo-med"), { alVer, QUIETO });
@@ -475,6 +473,23 @@ let pintarPoderes = () => {};
   boton.addEventListener("click", () => { const ab = nav.classList.toggle("abierto"); document.documentElement.classList.toggle("menu-abierto", ab); boton.setAttribute("aria-expanded", ab); boton.setAttribute("aria-label", ab ? "Cerrar el menú" : "Abrir el menú"); });
   $$("a", menu).forEach((a) => a.addEventListener("click", cerrar));
   addEventListener("keydown", (e) => e.key === "Escape" && cerrar());
+}
+/* Safari del iPhone pausa los videos por su cuenta: al volver a la pestaña, en ahorro de energía o para liberar memoria.
+   Cada pocos segundos, y en cada toque (que es lo que habilita reproducir en ahorro de energía), los videos que están
+   en pantalla y quedaron pausados vuelven a correr; si uno se cayó con error, se recarga */
+if (!QUIETO) {
+  const revivir = () => {
+    if (document.hidden) return;
+    $$("video").forEach((v) => {
+      const r = v.getBoundingClientRect();
+      if (!r.width || r.bottom < 0 || r.top > innerHeight || v.closest("[hidden]")) return;
+      if (v.error) { const t = v.currentTime; v.load(); v.currentTime = t; }
+      if (v.paused) v.play().catch(() => {});
+    });
+  };
+  setInterval(revivir, 2500);
+  addEventListener("visibilitychange", revivir); addEventListener("pageshow", revivir);
+  addEventListener("touchend", revivir, { passive: true }); addEventListener("click", revivir);
 }
 const progreso = $("#progreso");
 function pintarProgreso() { progreso.style.setProperty("--p", clamp(scrollY / (document.documentElement.scrollHeight - innerHeight))); }
