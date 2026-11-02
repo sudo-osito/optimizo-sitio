@@ -196,3 +196,19 @@ kbd { font: inherit; font-size: 13px; padding: 3px 8px; border-radius: 7px; bord
 .hoja h2 { font-size: 34px; }
 .hoja-sub, .hoja-eti { font-size: 18px; }
 .segmentos button { min-height: 60px; font-size: 20px; }
+
+/* ── 2-nov (Joaquín): otro 20 % más de texto en el formulario; sin el botón «Equipo» ── */
+.equipo-abrir { display: none !important; }
+.cuenta { font-size: 24px; }
+.titulo { font-size: clamp(3.6rem, 1.56rem + 5.28vw, 6.84rem); }
+.bajada { font-size: clamp(1.72rem, 1.49rem + .94vw, 2.28rem); }
+.campo input, .prefijo { font-size: clamp(2.8rem, 1.72rem + 3.43vw, 4.37rem); }
+.aviso { font-size: 24px; }
+.boton { min-height: 86px; padding: 0 50px; font-size: 28px; }
+.enlace { font-size: 25px; }
+.opcion-texto b { font-size: 35px; }
+.opcion-texto span { font-size: 26px; }
+.resumen dt, .resumen dd { font-size: 26px; }
+.resumen dd button { font-size: 24px; }
+.permiso { font-size: 25px; }
+.evento { font-size: 21px; }
