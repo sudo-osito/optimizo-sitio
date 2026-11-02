@@ -162,3 +162,37 @@ kbd { font: inherit; font-size: 13px; padding: 3px 8px; border-radius: 7px; bord
 
 /* 31-oct: «Atrás» visible junto a Continuar (la flecha de abajo quedaba lejos) */
 .acciones .volver { order: -1; margin-right: 8px; }
+
+/* ── 2-nov (Joaquín, en la feria): todo el formulario un 30 % más grande (texto, campos y botones) ── */
+.logo { height: 36px; }
+.evento { font-size: 18px; }
+.cuenta { font-size: 20px; margin-bottom: 26px; }
+.titulo { font-size: clamp(3rem, 1.3rem + 4.4vw, 5.7rem); }
+.bajada { font-size: clamp(1.43rem, 1.24rem + .78vw, 1.9rem); max-width: 42ch; }
+.campo { max-width: 1170px; }
+.campo input, .prefijo { font-size: clamp(2.34rem, 1.43rem + 2.86vw, 3.64rem); }
+.aviso { font-size: 20px; min-height: 28px; }
+.boton { min-height: 75px; padding: 0 42px; font-size: 23px; }
+.enlace { font-size: 21px; }
+.tecla { font-size: 18px; }
+.opciones { max-width: 1170px; }
+.opcion { padding: 34px 10px; }
+.opcion-marca img { height: 49px; }
+.opcion-texto b { font-size: 29px; }
+.opcion-texto span { font-size: 22px; }
+.check { width: 36px; height: 36px; }
+.check::after { left: 13px; top: 8px; width: 8px; height: 14px; }
+.resumen { max-width: 880px; }
+.resumen dt, .resumen dd { font-size: 22px; padding: 18px 0; }
+.resumen dd button { font-size: 20px; }
+.permiso { font-size: 21px; max-width: 880px; gap: 20px; }
+.interruptor { width: 68px; height: 42px; }
+.interruptor::after { width: 36px; height: 36px; top: 3px; left: 3px; }
+.permiso input:checked + .interruptor::after { transform: translateX(26px); }
+.atras { width: 62px; height: 62px; }
+.atras svg { width: 28px; height: 28px; }
+.equipo-abrir { font-size: 17px; }
+.hoja-caja { width: min(100%, 600px); padding: 39px; }
+.hoja h2 { font-size: 34px; }
+.hoja-sub, .hoja-eti { font-size: 18px; }
+.segmentos button { min-height: 60px; font-size: 20px; }
