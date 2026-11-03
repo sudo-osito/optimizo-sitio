@@ -1548,3 +1548,18 @@ img[src*="marca/"] { object-fit: contain; }
   /* superpoderes: tarjetas más bajas y menos recorrido entre una y otra */
   .sp7c { height: min(600px, calc(100svh - 150px)) !important; margin-bottom: 7vh !important; }
 }
+
+/* ── Héroe «planta» (2-nov): la planta isométrica en código, clara; el texto en tinta sobre un velo blanco ── */
+.pl { position: absolute; inset: 0; background: #E9EEEE; }
+.pl .planta { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.h7__video.pl::after { display: block !important; content: ""; position: absolute; inset: 0; left: 0; width: auto; transform: none; border: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, .7) 34%, rgba(255, 255, 255, 0) 62%), linear-gradient(0deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, 0) 30%) !important; }
+.h7--planta { background: #E9EEEE; }
+.h7--planta .h7__t, .h7--planta .eti { color: var(--tinta7); text-shadow: none; }
+.h7--planta .bajada { color: var(--texto7-2); text-shadow: none; }
+.h7--planta .h7__pie { border-top-color: rgba(11, 19, 27, .12); }
+.h7--planta .eti::before, .h7--planta .cursor { background: #387E80; }
+.h7--planta .h7__pie .btn7 { background: var(--tinta7); color: #fff; }
+@media (max-width: 1020px) {
+  .h7__video.pl::after { background: linear-gradient(0deg, rgba(255, 255, 255, .97) 0%, rgba(255, 255, 255, .88) 44%, rgba(255, 255, 255, 0) 70%) !important; }
+}
